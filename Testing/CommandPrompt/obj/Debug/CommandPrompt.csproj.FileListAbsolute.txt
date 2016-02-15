@@ -1,0 +1,5 @@
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\CommandPrompt\bin\Debug\CommandPrompt.exe.config
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\CommandPrompt\bin\Debug\CommandPrompt.exe
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\CommandPrompt\bin\Debug\CommandPrompt.pdb
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\CommandPrompt\obj\Debug\CommandPrompt.exe
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\CommandPrompt\obj\Debug\CommandPrompt.pdb

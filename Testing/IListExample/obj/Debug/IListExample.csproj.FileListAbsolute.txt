@@ -1,0 +1,11 @@
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\IListExample\bin\Debug\IListExample.exe.config
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\IListExample\bin\Debug\IListExample.exe
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\IListExample\bin\Debug\IListExample.pdb
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\IListExample\obj\Debug\IListExample.exe
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\IListExample\obj\Debug\IListExample.pdb
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\IListExample\bin\Debug\EntityFramework.dll
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\IListExample\bin\Debug\EntityFramework.Extended.dll
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\IListExample\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\IListExample\bin\Debug\EntityFramework.xml
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\IListExample\bin\Debug\EntityFramework.Extended.xml
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\IListExample\bin\Debug\EntityFramework.SqlServer.xml

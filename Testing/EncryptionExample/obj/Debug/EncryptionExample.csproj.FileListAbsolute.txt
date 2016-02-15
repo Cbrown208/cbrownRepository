@@ -1,0 +1,11 @@
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\EncryptionExample\bin\Debug\EncryptionExample.exe.config
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\EncryptionExample\bin\Debug\EncryptionExample.exe
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\EncryptionExample\bin\Debug\EncryptionExample.pdb
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\EncryptionExample\obj\Debug\EncryptionExample.exe
+C:\Users\cbrown\documents\visual studio 2013\Projects\Testing\EncryptionExample\obj\Debug\EncryptionExample.pdb
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\EncryptionExample\bin\Debug\EntityFramework.dll
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\EncryptionExample\bin\Debug\EntityFramework.Extended.dll
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\EncryptionExample\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\EncryptionExample\bin\Debug\EntityFramework.xml
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\EncryptionExample\bin\Debug\EntityFramework.Extended.xml
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\EncryptionExample\bin\Debug\EntityFramework.SqlServer.xml
