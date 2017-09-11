@@ -1,0 +1,17 @@
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\RabbitMQExample\bin\Debug\RabbitMQExample.exe.config
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\RabbitMQExample\bin\Debug\RabbitMQExample.exe
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\RabbitMQExample\bin\Debug\RabbitMQExample.pdb
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\RabbitMQExample\bin\Debug\RabbitMQ.Client.dll
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\RabbitMQExample\bin\Debug\RabbitMQ.Client.xml
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\RabbitMQExample\obj\Debug\RabbitMQExample.csprojResolveAssemblyReference.cache
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\RabbitMQExample\obj\Debug\RabbitMQExample.exe
+C:\Users\cbrown\Documents\Visual Studio 2013\Projects\Testing\RabbitMQExample\obj\Debug\RabbitMQExample.pdb
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\RabbitMQExample\bin\Debug\RabbitMQExample.exe.config
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\RabbitMQExample\bin\Debug\RabbitMQExample.exe
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\RabbitMQExample\bin\Debug\RabbitMQExample.pdb
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\RabbitMQExample\bin\Debug\RabbitMQ.Client.dll
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\RabbitMQExample\bin\Debug\RabbitMQ.Client.xml
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\RabbitMQExample\obj\Debug\RabbitMQExample.csprojResolveAssemblyReference.cache
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\RabbitMQExample\obj\Debug\RabbitMQExample.exe
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\RabbitMQExample\obj\Debug\RabbitMQExample.pdb
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\RabbitMQExample\bin\Debug\Newtonsoft.Json.dll

@@ -1,0 +1,15 @@
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\bin\Debug\MassTransit3_Example.exe.config
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\bin\Debug\MassTransit3_Example.exe
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\bin\Debug\MassTransit3_Example.pdb
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\bin\Debug\MassTransit.dll
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\bin\Debug\MassTransit.RabbitMqTransport.dll
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\bin\Debug\NewId.dll
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\bin\Debug\Newtonsoft.Json.dll
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\bin\Debug\RabbitMQ.Client.dll
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\bin\Debug\MassTransit.xml
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\bin\Debug\MassTransit.RabbitMqTransport.xml
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\bin\Debug\Newtonsoft.Json.xml
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\bin\Debug\RabbitMQ.Client.xml
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\obj\Debug\MassTransit3_Example.exe
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\obj\Debug\MassTransit3_Example.pdb
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\MassTransit3_Example\obj\Debug\MassTransit3_Example.csprojResolveAssemblyReference.cache

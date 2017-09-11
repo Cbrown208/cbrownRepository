@@ -1,0 +1,6 @@
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\XMLExamples\bin\Debug\XMLExamples.exe.config
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\XMLExamples\bin\Debug\XMLExamples.exe
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\XMLExamples\bin\Debug\XMLExamples.pdb
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\XMLExamples\obj\Debug\XMLExamples.csprojResolveAssemblyReference.cache
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\XMLExamples\obj\Debug\XMLExamples.exe
+C:\Users\cbrown\Documents\Visual Studio 2015\Projects\Testing\XMLExamples\obj\Debug\XMLExamples.pdb
