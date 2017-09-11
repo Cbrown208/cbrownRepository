@@ -37,11 +37,14 @@ namespace IListExample
 
         static void DisplayString(IList<string> list)
         {
-            if (list.Contains("bob")) { Console.WriteLine("2 Exsists"); }
-
+            //if (list.Contains("bob")) { Console.WriteLine("2 Exsists"); }
+            //string fullList = null;
+            string joined = string.Join("|", list);
+            Console.WriteLine(joined);
             Console.WriteLine("Count: {0}", list.Count);
             foreach (string value in list)
             {
+                //string joined = string.Join("|", list);
                 Console.WriteLine(value);
             }
         }

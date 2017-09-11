@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{B566E555-3BB1-4290-84D6-1D9D86B8187A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arrays", "Arrays\Arrays.csproj", "{C68C7B45-7D9A-471B-94F4-CA6B08BA211F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppendStringTest", "AppendStringTest\AppendStringTest.csproj", "{7C56B4F0-13E2-413D-9DCE-09A68295BA82}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryCatchExceptions", "TryCatchExceptions\TryCatchExceptions.csproj", "{1EA89AB9-4989-478A-BA1D-C1B828BAFFCC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IListExample", "IListExample\IListExample.csproj", "{674D06F2-B9A2-4F0F-845D-96A72A30EF2B}"
 EndProject
@@ -55,10 +53,6 @@ Global
 		{7C56B4F0-13E2-413D-9DCE-09A68295BA82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C56B4F0-13E2-413D-9DCE-09A68295BA82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C56B4F0-13E2-413D-9DCE-09A68295BA82}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1EA89AB9-4989-478A-BA1D-C1B828BAFFCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1EA89AB9-4989-478A-BA1D-C1B828BAFFCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1EA89AB9-4989-478A-BA1D-C1B828BAFFCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1EA89AB9-4989-478A-BA1D-C1B828BAFFCC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{674D06F2-B9A2-4F0F-845D-96A72A30EF2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{674D06F2-B9A2-4F0F-845D-96A72A30EF2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{674D06F2-B9A2-4F0F-845D-96A72A30EF2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
