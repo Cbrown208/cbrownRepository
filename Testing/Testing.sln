@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{B566E555-3BB1-4290-84D6-1D9D86B8187A}"
 EndProject
@@ -52,6 +52,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Formaters", "Common.Formaters\Common.Formaters.csproj", "{C65D2EF4-3256-46B9-8C98-7D6F70B684FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperTesting", "DapperTesting\DapperTesting.csproj", "{926CB8E1-AF50-4858-9022-8B860109910C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReader", "ExcelReader\ExcelReader.csproj", "{CC8353FD-ACF9-478F-9F6F-E10E8946B4DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -159,6 +161,10 @@ Global
 		{926CB8E1-AF50-4858-9022-8B860109910C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{926CB8E1-AF50-4858-9022-8B860109910C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{926CB8E1-AF50-4858-9022-8B860109910C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC8353FD-ACF9-478F-9F6F-E10E8946B4DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC8353FD-ACF9-478F-9F6F-E10E8946B4DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC8353FD-ACF9-478F-9F6F-E10E8946B4DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC8353FD-ACF9-478F-9F6F-E10E8946B4DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
