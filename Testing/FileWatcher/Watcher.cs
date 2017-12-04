@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Security.Permissions;
 
@@ -47,7 +43,7 @@ namespace FileWatcher
 
             // Wait for the user to quit the program.
             Console.WriteLine("Press \'q\' to quit the sample.");
-            while (Console.Read() != 'q') ;
+            while (Console.Read() != 'q');
         }
 
         // Define the event handlers.
