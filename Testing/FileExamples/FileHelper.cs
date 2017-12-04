@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace FileExamples
 {
-	public static class Environment
+	public static class FileHelper
 	{
 		public static string GetRootPath()
 		{
