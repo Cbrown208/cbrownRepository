@@ -1,7 +1,6 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
-namespace TestingSite
+namespace DevStartPage
 {
 	public class BundleConfig
 	{

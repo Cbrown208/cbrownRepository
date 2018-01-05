@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace TestingSite.Controllers
+namespace DevStartPage.Controllers
 {
 	public class HomeController : Controller
 	{
