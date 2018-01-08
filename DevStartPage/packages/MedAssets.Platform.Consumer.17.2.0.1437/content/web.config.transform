@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<configuration>
+<!--TODO - Merge into your web.config or delete-->
+  <appSettings>
+	<!--TODO - This shoud be replaced with the appropriate URL -->
+	<add key="MedAssets.ResourceUrl" value="https://platwebdev.medassets.com/platform.dev/" />    
+  </appSettings>
+</configuration>

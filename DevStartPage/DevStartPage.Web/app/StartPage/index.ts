@@ -1,0 +1,1 @@
+﻿export { StartPageComponent } from './startpage.component'

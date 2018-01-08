@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NLog.Elmah</name>
+    </assembly>
+    <members>
+        <member name="T:NLog.Elmah.ElmahTarget">
+            <summary>
+            Write messages to Elmah.
+            </summary>
+        </member>
+        <member name="M:NLog.Elmah.ElmahTarget.#ctor">
+            <summary>
+            Target with default errorlog.
+            </summary>
+        </member>
+        <member name="M:NLog.Elmah.ElmahTarget.#ctor(Elmah.ErrorLog)">
+            <summary>
+            Target with errorLog.
+            </summary>
+            <param name="errorLog"></param>
+        </member>
+        <member name="M:NLog.Elmah.ElmahTarget.Write(NLog.LogEventInfo)">
+            <summary>
+            Write the event.
+            </summary>
+            <param name="logEvent">event to be written.</param>
+        </member>
+        <member name="P:NLog.Elmah.ElmahTarget.LogLevelAsType">
+            <summary>
+            Use <see cref="P:NLog.LogEventInfo.Level"/> as type if <see cref="P:NLog.LogEventInfo.Exception"/> is <c>null</c>.
+            </summary>
+        </member>
+        <member name="P:NLog.Elmah.ElmahTarget.GetCurrentDateTime">
+            <summary>
+            Method for retrieving current date and time. If <c>null</c>, then <see cref="P:NLog.LogEventInfo.TimeStamp"/> will be used.
+            </summary>
+        </member>
+    </members>
+</doc>

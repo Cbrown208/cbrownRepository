@@ -1,0 +1,1 @@
+﻿export { DownloadsComponent } from './downloads.component'
