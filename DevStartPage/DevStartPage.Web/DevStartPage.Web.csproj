@@ -392,6 +392,8 @@
     <Content Include="Nlog.config" />
     <Content Include="readme.sso.aaa.txt" />
     <Content Include="Content\plugins\chartjsplugin.js" />
+    <Content Include="Scripts\lib\js\vendors.min.js" />
+    <Content Include="Scripts\main.app.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -432,7 +434,6 @@
     <Folder Include="Content\fonts\bootstrap\" />
     <Folder Include="Filters\" />
     <Folder Include="Models\" />
-    <Folder Include="Scripts\" />
     <Folder Include="Views\ContactDetails\" />
   </ItemGroup>
   <ItemGroup>
@@ -457,8 +458,11 @@
     <None Include="Project_Readme.html" />
     <Content Include="Readme\Platform.Consumer.ReadMe.docx" />
     <Content Include="Thinktecture.IdentityModel.chm" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\pricing.pubxml" />
     <Content Include="Views\Home\InvalidSession.cshtml" />
+    <Content Include="Scripts\lib\js\Reflect.js.map" />
+    <Content Include="Scripts\lib\js\system-polyfills.js.map" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\app-routing.module.ts" />
