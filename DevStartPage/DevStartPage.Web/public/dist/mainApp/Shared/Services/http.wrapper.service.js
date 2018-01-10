@@ -20,13 +20,13 @@ var HttpWrapperService = /** @class */ (function () {
     HttpWrapperService.prototype.get = function (apiUrl) {
         var _this = this;
         return this.http.get(apiUrl)
-            .map(function (response) { return response.text() ? response.json() : null; })
+            .map(function (response) { return response.json(); })
             .catch(function (error) { return _this.errorHandler.handleError(error); });
     };
-    HttpWrapperService.prototype.post = function (apiUrl, payload) {
+    HttpWrapperService.prototype.post = function (apiUrl, requestObj) {
         var _this = this;
-        return this.http.post(apiUrl, payload)
-            .map(function (response) { return response.text() ? response.json() : null; })
+        return this.http.post(apiUrl, requestObj)
+            .map(function (response) { return response.json(); })
             .catch(function (error) { return _this.errorHandler.handleError(error); });
     };
     HttpWrapperService = __decorate([

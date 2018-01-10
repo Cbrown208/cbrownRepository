@@ -14,7 +14,8 @@ import { TextMaskModule } from 'angular2-text-mask';
 
 import { AppComponent } from './app';
 import { DownloadsComponent } from './Downloads/downloads.component'
-import { StartPageComponent } from './StartPage/startpage.component'
+import { StartPageComponent, StartPageService } from './StartPage/index'
+
 
 import { SharedModule } from './Shared/shared.module';
 import {
@@ -78,8 +79,8 @@ const providers = [SessionManager,
     InitialService,
     ErrorHandlingService,
     HttpWrapperService,
-    MasterDataService,
-
+	MasterDataService,
+	StartPageService
 ];
 
 @NgModule({

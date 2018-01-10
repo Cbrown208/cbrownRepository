@@ -11,13 +11,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var index_1 = require("../Shared/Widgets/index");
+var startpage_service_1 = require("./Services/startpage.service");
 var router_1 = require("@angular/router");
 var StartPageComponent = /** @class */ (function () {
-    function StartPageComponent(injector, spinnerSvc, router) {
+    function StartPageComponent(injector, spinnerSvc, router, startPageService) {
+        var _this = this;
         this.spinnerSvc = spinnerSvc;
         this.router = router;
-        this.navLinks = {};
-        this.shopRequest = {};
+        this.startPageService = startPageService;
+        this.ipAddress = "";
+        this.startPageService.GetIpAddress().subscribe(function (data) {
+            _this.ipAddress = data;
+        });
+        this.currentDate = new Date();
         this.fancySpinnerSVC = injector.get(index_1.FancySpinnerService);
     }
     StartPageComponent.prototype.ngOnInit = function () {
@@ -26,11 +32,13 @@ var StartPageComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'startpage-page',
             templateUrl: './app/StartPage/startpage.component.html',
-            styleUrls: ['../../Content/styles/Site.css']
+            styleUrls: ['../../Content/styles/Site.css'],
+            providers: [startpage_service_1.StartPageService]
         }),
         __metadata("design:paramtypes", [core_1.Injector,
             index_1.FancySpinnerService,
-            router_1.Router])
+            router_1.Router,
+            startpage_service_1.StartPageService])
     ], StartPageComponent);
     return StartPageComponent;
 }());

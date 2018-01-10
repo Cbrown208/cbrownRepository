@@ -1,6 +1,5 @@
 using System.Text;
 using System.Web.Mvc;
-using MedAssets.Web.Mvc.ActionResults;
 using NLog;
 using StructureMap;
 
@@ -8,10 +7,10 @@ namespace DevStartPage.Web.Controllers
 {
     public abstract class JsonNetController : Controller
     {
-        protected readonly ILogger _logger;
+        //protected readonly ILogger _logger;
         public JsonNetController()
         {
-            _logger = ObjectFactory.GetInstance<ILogger>();
+            //_logger = ObjectFactory.GetInstance<ILogger>();
         }
 
         protected override JsonResult Json(object data, string contentType, Encoding contentEncoding, JsonRequestBehavior behavior)
