@@ -2,9 +2,11 @@
 <div align="center">
 	<div class="topnav" style="height: 50px">
 		<div style="padding-left: 40%">
-			<a routerLink="/home">DevStartPage</a>
-			<a routerLink="downloads">Downloads</a>
-			<a routerLink="testing">Testing</a>
+			<ul>
+				<li><a active routerLink="/home" routerLinkActive="active">DevStartPage</a></li>
+				<li><a routerLink="downloads" routerLinkActive="active" >Downloads</a></li>
+				<li><a routerLink="testing" routerLinkActive="active">Testing</a></li>
+			</ul>
 		</div>
 	</div>
 	<fancy-spinner [id]="'wizard'"></fancy-spinner>
