@@ -227,6 +227,7 @@
     <Compile Include="App_Start\IoC.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DownloadsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JsonNetController.cs" />
     <Compile Include="Controllers\JsonNetResult.cs" />
@@ -241,6 +242,8 @@
   <ItemGroup>
     <Content Include="app\app.html" />
     <Content Include="app\Downloads\downloads.component.html" />
+    <Content Include="app\Downloads\Files\AgentRansack_867.exe" />
+    <Content Include="app\Downloads\Files\cpu-z_1.77-en.exe" />
     <Content Include="app\Shared\Widgets\DatePicker\datepicker.component.html" />
     <Content Include="app\Shared\Widgets\FancySpinner\fancy.spinner.html" />
     <Content Include="app\Shared\Widgets\header\header.html" />
@@ -401,6 +404,7 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\styles\mixins.scss" />
+    <Content Include="app\Downloads\Files\KatCompDrivers.zip" />
     <None Include="Project_Readme.html" />
     <Content Include="Thinktecture.IdentityModel.chm" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
@@ -415,6 +419,7 @@
     <TypeScriptCompile Include="app\boot.ts" />
     <TypeScriptCompile Include="app\Downloads\downloads.component.ts" />
     <TypeScriptCompile Include="app\Downloads\index.ts" />
+    <TypeScriptCompile Include="app\Downloads\Services\downloads.service.ts" />
     <TypeScriptCompile Include="app\environment.ts" />
     <TypeScriptCompile Include="app\main.ts" />
     <TypeScriptCompile Include="app\Shared\Constants\app.constants.ts" />
@@ -422,6 +427,7 @@
     <TypeScriptCompile Include="app\Shared\Enums\http.status.code.ts" />
     <TypeScriptCompile Include="app\Shared\Enums\index.ts" />
     <TypeScriptCompile Include="app\Shared\Models\fancy.spinner.ts" />
+    <TypeScriptCompile Include="app\Shared\Models\filedetails.model.ts" />
     <TypeScriptCompile Include="app\Shared\Models\index.ts" />
     <TypeScriptCompile Include="app\Shared\Models\state.ts" />
     <TypeScriptCompile Include="app\Shared\Services\display.settings.ts" />

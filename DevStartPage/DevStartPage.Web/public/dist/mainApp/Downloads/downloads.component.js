@@ -10,26 +10,68 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var angular_2_data_table_1 = require("angular-2-data-table");
 var index_1 = require("../Shared/Widgets/index");
+var downloads_service_1 = require("./Services/downloads.service");
 var router_1 = require("@angular/router");
 var DownloadsComponent = /** @class */ (function () {
-    function DownloadsComponent(injector, spinnerSvc, router) {
+    function DownloadsComponent(injector, spinnerSvc, router, downloadSvc) {
+        var _this = this;
         this.spinnerSvc = spinnerSvc;
         this.router = router;
+        this.downloadSvc = downloadSvc;
         this.navLinks = {};
         this.shopRequest = {};
-        this.fancySpinnerSVC = injector.get(index_1.FancySpinnerService);
+        this.filesList = [];
+        this.itemCount = 0;
+        this.itemResource = new angular_2_data_table_1.DataTableResource([]);
+        this.downloadSvc.GetFileDownloadList().subscribe(function (data) {
+            _this.filesList = data;
+            _this.initGrid(_this.filesList);
+        });
+        this.fancySpinnerSvc = injector.get(index_1.FancySpinnerService);
     }
-    DownloadsComponent.prototype.ngOnInit = function () {
+    DownloadsComponent.prototype.ngOnInit = function () { };
+    DownloadsComponent.prototype.initGrid = function (items) {
+        this.itemCount = items.length;
+        this.itemResource = new angular_2_data_table_1.DataTableResource(items);
+        this.dtDownloadsTable._triggerReload();
     };
+    DownloadsComponent.prototype.refreshTable = function () {
+        var _this = this;
+        this.downloadSvc.GetFileDownloadList().subscribe(function (data) {
+            _this.filesList = data;
+            _this.initGrid(_this.filesList);
+        });
+    };
+    DownloadsComponent.prototype.reloadItems = function (params) {
+        var _this = this;
+        this.itemResource.query(params).then(function (items) { return _this.filesList = items; });
+    };
+    DownloadsComponent.prototype.rowClick = function (rowEvent) {
+        console.log('Clicked: ' + rowEvent.row.item.Name);
+    };
+    DownloadsComponent.prototype.rowDoubleClick = function (rowEvent) {
+        window.open(rowEvent.row.item.download);
+        alert('Double clicked: ' + rowEvent.row.item.Name);
+    };
+    DownloadsComponent.prototype.downloadFile = function (item) {
+        window.open("app/Downloads/Files/" + item);
+    };
+    __decorate([
+        core_1.ViewChild('dtDownloadsTable'),
+        __metadata("design:type", angular_2_data_table_1.DataTable)
+    ], DownloadsComponent.prototype, "dtDownloadsTable", void 0);
     DownloadsComponent = __decorate([
         core_1.Component({
             selector: 'downloads-page',
-            templateUrl: './app/Downloads/downloads.component.html'
+            templateUrl: './app/Downloads/downloads.component.html',
+            providers: [downloads_service_1.DownloadsService]
         }),
         __metadata("design:paramtypes", [core_1.Injector,
             index_1.FancySpinnerService,
-            router_1.Router])
+            router_1.Router,
+            downloads_service_1.DownloadsService])
     ], DownloadsComponent);
     return DownloadsComponent;
 }());

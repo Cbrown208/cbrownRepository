@@ -372,7 +372,7 @@ gulp.task('default', function (callback) {
 gulp.task('iisexpress', function () {
     gulp.src('')
         .pipe($.shell([
-            '"C:\\Program Files\\IIS Express\\iisexpress.exe" /config:..\\.vs\\config\\applicationhost.config /site:PAS.Pricing.Web /systray:false'
+            '"C:\\Program Files\\IIS Express\\iisexpress.exe" /config:..\\.vs\\config\\applicationhost.config /site:DevStartPage /systray:false'
         ]));
 });
 

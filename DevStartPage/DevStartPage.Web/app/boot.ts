@@ -13,8 +13,8 @@ import { ToastyModule } from 'ng2-toasty';
 import { TextMaskModule } from 'angular2-text-mask';
 
 import { AppComponent } from './app';
-import { DownloadsComponent } from './Downloads/downloads.component'
-import { StartPageComponent, StartPageService } from './StartPage/index'
+import { DownloadsComponent, DownloadsService } from './Downloads/index';
+import { StartPageComponent, StartPageService } from './StartPage/index';
 
 
 import { SharedModule } from './Shared/shared.module';
@@ -80,7 +80,8 @@ const providers = [SessionManager,
     ErrorHandlingService,
     HttpWrapperService,
 	MasterDataService,
-	StartPageService
+	StartPageService,
+	DownloadsService
 ];
 
 @NgModule({

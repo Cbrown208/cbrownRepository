@@ -20,15 +20,15 @@ var ng2_charts_1 = require("ng2-charts/ng2-charts");
 var ng2_toasty_1 = require("ng2-toasty");
 var angular2_text_mask_1 = require("angular2-text-mask");
 var app_1 = require("./app");
-var downloads_component_1 = require("./Downloads/downloads.component");
-var index_1 = require("./StartPage/index");
+var index_1 = require("./Downloads/index");
+var index_2 = require("./StartPage/index");
 var shared_module_1 = require("./Shared/shared.module");
-var index_2 = require("./Shared/Services/index");
+var index_3 = require("./Shared/Services/index");
 var app_routing_module_1 = require("./app-routing.module");
 var angular_2_data_table_1 = require("angular-2-data-table");
 var ng2_dnd_1 = require("ng2-dnd");
 var ngx_datatable_1 = require("@swimlane/ngx-datatable");
-var index_3 = require("./Shared/Widgets/index");
+var index_4 = require("./Shared/Widgets/index");
 var test_component_1 = require("./Test/test.component");
 var datatable_basicauto_1 = require("./Test/Grid/NGX/datatable.basicauto");
 var datagrid_component_1 = require("./Test/Grid/datagrid.component");
@@ -36,14 +36,14 @@ var simple_dnd_component_1 = require("./Test/DragNDrop/simple-dnd.component");
 var datepicker_component_1 = require("./Shared/Widgets/DatePicker/datepicker.component");
 var declarations = [
     app_1.AppComponent,
-    index_1.StartPageComponent,
-    downloads_component_1.DownloadsComponent,
+    index_2.StartPageComponent,
+    index_1.DownloadsComponent,
     test_component_1.TestComponent,
     datatable_basicauto_1.BasicAutoComponent,
     datagrid_component_1.DataGridComponent,
     simple_dnd_component_1.SimpleDndComponent,
     datepicker_component_1.DatePickerComponent,
-    index_3.FancySpinnerComponent
+    index_4.FancySpinnerComponent
 ];
 var imports = [platform_browser_1.BrowserModule,
     forms_1.FormsModule,
@@ -64,14 +64,15 @@ var imports = [platform_browser_1.BrowserModule,
     ng2_toasty_1.ToastyModule.forRoot(),
     angular2_text_mask_1.TextMaskModule
 ];
-var providers = [index_2.SessionManager,
-    index_3.FancySpinnerService,
-    index_2.Toast,
-    index_2.InitialService,
-    index_2.ErrorHandlingService,
-    index_2.HttpWrapperService,
-    index_2.MasterDataService,
-    index_1.StartPageService
+var providers = [index_3.SessionManager,
+    index_4.FancySpinnerService,
+    index_3.Toast,
+    index_3.InitialService,
+    index_3.ErrorHandlingService,
+    index_3.HttpWrapperService,
+    index_3.MasterDataService,
+    index_2.StartPageService,
+    index_1.DownloadsService
 ];
 var AppModule = /** @class */ (function () {
     function AppModule() {
