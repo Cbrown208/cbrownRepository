@@ -1,51 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IListExample
 {
     class Program
     {
-        static void Main(string[] args)
+	    private static readonly ExampleData ExData = new ExampleData();
+		static void Main()
         {
-            int[] array = new int[3];
-            array[0] = 1;
-            array[1] = 2;
-            array[2] = 3;
-            //DisplayInt(array);
+			var functions = new ListFunctions();
 
-            List<string> list = new List<string>();
-            list.Add("Date");
-            list.Add("Bob");
-            list.Add("Last");
-            DisplayString(list);
-            Console.ReadLine();
+			var starkList1 = ExData.GetCustomerData();
+	        var starkList2 = ExData.GetCustomerData2();
+
+	        var list1Vslist2 = functions.GetValuesInFirstListNotInSecondList(starkList1, starkList2);
+			var list1Andlist2 = functions.GetSimilaritiesBetween(starkList1, starkList2);
+
+			Console.WriteLine("Values In List 1 that are NOT in List 2");
+	        DisplayList(list1Vslist2);
+
+			Console.WriteLine(Environment.NewLine+ "Values In List 1 AND List 2");
+			DisplayList(list1Andlist2);
+
+			Console.ReadLine();
         }
 
-        static void DisplayInt(IList<int> list)
+        static void DisplayList(List<Customer> list)
         {
-            if (list.Contains(2)) { Console.WriteLine("2 Exsists");}
-            
-            Console.WriteLine("Count: {0}", list.Count);
-            foreach (int value in list)
+            foreach (var value in list)
             {
-                Console.WriteLine(value);
-            }
-        }
+	            //var outputString = string.Format("AccountNumber: {0} FirstName: {1}, LastName: {2}", value.AccountNumber, value.FirstName, value.LastName);
+				var outputString =
+		            $"AccountNumber: {value.AccountNumber} FirstName: {value.FirstName}, LastName: {value.LastName}";
 
-        static void DisplayString(IList<string> list)
-        {
-            //if (list.Contains("bob")) { Console.WriteLine("2 Exsists"); }
-            //string fullList = null;
-            string joined = string.Join("|", list);
-            Console.WriteLine(joined);
-            Console.WriteLine("Count: {0}", list.Count);
-            foreach (string value in list)
-            {
-                //string joined = string.Join("|", list);
-                Console.WriteLine(value);
+				Console.WriteLine(outputString);
             }
         }
     }

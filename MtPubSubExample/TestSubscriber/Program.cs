@@ -13,7 +13,6 @@ namespace TestSubscriber
 		    var host = x.Host(new Uri("rabbitmq://localhost/"), h => { h.Username("PAS"); h.Password("PAS"); });
 
 		    x.ReceiveEndpoint(host, "MtPubSubExample_TestSubscriber", e => e.Consumer<SomethingHappenedConsumer>());
-		    x.ReceiveEndpoint(host, "MtPubSubExample_TestSubscriber2", e => e.Consumer<SomethingHappenedConsumer>());
 		});
 	    var busHandle = bus.Start();
 

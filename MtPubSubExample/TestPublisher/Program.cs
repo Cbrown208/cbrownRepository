@@ -17,7 +17,6 @@ namespace TestPublisher
 			int count = 0;
 			while (text != "quit")
 			{
-				
 				var message = new SomethingHappenedMessage() { What = count.ToString(), When = DateTime.Now };
 				Console.WriteLine("Publishing Message Number "+message.What +" At "+ message.When);
 				 bus.Publish<SomethingHappened>(message);

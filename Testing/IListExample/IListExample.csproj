@@ -74,7 +74,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FindInList.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="ExampleData.cs" />
+    <Compile Include="ListFunctions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
