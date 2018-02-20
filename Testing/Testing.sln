@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReader", "ExcelReader\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileExamples", "FileExamples\FileExamples.csproj", "{5787F651-A281-403D-ACA8-9F5081829B95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleOutputColors", "ConsoleOutputColors\ConsoleOutputColors.csproj", "{5B5DC4AC-E38F-4266-8860-A04338EB75B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,10 @@ Global
 		{5787F651-A281-403D-ACA8-9F5081829B95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5787F651-A281-403D-ACA8-9F5081829B95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5787F651-A281-403D-ACA8-9F5081829B95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B5DC4AC-E38F-4266-8860-A04338EB75B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B5DC4AC-E38F-4266-8860-A04338EB75B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B5DC4AC-E38F-4266-8860-A04338EB75B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B5DC4AC-E38F-4266-8860-A04338EB75B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
