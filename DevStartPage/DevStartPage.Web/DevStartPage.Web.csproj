@@ -244,6 +244,7 @@
     <Content Include="app\Downloads\downloads.component.html" />
     <Content Include="app\Downloads\Files\AgentRansack_867.exe" />
     <Content Include="app\Downloads\Files\cpu-z_1.77-en.exe" />
+    <Content Include="app\Downloads\Files\TeamViewerQS.exe" />
     <Content Include="app\Shared\Widgets\DatePicker\datepicker.component.html" />
     <Content Include="app\Shared\Widgets\FancySpinner\fancy.spinner.html" />
     <Content Include="app\Shared\Widgets\header\header.html" />
