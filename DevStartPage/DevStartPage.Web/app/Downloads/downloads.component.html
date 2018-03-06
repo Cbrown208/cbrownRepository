@@ -27,7 +27,7 @@
 								<data-table-column [property]="'Name'" [header]="'Download'" [visible]="true" [resizable]="true">
 									<template #dataTableCell let-item="item">
 										<span>
-											<button (click)="downloadFile(item)" type="button" class="btn btn-info">
+											<button (click)="downloadFile(item.Name)" type="button" class="btn btn-info">
 												<span class="glyphicon glyphicon-download"></span> Download
 											</button>
 										</span>

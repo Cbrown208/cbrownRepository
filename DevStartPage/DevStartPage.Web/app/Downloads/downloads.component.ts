@@ -60,6 +60,6 @@ export class DownloadsComponent implements OnInit {
 	}
 
 	downloadFile(item) {
-		window.open("app/Downloads/Files/" + item);
+		window.open("app/Downloads/Files/" + item.row.item.Name);
 	}
 }

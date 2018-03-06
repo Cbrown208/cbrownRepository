@@ -7,6 +7,7 @@ namespace DevStartPage.Web.Controllers
 	public class DownloadsController : JsonNetController
 	{
 		private readonly DownloadsManager _manager = new DownloadsManager();
+
 		[OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
 		public JsonResult GetFileList()
 		{

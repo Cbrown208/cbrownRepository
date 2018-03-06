@@ -56,7 +56,7 @@ var DownloadsComponent = /** @class */ (function () {
         alert('Double clicked: ' + rowEvent.row.item.Name);
     };
     DownloadsComponent.prototype.downloadFile = function (item) {
-        window.open("app/Downloads/Files/" + item);
+        window.open("app/Downloads/Files/" + item.row.item.Name);
     };
     __decorate([
         core_1.ViewChild('dtDownloadsTable'),
