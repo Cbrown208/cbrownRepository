@@ -1,5 +1,6 @@
 ﻿import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { FancySpinnerService } from './Shared/Widgets/index';
+import { CountdownTimerModule } from 'ngx-countdown-timer';
 
 @Component({
     selector: 'my-app',

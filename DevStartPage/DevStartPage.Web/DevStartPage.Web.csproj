@@ -254,6 +254,7 @@
     <Content Include="app\Shared\Widgets\Spinner\spinner.css" />
     <Content Include="app\Shared\Widgets\Spinner\spinner.html" />
     <Content Include="app\StartPage\startpage.component.html" />
+    <Content Include="app\Test\CountDown\countdown.html" />
     <Content Include="app\Test\DatePicker\datepicker.component.html" />
     <Content Include="app\Test\Grid\NGX\basic-auto-table.html" />
     <Content Include="app\Test\Grid\data-table-demo1.css" />
@@ -458,6 +459,8 @@
     <TypeScriptCompile Include="app\StartPage\index.ts" />
     <TypeScriptCompile Include="app\StartPage\Services\startpage.service.ts" />
     <TypeScriptCompile Include="app\StartPage\startpage.component.ts" />
+    <TypeScriptCompile Include="app\Test\CountDown\countdown.component.ts" />
+    <TypeScriptCompile Include="app\Test\CountDown\countdownfancy.component.ts" />
     <TypeScriptCompile Include="app\Test\DatePicker\datepicker.component.ts" />
     <TypeScriptCompile Include="app\Test\Grid\data-table-demo1-data.ts" />
     <TypeScriptCompile Include="app\Test\Grid\datagrid.component.ts" />

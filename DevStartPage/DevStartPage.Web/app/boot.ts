@@ -33,6 +33,11 @@ import { DataTableModule } from 'angular-2-data-table';
 import { DndModule } from 'ng2-dnd';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
+import { CountdownTimer } from './Test/CountDown/countdown.component';
+//import { CountdownTimerModule } from 'ngx-countdown-timer';
+//import { CountDown } from "ng2-date-countdown";
+import { CountDown } from "./Test/CountDown/countdownfancy.component";
+
 import { FancySpinnerComponent, FancySpinnerService } from './Shared/Widgets/index';
 import { TestComponent } from './Test/test.component';
 import { BasicAutoComponent } from './Test/Grid/NGX/datatable.basicauto';
@@ -50,7 +55,9 @@ const declarations = [
     DataGridComponent,
     SimpleDndComponent,
     DatePickerComponent,
-    FancySpinnerComponent
+	FancySpinnerComponent,
+	CountdownTimer,
+	CountDown
 ];
 
 const imports = [BrowserModule,
@@ -70,7 +77,8 @@ const imports = [BrowserModule,
     NgxMyDatePickerModule,
     ChartsModule,
     ToastyModule.forRoot(),
-    TextMaskModule
+	TextMaskModule,
+	//CountdownTimerModule.forRoot()
 ];
 
 const providers = [SessionManager,

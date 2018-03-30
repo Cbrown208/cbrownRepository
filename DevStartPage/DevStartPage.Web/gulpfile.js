@@ -173,7 +173,8 @@ gulp.task('compile:sass', function () {
 var cssComponentPaths = [
     'node_modules/ng2-slim-loading-bar/bundles/style.css',
     'node_modules/ng2-toasty/bundles/style-bootstrap.css',
-    'app/Shared/Widgets/Spinner/spinner.css'
+	'app/Shared/Widgets/Spinner/spinner.css',
+	'Content/styles/main.css'
 ];
 
 var cssGlobalPaths = [
@@ -322,7 +323,8 @@ gulp.task('copy1', function (callback) {
     runSequence('copy:libs', 'copy:scripts', callback);
 });
 gulp.task('copy', function (callback) {
-    runSequence('copy:libs', callback);
+	//runSequence('copy:libs', callback); //TODO changed here 
+	runSequence('copy:libs', 'copy:scripts', callback);
 });
 gulp.task('scripts1', function (callback) {
     runSequence(['lint:ts', 'clean:dist:js'], 'compile:ts', 'bundle:js', 'minify:js', callback);
@@ -388,7 +390,7 @@ var src = '',
     mainApp = dist + 'mainApp',
     tsFiles = app + '**/*.ts',
     htmlFiles = app + '**/*.html',
-    sassFile = styles + 'main.scss',
+    //sassFile = styles + 'main.scss',
     cssFiles = styles + '**/*.css';
 
 var config = {
@@ -403,18 +405,18 @@ var config = {
     mainApp: mainApp,
     tsFiles: tsFiles,
     htmlFiles: htmlFiles,
-    sassFile: sassFile,
+    //sassFile: sassFile,
     cssFiles: cssFiles
 };
 
 var bsConfig = {
     port: 3000,
     proxy: {
-        target: "http://localhost:60470/",
+		target: "http://localhost:28812/",
         middleware: function(req, res, next){
-            if(req.url == '/') {
-                req.url = req.url + "?clientId=3503&facId=5318";
-            }        
+            //if(req.url == '/') {
+            //    req.url = req.url + "?clientId=3503&facId=5318";
+            //}        
             next();
         }
     }, // "http://localhost:57909?clientId=52060&facId=2566",
@@ -458,20 +460,20 @@ gulp.task('watch-css', function () {
     gulp.watch(config.cssFiles);
 });
 
-gulp.task('sass', function () {
-    return gulp.src(config.sassFile)
-        .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest(config.styles));
-});
+//gulp.task('sass', function () {
+//    return gulp.src(config.sassFile)
+//        .pipe(sass().on('error', sass.logError))
+//        .pipe(gulp.dest(config.styles));
+//});
 
-gulp.task('watch-sass', function () {
-    var location = config.styles + '*.scss';
-    gulp.watch(location, ['sass']);
-});
+//gulp.task('watch-sass', function () {
+//    var location = config.styles + '*.scss';
+//    gulp.watch(location, ['sass']);
+//});
 
 gulp.task('serve-dev', function () {
-    runSequence(['sass', 'tsc-app'],
-                ['watch-sass','watch-ts', 'watch-html', 'watch-css'], function () {
+    runSequence(['tsc-app'],
+		['watch-ts', 'watch-html', 'watch-css'], function () {
         startBrowsersync(bsConfig);
     });
 });
