@@ -32,9 +32,11 @@ bld/
 *.map
 # SVN artifacts
 .svn/
+*.jfm
 
 /Testing/packages/
-/src/PAS.AdminCenter.Web/Content/generated
+/DevStartPage/DevStartPage.Web/public
+/src/DevStartPage/Content/generated
 
 
 _logs
