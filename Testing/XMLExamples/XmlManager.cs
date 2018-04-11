@@ -21,35 +21,48 @@ namespace XMLExamples
 
 		public string XmlSerialize<T>(T sourceValue) where T : class
 		{
-			// If source is empty, throw Exception
 			if (sourceValue == null)
 				throw new NullReferenceException("sourceValue is required");
 
-			// Define encoding
 			var encoding = Encoding.ASCII;
-
-			// Declare the resultant variable
 			string targetValue;
 
-			// Using MemoryStream for In-Process conversion
 			using (var memoryStream = new MemoryStream())
 			{
-				// Declare Stream with required Encoding
 				using (var streamWriter = new StreamWriter(memoryStream, encoding))
 				{
-					// Declare Xml Serializer with source value Type (serializing type)
 					var xmlSerializer = new XmlSerializer(sourceValue.GetType());
-
-					// Perform Serialization of the source value and write to Stream
 					xmlSerializer.Serialize(streamWriter, sourceValue);
-
-					// Grab the serialized string
 					targetValue = encoding.GetString(memoryStream.ToArray());
 				}
 			}
-
-			// Return the resultant value;
 			return targetValue;
+		}
+
+		public string SerializeToString<T>(T value) where T : class
+		{
+			string message;
+			var emptyNamepsaces = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+			var serializer = new XmlSerializer(value.GetType());
+			var settings = new XmlWriterSettings();
+			settings.Indent = true;
+			settings.OmitXmlDeclaration = true;
+
+			using (var stream = new StringWriter())
+			using (var writer = XmlWriter.Create(stream, settings))
+			{
+				serializer.Serialize(writer, value, emptyNamepsaces);
+				message = stream.ToString();
+			}
+			//message = message.Replace("\r\n", string.Empty);
+			message = message.Replace("<AdtMessage>",
+				"<?xml version=\"1.0\" encoding=\"utf-8\"?><ADTMessage xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
+			message = message.Replace("</AdtMessage>", "</ADTMessage>");
+			message = message.Replace("<Ssn>", "<SSN>");
+			message = message.Replace("</Ssn>", "</SSN>");
+			message = message.Replace("<Mrn>", "<MRN>");
+			message = message.Replace("</Mrn>", "</MRN>");
+			return message;
 		}
 
 		public T XmlDeserialize<T>(string sourceValue) where T : class
