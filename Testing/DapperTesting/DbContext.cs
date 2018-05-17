@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Xml;
 using Dapper;
 using DapperTesting.Models;
 
@@ -13,10 +14,39 @@ namespace DapperTesting
 		private readonly IDbConnection _db;
 		private readonly QueryBuilder _queryBuilder;
 
-		public DbContext()
+		public DbContext(string connectionString)
 		{
-			_db = new SqlConnection(@"Server=.;Database=CommandCenter.Local;Trusted_Connection=true;");
+			_db = new SqlConnection(connectionString);
 			_queryBuilder = new QueryBuilder();
+		}
+
+		public string ExecuteStoredProcedure()
+		{
+			using (IDbConnection dbConnection = _db)
+			{
+				dbConnection.Open();
+				//var commandText = "apiWorklistInsertAccount @accountNumber, @facilityId";
+				//SqlParameter[] parameters = new[] {
+				//	new SqlParameter("@accountNumber", accountNumber),
+				//	new SqlParameter("@facilityId", facilityId)
+				//};
+				//dbConnection.Execute()
+				XmlDocument myConfig = new XmlDocument();
+				//myConfig.AppendChild("Testing.xml");
+
+				var results = dbConnection.ExecuteScalar(@"EXEC [dbo].[apiCfgClientPayorGetXmlByPayorMaster]
+				@ClientId = 52060,
+				@PayorMasterId = 10104,
+				@IsActive = true").ToString();
+				XmlDocument doc = new XmlDocument();
+				//doc.DocumentElement. = "<root>"+results+"</root>";
+				doc.LoadXml("<root>" + results + "</root>");
+				XmlElement root = doc.DocumentElement;
+
+				var ending = doc;
+
+			}
+			return "true";
 		}
 
 		public void AddXmlMapping(List<Hl7XmlMappings> mappingList, string tableName)

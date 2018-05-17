@@ -1,0 +1,92 @@
+﻿@model MvcExercise.Core.Models.Contact
+<head>
+	<link href=' http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<script type="text/javascript" src="../../Scripts/jquery-3.3.1.min.js"></script>
+	<script language="javascript" type="text/javascript">
+
+		$(document).ready(function () {
+			$('#contactUsForm').submit(function () {
+				var recaptcha = $("#g-recaptcha-response").val();
+				if (recaptcha === "") {
+					event.preventDefault();
+					alert("Please check the recaptcha");
+				}
+			});
+		});
+
+	</script>
+</head>
+<div class="topnav">
+	<a class="active">Mvc Excercise</a>
+</div>
+<div id="main">
+	<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+
+	<div id="mySidenav" class="sidenav">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()"></a>
+		<a href="#">About</a>
+		<a href="#">Services</a>
+		<a href="#">Clients</a>
+		<a href="#" class="sideNavActive">Contact</a>
+	</div>
+</div>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+@using (Html.BeginForm("AddContact", "Home", FormMethod.Post, new { id = "contactUsForm" }))
+{
+	<div class="container contact-Form">
+		<h2>Contact Us</h2>
+		<div class="row form-Padding">
+			<div class="col-xs-6">
+				<label class="required ">First Name</label>
+				@Html.TextBoxFor(m => m.FirstName, new { id = "firstName", placeholder = "Your first name ", type = "text", required = "required", maxlength = "40", autofocus = "autofocus", tabindex = "1" })
+			</div>
+			<div class="col-xs-6">
+				<label class="required">Last Name</label>
+				@Html.TextBoxFor(m => m.LastName, new { id = "lastName", placeholder = "Your last name", type = "text", required = "required", maxlength = "40", tabindex = "2" })
+			</div>
+		</div>
+		<div class="row form-Padding">
+			<div class="col-xs-6">
+				<label class="required">Email Address</label>
+			@Html.TextBoxFor(m => m.EmailAddress, new {id = "email", placeholder = "Your email address", type = "email", required = "required", maxlength = "80", tabindex = "3"})
+			</div>
+		</div>
+		<div class="row form-Padding">
+			<div class="col-xs-6">
+				<label>Phone Number</label>
+				@Html.TextBoxFor(m => m.Telephone, new { id = "phone", placeholder = "Your phone number", maxlength = "16", tabindex = "4" })
+			</div>
+		</div>
+		<div class="row form-Padding">
+			<div class="col-xs-6">
+				<label>Best Contact Time</label>
+				@Html.TextBoxFor(m => m.BestTimeToCall, new
+				{
+					id = "contactTime",
+					type = "time",
+					step = "900",
+					min = "09:00",
+					max = "18:00",
+					tabindex = "5"
+				})
+			</div>
+		</div>
+
+		<div class="g-recaptcha form-Padding" data-sitekey="6LfEfkIUAAAAAPEaZqgqF3L5JPg5J3sPnb4DqrPV"></div>
+
+		<button class="submitButton" name="submitIt" type="submit" id="submitContact">Submit</button>
+	</div>
+}
+
+<script>
+	function openNav() {
+		document.getElementById("mySidenav").style.width = "250px";
+		document.getElementById("main").style.marginLeft = "250px";
+	}
+
+	function closeNav() {
+		document.getElementById("mySidenav").style.width = "0";
+		document.getElementById("main").style.marginLeft = "0";
+	}
+</script>

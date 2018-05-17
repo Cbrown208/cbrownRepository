@@ -1,0 +1,85 @@
+﻿body {
+	font-family: "Lato", sans-serif;
+}
+
+.main {
+	padding-left: 200px;
+}
+
+.topnav {
+	overflow: hidden;
+	background-color: #333;
+	padding-left: 200px;
+}
+
+	.topnav a {
+		float: left;
+		color: #f2f2f2;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+		font-size: 25px;
+	}
+
+.sidenav {
+	height: 100%;
+	width: 200px;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #111;
+	overflow-x: hidden;
+	padding-top: 70px;
+}
+
+	.sidenav a {
+		padding: 8px 8px 8px 32px;
+		text-decoration: none;
+		font-size: 25px;
+		color: #818181;
+		display: block;
+		transition: 0.3s;
+	}
+
+		.sidenav a:hover {
+			color: #f1f1f1;
+		}
+
+	.sidenav .sideNavActive {
+		color: #f1f1f1;
+	}
+
+.sideNavActive {
+	color: #f1f1f1;
+}
+
+@media screen and (max-height: 450px) {
+	.sidenav {
+		padding-top: 15px;
+	}
+
+		.sidenav a {
+			font-size: 18px;
+		}
+}
+
+
+.required:before {
+	content: "*";
+	color: red
+}
+
+.contact-Form {
+	max-width: 450px;
+	background: #FAFAFA;
+	padding: 30px;
+	margin: 50px auto;
+	box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+	border-radius: 10px;
+	border: 6px solid #305A72;
+}
+
+.form-Padding {
+	padding-bottom: 15px;
+}
