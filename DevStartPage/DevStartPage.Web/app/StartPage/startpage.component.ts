@@ -22,7 +22,7 @@ export class StartPageComponent implements OnInit {
 		this.startPageService.GetIpAddress().subscribe((data) => {
 			this.ipAddress = data;
 		});
-		this.currentDate = new Date();
+		setInterval(() => { this.currentDate = new Date(); }, 1);
 		this.fancySpinnerSVC = injector.get(FancySpinnerService);
 	}
 
