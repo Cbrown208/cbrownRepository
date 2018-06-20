@@ -34,11 +34,15 @@ namespace LoadSimulator.DataAccess
 			}
 		}
 
-		public List<WorklistSyncOne> GetAccountFacilityList()
+		public List<WorklistSyncOne> GetAccountFacilityList(int messageCount)
 		{
+			if (messageCount == 0)
+			{
+				messageCount = 100;
+			}
 			using (IDbConnection dbConnection = _db)
 			{
-				var sQuery = "SELECT TOP(100) * FROM Account with (nolock) ORDER BY CreatedOn desc";
+				var sQuery = string.Format("SELECT TOP({0}) * FROM Account with (nolock) ORDER BY CreatedOn desc", messageCount);
 				dbConnection.Open();
 				var result = dbConnection.Query(sQuery);
 				var accountList = new List<WorklistSyncOne>();

@@ -32,8 +32,9 @@ namespace LoadSimulator
 			{
 				var temp = _pccRepository.GetById(2);
 				Console.WriteLine(temp);
+				var messageCount = 0;
 
-				var syncOneAccountList = _amsRepository.GetAccountFacilityList();
+				var syncOneAccountList = _amsRepository.GetAccountFacilityList(messageCount);
 				_busControl.StartAsync();
 				var testMsg = new WorklistSyncOne(3503, new Account { AccountNumber = "1234", FacilityId = new Guid() });
 

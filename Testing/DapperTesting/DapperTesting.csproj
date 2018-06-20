@@ -49,6 +49,7 @@
     <Compile Include="DbContext.cs" />
     <Compile Include="Models\HealthChecks.cs" />
     <Compile Include="Models\Hl7XmlMappings.cs" />
+    <Compile Include="Models\TableInfoSchema.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryBuilder.cs" />

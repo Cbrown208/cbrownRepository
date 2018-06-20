@@ -1,0 +1,38 @@
+﻿//Create Database SampleDBTutorials
+CREATE DATABASE IF NOT EXISTS TvShowDb;
+
+//Create Table OlympicAthletes
+CREATE TABLE IF NOT EXISTS TvShowDb.dbo.Shows
+(
+        //Define schema of table
+        ShowId         int, 
+        ShowName       string, 
+        Season         int, 
+        EpisodeNumber  int, 
+        EpisodeTitle   string, 
+		Genre          string, 
+		Watched        bool, 
+    INDEX ShowIdx1 //Name of index
+    CLUSTERED (ShowId ASC) //Column to cluster by
+    DISTRIBUTED BY HASH (ShowName) //Column to partition by
+);
+
+//@searchlog = 
+//    EXTRACT UserId          int, 
+//            Start           DateTime, 
+//            Region          string, 
+//            Query           string, 
+//            Duration        int, 
+//            Urls            string, 
+//            ClickedUrls     string
+//    FROM "/SearchLog.tsv"
+//    USING Extractors.Tsv();
+//
+//@output =
+//    SELECT *
+//    FROM @searchlog
+//         //	WHERE UserId == 399266;
+//         ;
+//OUTPUT @output 
+//    TO "/SearchLog_output.csv"
+//    USING Outputters.Csv();

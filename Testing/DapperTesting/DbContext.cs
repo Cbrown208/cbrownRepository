@@ -20,6 +20,33 @@ namespace DapperTesting
 			_queryBuilder = new QueryBuilder();
 		}
 
+		public IEnumerable<TableInfoSchema> GetListofTableNames()
+		{
+			using (IDbConnection dbConnection = _db)
+			{
+				dbConnection.Open();
+				var results = dbConnection.Query<TableInfoSchema>(@"SELECT * FROM Information_Schema.Tables where Table_Name not like '%Staging%' AND TABLE_NAME Not Like '%_Ref%' ORDER BY Table_Name");
+				return results;
+			}
+		}
+
+		public string BuildQueryCheckStatementForSc(List<TableInfoSchema> tableList)
+		{
+			var query = "";
+
+			var columns = new List<string> {"TableName", "ColumnName", "ColumnType", "GetEntireTable"};
+
+			foreach (var tValue in tableList)
+			{
+				var queryCheck = _queryBuilder.BuildCheckStatement("ChangeTrackingVersion", "TableName", tValue.TABLE_NAME);
+				var insertQuery = _queryBuilder.BuildInsertQuery("ChangeTrackingVersion", columns);
+				var valuesQuery = string.Format("('{0}','{1}','{2}',0)", tValue.TABLE_NAME, "ModifiedDate", "DateTime") + Environment.NewLine;
+				query = query + queryCheck + insertQuery + valuesQuery + _queryBuilder.BuildEndStatement();
+			}
+
+			return query;
+		}
+
 		public string ExecuteStoredProcedure()
 		{
 			using (IDbConnection dbConnection = _db)

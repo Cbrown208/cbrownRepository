@@ -1,0 +1,25 @@
+﻿@table = SELECT * FROM [SampleDBTutorials].[dbo].[ReferrersPerDay];
+
+OUTPUT @table
+    TO "/Analytics/SampleDBTutorials.dbo.ReferrersPerDay.tsv"
+    USING Outputters.Tsv();
+
+@searchlog = 
+    EXTRACT UserId          int, 
+            Start           DateTime, 
+            Region          string, 
+            Query           string, 
+            Duration        int, 
+            Urls            string, 
+            ClickedUrls     string
+    FROM "/SearchLog.tsv"
+    USING Extractors.Tsv();
+
+@output =
+    SELECT *
+    FROM @searchlog
+         //	WHERE UserId == 399266;
+         ;
+OUTPUT @output 
+    TO "/SearchLog_output.csv"
+    USING Outputters.Csv();

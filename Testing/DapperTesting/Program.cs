@@ -8,13 +8,22 @@ namespace DapperTesting
 {
 	class Program
 	{
+		
 		static void Main(string[] args)
 		{
 			try
 			{
-				var connectionString = @"Server = RCM41VQPASDB01.medassets.com\PASDEVIV; Database = AMS_QA_CHC; Trusted_Connection = true;";
-				var dbContext = new DbContext(connectionString);
-				dbContext.ExecuteStoredProcedure();
+				var queryBuilder = new QueryBuilder();
+				var centuraConnectionString = @"Server = RCM41VQPASDB01.medassets.com\PASDEVIV; Database = AMS_QA_CHC; Trusted_Connection = true;";
+				var serviceCategoryCenturaConnectionString = @"Server = RCM41VSPASDB02.medassets.com; Database = SC_Centura; Trusted_Connection = true;";
+				var dbContext = new DbContext(serviceCategoryCenturaConnectionString);
+
+				var tableNameList = dbContext.GetListofTableNames().ToList();
+
+				var results = dbContext.BuildQueryCheckStatementForSc(tableNameList);
+
+
+
 
 				//var excelImport = new ExcelReaderSvc();
 				//var path = @"C:\MyScripts\Documents\DI\InformationForChrisBrown.xlsx";
@@ -30,7 +39,7 @@ namespace DapperTesting
 				//		MappingFileName = excelObject.MappingFileName
 				//	});
 				//}
-				
+
 				//	dbContext.AddXmlMapping(mappingsList, tableName);
 				//var healthChecks = dbContext.GetAllXmlMappings();
 
