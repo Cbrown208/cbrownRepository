@@ -21,7 +21,33 @@ var reload = browserSync.reload;
 
 const tscConfig = require('./app/tsconfig.json');
 
+// compiles 
+var tsProject = ts.createProject('app/tsconfig.json', {
+	typescript: require('typescript')
+});
+
+
+//************************************************* Build **************************************************//
+gulp.task('default', function (callback) {
+	runSequence('build:prod', callback);
+});
+
+gulp.task('build:dev', function (callback) {
+	runSequence('clean', 'scripts:dev', 'copy', 'styles', callback);
+});
+
+gulp.task('build:debug', function (callback) {
+	runSequence('scripts:dev', callback);
+});
+
+gulp.task('build:prod', function (callback) {
+	runSequence('clean', 'scripts', 'copy', 'styles', callback);
+});
+
+//************************************************* Clean **************************************************//
 // Clean the js distribution directory
+gulp.task('clean', ['clean:dist:js', 'clean:dist:css', 'clean:lib', 'clean:scripts']);
+
 gulp.task('clean:dist:js', function () {
     return del('public/dist/js/*');
 });
@@ -44,12 +70,6 @@ gulp.task('clean:lib', function () {
 gulp.task('clean:scripts', function () {
     return del('Scripts/**/*');
 });
-
-// compiles 
-var tsProject = ts.createProject('app/tsconfig.json', {
-    typescript: require('typescript')
-});
-
 
 // Lint Typescript
 gulp.task('lint:ts', function () {
@@ -317,58 +337,20 @@ gulp.task('test', ['compile:specs'], function () {
 
 gulp.task('lint', ['lint:ts', 'lint:sass']);
 
-gulp.task('clean', ['clean:dist:js', 'clean:dist:css', 'clean:lib', 'clean:scripts']);
-
-gulp.task('copy1', function (callback) {
-    runSequence('copy:libs', 'copy:scripts', callback);
-});
 gulp.task('copy', function (callback) {
 	//runSequence('copy:libs', callback); //TODO changed here 
 	runSequence('copy:libs', 'copy:scripts', callback);
 });
-gulp.task('scripts1', function (callback) {
-    runSequence(['lint:ts', 'clean:dist:js'], 'compile:ts', 'bundle:js', 'minify:js', callback);
+
+gulp.task('scripts', function (callback) {
+	runSequence('compile:ts', 'bundle:js', callback);
 });
+
 gulp.task('scripts:dev', function (callback) {
     runSequence('compile:ts', 'bundle:dev:js', callback);
 });
-gulp.task('scripts', function (callback) {
-    runSequence('compile:ts', 'bundle:js', callback);
-});
 
-gulp.task('styles1', function (callback) {
-    runSequence(['lint:sass', 'clean:dist:css'], ['compile:sass', 'minify:css'], callback);
-});
-
-gulp.task('styles2', function (callback) {
-    runSequence('clean:generated:css', 'minify:css', 'copy:cssBundle', 'clean:dist:css', callback);
-});
-
-gulp.task('styles3', function (callback) {
-    runSequence(['clean:generated:css'], ['minify:css'], ['copy:cssBundle'], callback);
-});
 gulp.task('styles', ['minify:css', 'compile:sass']);
-
-gulp.task('build1', function (callback) {
-    runSequence('copy', 'scripts', 'styles', callback);
-});
-
-gulp.task('build:dev', function (callback) {
-    runSequence('clean', 'scripts:dev', 'copy', 'styles', callback);
-});
-
-gulp.task('build:debug', function (callback) {
-    runSequence('scripts:dev', callback);
-});
-
-gulp.task('build:prod', function (callback) {
-    runSequence('clean', 'scripts', 'copy', 'styles', callback);
-});
-
-gulp.task('default', function (callback) {
-    runSequence('build:debug', callback);
-});
-
 
 //Others
 gulp.task('iisexpress', function () {

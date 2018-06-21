@@ -2,9 +2,9 @@
   "version": "1.0.0",
   "name": "paspricing",
   "private": true,
-  "scripts": {
-    "postinstall": "gulp build:debug"
-  },
+	"scripts": {
+		"postinstall": "gulp default"
+	},
   "dependencies": {
     "@angular/animations": "^4.1.2",
     "@angular/common": "~4.0.3",
