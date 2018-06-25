@@ -20,9 +20,25 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Script Include="cbCleanupScript.usql" />
+    <Script Include="cbGetCboTesting.usql" />
+    <Script Include="cbMultiFileTest.usql" />
+    <Script Include="CreateAllTables.usql" />
     <Script Include="CustomSelect.usql" />
     <Script Include="PopulateTableData.usql" />
     <Script Include="Script.usql" />
+    <ScriptCode Include="cbCleanupScript.usql.cs">
+      <DependentUpon>cbCleanupScript.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="cbGetCboTesting.usql.cs">
+      <DependentUpon>cbGetCboTesting.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="cbMultiFileTest.usql.cs">
+      <DependentUpon>cbMultiFileTest.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="CreateAllTables.usql.cs">
+      <DependentUpon>CreateAllTables.usql</DependentUpon>
+    </ScriptCode>
     <ScriptCode Include="CustomSelect.usql.cs">
       <DependentUpon>CustomSelect.usql</DependentUpon>
     </ScriptCode>

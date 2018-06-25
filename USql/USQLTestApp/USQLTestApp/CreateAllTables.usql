@@ -1,0 +1,503 @@
+﻿USE ServiceCategory;
+
+DECLARE EXTERNAL @ClientId string = "52060";
+DECLARE @tableName_BillDiag string = "BillDiag";
+DECLARE @dir_BillDiag string = "/ServiceCategory/" + @ClientId + "/" + @tableName_BillDiag + "/" + @tableName_BillDiag + "." + @ClientId;
+DECLARE @file_set_path_BillDiag string = @dir_BillDiag + ".{date:yyyy}{date:MM}{date:dd}.csv";
+
+@data_BillDiag =
+    EXTRACT BillMast string,
+            Syskey string,
+            FacilityId int?,
+            Sequence string,
+            DiagCode string,
+            Domdef string,
+            ModifiedDate string,
+            date DateTime
+    FROM @file_set_path_BillDiag
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.BillDiag;
+CREATE TABLE dbo.BillDiag
+(
+    INDEX clx_BillMast
+    CLUSTERED(BillMast ASC)
+    DISTRIBUTED BY
+    HASH(BillMast)
+) AS
+SELECT *
+FROM @data_BillDiag;
+
+
+DECLARE @tableName_BillMast string= "BillMast";
+DECLARE @dir_BillMast string = "/ServiceCategory/"+@ClientId+"/"+@tableName_BillMast+"/"+@tableName_BillMast+"."+@ClientId;
+DECLARE @file_set_path_BillMast string = @dir_BillMast +".{date:yyyy}{date:MM}{date:dd}.csv";
+
+@data_BillMast = 
+    EXTRACT Syskey string,
+    FacilityId int?,
+    Drg string,
+    PatientType string,
+    PatientAccountNumber string,
+    GrossCharges double?,
+    ServiceFrom string,
+    ServiceTo string,
+    BillPayrClassSmry int?,
+    RepriceType int?,
+    AdmitDate string,
+    ModifiedDate string,
+    ModifiedTime string,
+    Domdef string,
+    PatientDOB string,
+    PatientSex string,
+	date DateTime
+    FROM @file_set_path_BillMast
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.BillMast;
+CREATE TABLE dbo.BillMast (
+       INDEX clx_Syskey CLUSTERED(Syskey ASC) 
+       DISTRIBUTED BY HASH (Syskey)
+) AS SELECT * FROM @data_BillMast;
+
+
+DECLARE @tableName_BillPayrClassSmry string = "BillPayrClassSmry";
+DECLARE @dir_BillPayrClassSmry string = "/ServiceCategory/" + @ClientId + "/" + @tableName_BillPayrClassSmry + "/" + @tableName_BillPayrClassSmry + "." + @ClientId;
+DECLARE @file_set_path_BillPayrClassSmry string = @dir_BillPayrClassSmry + ".{date:yyyy}{date:MM}{date:dd}.csv";
+
+@data_BillPayrClassSmry =
+    EXTRACT Syskey int?,
+            FacilityId int?,
+            PayerClass int?,
+            ModifiedDate string,
+            date DateTime
+    FROM @file_set_path_BillPayrClassSmry
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.BillPayrClassSmry;
+CREATE TABLE dbo.BillPayrClassSmry
+(
+    INDEX clx_Syskey
+    CLUSTERED(Syskey ASC)
+    DISTRIBUTED BY
+    HASH(Syskey)
+) AS
+SELECT *
+FROM @data_BillPayrClassSmry;
+
+
+
+DECLARE @tableName_BillPhys string = "BillPhys";
+DECLARE @dir_BillPhys string = "/ServiceCategory/" + @ClientId + "/" + @tableName_BillPhys + "/" + @tableName_BillPhys + "." + @ClientId;
+DECLARE @file_set_path_BillPhys string = @dir_BillPhys + ".{date:yyyy}{date:MM}{date:dd}.csv";
+
+@data_BillPhys =
+    EXTRACT BillMast string,
+            Syskey string,
+            FacilityId int?,
+            PhysicianName string,
+            Npi string,
+            Sequence string,
+            PhysicianType string,
+            Domdef string,
+            ModifiedDate string,
+            date DateTime
+    FROM @file_set_path_BillPhys
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.BillPhys;
+CREATE TABLE dbo.BillPhys
+(
+    INDEX clx_Syskey
+    CLUSTERED(Syskey ASC)
+    DISTRIBUTED BY
+    HASH(Syskey)
+) AS
+SELECT *
+FROM @data_BillPhys;
+
+
+DECLARE @tableName_BillProc string = "BillProc";
+DECLARE @dir_BillProc string = "/ServiceCategory/" + @ClientId + "/" + @tableName_BillProc + "/" + @tableName_BillProc + "." + @ClientId;
+DECLARE @file_set_path_BillProc string = @dir_BillProc + ".{date:yyyy}{date:MM}{date:dd}.csv";
+
+@data_BillProc =
+    EXTRACT BillMast string,
+            Syskey string,
+            FacilityId int?,
+            Sequence string,
+            ProcedureCode string,
+            CodeType string,
+            Domdef string,
+            ModifiedDate string,
+            date DateTime
+    FROM @file_set_path_BillProc
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.BillProc;
+CREATE TABLE dbo.BillProc
+(
+    INDEX clx_Syskey
+    CLUSTERED(Syskey ASC)
+    DISTRIBUTED BY
+    HASH(Syskey)
+) AS
+SELECT *
+FROM @data_BillProc;
+
+
+DECLARE @tableName_BillRevc string = "BillRevc";
+DECLARE @dir_BillRevc string = "/ServiceCategory/" + @ClientId + "/" + @tableName_BillRevc + "/" + @tableName_BillRevc + "." + @ClientId;
+DECLARE @file_set_path_BillRevc string = @dir_BillRevc + ".{date:yyyy}{date:MM}{date:dd}.csv";
+
+@data_BillRevc =
+    EXTRACT BillMast string,
+            Syskey string,
+            FacilityId int?,
+            HcpcsRates string,
+            RevCode string,
+            Domdef string,
+            ModifiedDate string,
+            date DateTime
+    FROM @file_set_path_BillRevc
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.BillRevc;
+CREATE TABLE dbo.BillRevc
+(
+    INDEX clx_Syskey
+    CLUSTERED(Syskey ASC)
+    DISTRIBUTED BY
+    HASH(Syskey)
+) AS
+SELECT *
+FROM @data_BillRevc;
+
+
+DECLARE @tableName_ChargeDataCustomFields string = "ChargeDataCustomFields";
+DECLARE @dir_ChargeDataCustomFields string = "/ServiceCategory/" + @ClientId + "/" + @tableName_ChargeDataCustomFields + "/" + @tableName_ChargeDataCustomFields + "." + @ClientId;
+DECLARE @file_set_path_ChargeDataCustomFields string = @dir_ChargeDataCustomFields + ".{date:yyyy}{date:MM}{date:dd}.csv";
+
+@data_ChargeDataCustomFields =
+    EXTRACT FacilityId string,
+            CustomField1 string,
+            CustomField2 string,
+            CustomField3 string,
+            CustomField4 string,
+            CustomField5 string,
+            CreatedOn DateTime,
+            CreatedBy string,
+            ModifiedOn DateTime,
+            ModifiedBy string,
+            date DateTime
+    FROM @file_set_path_ChargeDataCustomFields
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.ChargeDataCustomFields;
+CREATE TABLE dbo.ChargeDataCustomFields
+(
+    INDEX clx_FacilityId
+    CLUSTERED(FacilityId ASC)
+    DISTRIBUTED BY
+    HASH(FacilityId)
+) AS
+SELECT *
+FROM @data_ChargeDataCustomFields;
+
+
+DECLARE @tableName_ChargeData string = "ChargeData";
+DECLARE @dir_ChargeData string = "/ServiceCategory/" + @ClientId + "/" + @tableName_ChargeData + "/" + @tableName_ChargeData + "." + @ClientId;
+DECLARE @file_set_path_ChargeData string = @dir_ChargeData + ".{date:yyyy}{date:MM}{date:dd}.csv";
+
+@data_ChargeData =
+    EXTRACT Id int?,
+            FacilityId string,
+            FacilityName string,
+            PatientAccountNumber string,
+            ChargeCode string,
+            ChargeDescription string,
+            UnitChargeAmount int?,
+            ServiceUnits int?,
+            ExtendedChargeAmount int?,
+            ServiceDate DateTime,
+            TransactionDate DateTime,
+            HCPCSCPTCode string,
+            HCPCSCPTCodeModifiers string,
+            RevenueCode string,
+            ServiceCategoryId string,
+            ServiceCategoryDescription string,
+            UniqueChargeId string,
+            CreatedOn DateTime,
+            CreatedBy string,
+            ModifiedOn DateTime,
+            ModifiedBy string,
+            CustomField1 string,
+            CustomField2 string,
+            CustomField3 string,
+            CustomField4 string,
+            CustomField5 string,
+            date DateTime
+    FROM @file_set_path_ChargeData
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.ChargeData;
+CREATE TABLE dbo.ChargeData
+(
+    INDEX clx_Id
+    CLUSTERED(Id ASC)
+    DISTRIBUTED BY
+    HASH(Id)
+) AS
+SELECT *
+FROM @data_ChargeData;
+
+DECLARE @tableName_CpLogPkgParam string = "CPLOGPKGPARAM";
+DECLARE @dir_CpLogPkgParam string = "/ServiceCategory/" + @ClientId + "/" + @tableName_CpLogPkgParam + "/" + @tableName_CpLogPkgParam + "." + @ClientId;
+DECLARE @file_set_path_CpLogPkgParam string = @dir_CpLogPkgParam + ".csv";
+
+@data_CpLogPkgParam =
+    EXTRACT Facid int?,
+            Deptid int?,
+            Job_datefrom string,
+            Job_dateto string,
+            Variance string,
+            Fac_lvlofconfidence string,
+            Job_charge_pref_used string,
+            Job_auto_create_override string,
+            Mdate string,
+            Mtime string,
+            Muser string,
+            Domdef string,
+            Job_min_pat_count int?,
+            Sql_query_used string,
+            Pkg_param_date_range_used string,
+            Nsyskey int?,
+            Event string,
+            Fac_charge_pref string,
+            Fac_auto_create string,
+            Fac_min_pat_count int?,
+            Fac_def_date_rng int?,
+            Fac_rev_rollup_thresh int?,
+            Fac_rev_rollup_thresh_op int?,
+            date DateTime
+    FROM @file_set_path_CpLogPkgParam
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.CpLogPkgParam;
+CREATE TABLE dbo.CpLogPkgParam
+(
+    INDEX clx_Facid
+    CLUSTERED(Facid ASC)
+    DISTRIBUTED BY
+    HASH(Facid)
+) AS
+SELECT *
+FROM @data_CpLogPkgParam;
+
+
+DECLARE @tableName_CpPackage_Params string = "CPPACKAGE_PARAMS";
+DECLARE @dir_CpPackage_Params string = "/ServiceCategory/" + @ClientId + "/" + @tableName_CpPackage_Params + "/" + @tableName_CpPackage_Params + "." + @ClientId;
+DECLARE @file_set_path_CpPackage_Params string = @dir_CpPackage_Params + ".csv";
+
+@data_CpPackage_Params =
+    EXTRACT Syskey string,
+            Pattype string,
+            Datefrom string,
+            Dateto string,
+            Losmax int?,
+            Losmin int?,
+            Cdate string,
+            Ctime string,
+            Cuser string,
+            Mdate string,
+            Mtime string,
+            Muser string,
+            Domdef string,
+            Eff_date DateTime,
+            Trm_date DateTime,
+            Npi string,
+            date DateTime
+    FROM @file_set_path_CpPackage_Params
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.CpPackage_Params;
+CREATE TABLE dbo.CpPackage_Params
+(
+    INDEX clx_Syskey
+    CLUSTERED(Syskey ASC)
+    DISTRIBUTED BY
+    HASH(Syskey)
+) AS
+SELECT *
+FROM @data_CpPackage_Params;
+
+
+DECLARE @tableName_CpPackageDef string = "CPPACKAGEDEF";
+DECLARE @dir_CpPackageDef string = "/ServiceCategory/" + @ClientId + "/" + @tableName_CpPackageDef + "/" + @tableName_CpPackageDef + "." + @ClientId;
+DECLARE @file_set_path_CpPackageDef string = @dir_CpPackageDef + ".csv";
+
+@data_CpPackageDef =
+    EXTRACT Syskey string,
+            Servtype string,
+            Description string,
+            Er string,
+            Outpatient string,
+            Inpatient string,
+            Drg string,
+            Eff_date string,
+            Trm_date string,
+            Mdate string,
+            Mtime string,
+            Muser string,
+            Domdef string,
+            Formord int?,
+            Mcommord int?,
+            Mselord int?,
+            Icd9 string,
+            Altdesc string,
+            Audit string,
+            Hichgs double?,
+            Avgchgs double?,
+            Lochgs double?,
+            Xmitlog string,
+            Level string,
+            FInclass string,
+            Deptid int?,
+            Lvl_confidence string,
+            Modechgs double?,
+            Modefreq string,
+            Medianchgs double?,
+            Stdevchgs double?,
+            Cppackage_params string,
+            Losmax int?,
+            Losmin int?,
+            Losavg int?,
+            Cplogpkgparam string,
+            Median_age double?,
+            Mode_gender string,
+            Pkg_type string,
+            Clmmast string,
+            ICd_ver string,
+            Sc_type string,
+            Patnum string,
+            date DateTime
+    FROM @file_set_path_CpPackageDef
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.CpPackageDef;
+CREATE TABLE dbo.CpPackageDef
+(
+    INDEX clx_Syskey
+    CLUSTERED(Syskey ASC)
+    DISTRIBUTED BY
+    HASH(Syskey)
+) AS
+SELECT *
+FROM @data_CpPackageDef;
+
+DECLARE @tableName_CpPackageDtls string = "CPPACKAGEDTLS";
+DECLARE @dir_CpPackageDtls string = "/ServiceCategory/" + @ClientId + "/" + @tableName_CpPackageDtls + "/" + @tableName_CpPackageDtls + "." + @ClientId;
+DECLARE @file_set_path_CpPackageDtls string = @dir_CpPackageDtls + ".csv";
+
+@data_CpPackageDtls =
+    EXTRACT Syskey string,
+            Cppackagedef string,
+            Cdmcode string,
+            Revcode string,
+            Hcpcsrates string,
+            Totunits int?,
+            Avgunits int?,
+            Percentage string,
+            Totalcharges double?,
+            Statunitcharge double?,
+            Cdmunitcharge double?,
+            Cdate string,
+            Ctime string,
+            Cuser string,
+            Mdate string,
+            Mtime string,
+            Muser string,
+            Domdef string,
+            date DateTime
+    FROM @file_set_path_CpPackageDtls
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.CpPackageDtls;
+CREATE TABLE dbo.CpPackageDtls
+(
+    INDEX clx_Syskey
+    CLUSTERED(Syskey ASC)
+    DISTRIBUTED BY
+    HASH(Syskey)
+) AS
+SELECT *
+FROM @data_CpPackageDtls;
+
+
+DECLARE @tableName_CpPackagerl string = "CPPACKAGERL";
+DECLARE @dir_CpPackagerl string = "/ServiceCategory/" + @ClientId + "/" + @tableName_CpPackagerl + "/" + @tableName_CpPackagerl + "." + @ClientId;
+DECLARE @file_set_path_CpPackagerl string = @dir_CpPackagerl + ".csv";
+
+@data_CpPackagerl =
+    EXTRACT Syskey string,
+            Cppackagedef string,
+            Chargecode string,
+            Units int?,
+            Mdate string,
+            Mtime string,
+            Muser string,
+            Domdef string,
+            Sequence int?,
+            Mod1 string,
+            Mod2 string,
+            Mod3 string,
+            Mod4 string,
+            Perrelevance string,
+            Cpt4 string,
+            Revcode string,
+            Revdesc string,
+            Hcpcsrates string,
+            Statcharge double?,
+            Cdmcharge double?,
+            Linecharge double?,
+            Unitsordays string,
+            Unitweight double?,
+            Manual string,
+            date DateTime
+    FROM @file_set_path_CpPackagerl
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.CpPackagerl;
+CREATE TABLE dbo.CpPackagerl
+(
+    INDEX clx_Syskey
+    CLUSTERED(Syskey ASC)
+    DISTRIBUTED BY
+    HASH(Syskey)
+) AS
+SELECT *
+FROM @data_CpPackagerl;
+
+DECLARE @tableName_CpPkg_Params_Dtls string = "CPPKG_PARAMS_DTLS";
+DECLARE @dir_CpPkg_Params_Dtls string = "/ServiceCategory/" + @ClientId + "/" + @tableName_CpPkg_Params_Dtls + "/" + @tableName_CpPkg_Params_Dtls + "." + @ClientId;
+DECLARE @file_set_path_CpPkg_Params_Dtls string = @dir_CpPkg_Params_Dtls + ".csv";
+
+@data_CpPkg_Params_Dtls =
+    EXTRACT Nsyskey int?,
+            Cppackage_params string,
+            Codetype string,
+            Code string,
+            date DateTime
+    FROM @file_set_path_CpPkg_Params_Dtls
+    USING Extractors.Csv();
+
+DROP TABLE IF EXISTS dbo.CpPkg_Params_Dtls;
+CREATE TABLE dbo.CpPkg_Params_Dtls
+(
+    INDEX clx_Nsyskey
+    CLUSTERED(Nsyskey ASC)
+    DISTRIBUTED BY
+    HASH(Nsyskey)
+) AS
+SELECT *
+FROM @data_CpPkg_Params_Dtls;

@@ -1,0 +1,76 @@
+﻿CREATE DATABASE IF NOT EXISTS TestingDb;
+
+//CREATE TABLE IF NOT EXISTS TestingDb.dbo.BillMast
+//(
+//    Syskey string,
+//    FacilityId int,
+//    Drg string,
+//    PatientType string,
+//    PatientAccountNumber string,
+//    GrossCharges double,
+//    ServiceFrom string,
+//    ServiceTo string,
+//    BillPayrClassSmry int,
+//    RepriceType int,
+//    AdmitDate string,
+//    ModifiedDate string,
+//    ModifiedTime string,
+//    Domdef string,
+//    PatientDOB string,
+//    PatientSex string,
+//	INDEX Syskey //Name of index
+//    CLUSTERED (Syskey ASC) //Column to cluster by
+//    DISTRIBUTED BY HASH (FacilityId) //Column to partition by
+//);
+
+DROP TABLE IF EXISTS TestingDb.dbo.BillMast;
+CREATE TABLE TestingDb.dbo.BillMast (
+       INDEX clx_Syskey CLUSTERED(Syskey ASC) 
+       DISTRIBUTED BY HASH (Syskey)
+) AS EXTRACT     Syskey string,
+    FacilityId int,
+    Drg string,
+    PatientType string,
+    PatientAccountNumber string,
+    GrossCharges double,
+    ServiceFrom string,
+    ServiceTo string,
+    BillPayrClassSmry int,
+    RepriceType int,
+    AdmitDate string,
+    ModifiedDate string,
+    ModifiedTime string,
+    Domdef string,
+    PatientDOB string,
+    PatientSex string
+    FROM "/ServiceCategory/52060/BillMast/BillMast.52060.20180621.csv"
+    USING Extractors.Csv();
+	
+	@searchlog = 
+    EXTRACT     Syskey string,
+    FacilityId int,
+    Drg string,
+    PatientType string,
+    PatientAccountNumber string,
+    GrossCharges double,
+    ServiceFrom string,
+    ServiceTo string,
+    BillPayrClassSmry int,
+    RepriceType int,
+    AdmitDate string,
+    ModifiedDate string,
+    ModifiedTime string,
+    Domdef string,
+    PatientDOB string,
+    PatientSex string
+    FROM "/ServiceCategory/52060/BillMast/BillMast.52060.20180621.csv"
+    USING Extractors.Csv();
+
+@output =
+    SELECT *
+    FROM @searchlog
+         WHERE PatientSex == @PatientSex;
+
+OUTPUT @output 
+    TO "/Scripts/52060/BillMast/BillMastOutput.csv"
+    USING Outputters.Csv();

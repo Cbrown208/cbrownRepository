@@ -1,0 +1,47 @@
+﻿// Sample file naming convention: vehicle1_09142014.csv, vehicle2_09142014.csv
+// Sample directory naming convention: /Samples/Data/AmbulanceData/2014/09/15/, /Samples/Data/AmbulanceData/2014/09/14/
+DECLARE @ClientId int = 52060;
+DECLARE @tableName string = "BillMast";
+DECLARE @dir string = "/Data/"+@ClientId+"/dbo."+@tableName+"/"+@tableName+"."+@ClientId;
+DECLARE @file_set_path2 string = @dir +".{date:yyyy}{date:MM}{date:dd}.csv";
+
+@data = 
+    EXTRACT Syskey string,
+    FacilityId int?,
+    Drg string,
+    PatientType string,
+    PatientAccountNumber string,
+    GrossCharges double?,
+    ServiceFrom string,
+    ServiceTo string,
+    BillPayrClassSmry int?,
+    RepriceType int?,
+    AdmitDate string,
+    ModifiedDate string,
+    ModifiedTime string,
+    Domdef string,
+    PatientDOB string,
+    PatientSex string,
+	date DateTime
+    FROM @file_set_path2
+    USING Extractors.Csv();
+
+@result =
+    SELECT *
+    FROM @data
+    WHERE date >= DateTime.Parse("2018-06-20");
+
+OUTPUT @result
+TO "/Outputs/BillMastMultiFileTestOutput.txt"
+USING Outputters.Csv();
+
+USE TvShowDb;
+// Create table based on extraction and populate table
+
+USE [@dbName];
+
+DROP TABLE IF EXISTS dbo.BillMast;
+CREATE TABLE dbo.BillMast (
+       INDEX clx_Syskey CLUSTERED(Syskey ASC) 
+       DISTRIBUTED BY HASH (Syskey)
+) AS SELECT * FROM @result;
