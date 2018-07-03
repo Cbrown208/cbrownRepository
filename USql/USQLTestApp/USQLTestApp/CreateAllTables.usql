@@ -1,4 +1,6 @@
-﻿USE ServiceCategory;
+﻿CREATE DATABASE IF NOT EXISTS ServiceCategory;
+
+USE ServiceCategory;
 
 DECLARE EXTERNAL @ClientId string = "52060";
 DECLARE @tableName_BillDiag string = "BillDiag";

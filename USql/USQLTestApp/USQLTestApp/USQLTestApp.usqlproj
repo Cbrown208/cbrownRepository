@@ -23,9 +23,11 @@
     <Script Include="cbCleanupScript.usql" />
     <Script Include="cbGetCboTesting.usql" />
     <Script Include="cbMultiFileTest.usql" />
+    <Script Include="cbSaveResultsToDbTesting.usql" />
     <Script Include="CreateAllTables.usql" />
     <Script Include="CustomSelect.usql" />
     <Script Include="PopulateTableData.usql" />
+    <Script Include="RunCalculations.usql" />
     <Script Include="Script.usql" />
     <ScriptCode Include="cbCleanupScript.usql.cs">
       <DependentUpon>cbCleanupScript.usql</DependentUpon>
@@ -36,6 +38,9 @@
     <ScriptCode Include="cbMultiFileTest.usql.cs">
       <DependentUpon>cbMultiFileTest.usql</DependentUpon>
     </ScriptCode>
+    <ScriptCode Include="cbSaveResultsToDbTesting.usql.cs">
+      <DependentUpon>cbSaveResultsToDbTesting.usql</DependentUpon>
+    </ScriptCode>
     <ScriptCode Include="CreateAllTables.usql.cs">
       <DependentUpon>CreateAllTables.usql</DependentUpon>
     </ScriptCode>
@@ -44,6 +49,9 @@
     </ScriptCode>
     <ScriptCode Include="PopulateTableData.usql.cs">
       <DependentUpon>PopulateTableData.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="RunCalculations.usql.cs">
+      <DependentUpon>RunCalculations.usql</DependentUpon>
     </ScriptCode>
     <ScriptCode Include="Script.usql.cs">
       <DependentUpon>Script.usql</DependentUpon>

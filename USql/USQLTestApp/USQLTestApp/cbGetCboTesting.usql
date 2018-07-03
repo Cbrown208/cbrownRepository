@@ -1,76 +1,60 @@
-﻿CREATE DATABASE IF NOT EXISTS TestingDb;
+﻿DECLARE EXTERNAL @FacId = 1968;
+DECLARE EXTERNAL @DomDef = "000FAHQA0001";
+DECLARE EXTERNAL @PatientType = "Ip";
+DECLARE EXTERNAL @AdmitDateRange = 0;
+DECLARE EXTERNAL @DateRangeInMonths = 0;
+DECLARE EXTERNAL @CptRange = "";
+DECLARE EXTERNAL @Variance = ".10";
+DECLARE EXTERNAL @Lvl_Confidence = "75";
+DECLARE EXTERNAL @AutoCreate = "Y";
+DECLARE EXTERNAL @Charge_Preference = "Higher";
+DECLARE EXTERNAL @Rev_Rollup_Threshold = 50;
+DECLARE EXTERNAL @MinPatClmCount = 5;
+DECLARE EXTERNAL @Icd_Ver = 0;
+DECLARE EXTERNAL @Rev_Rollup_Threshold_Op = 50;
+DECLARE EXTERNAL @SqlQuery = "";
+DECLARE EXTERNAL @GroupBy = "";
 
-//CREATE TABLE IF NOT EXISTS TestingDb.dbo.BillMast
-//(
-//    Syskey string,
-//    FacilityId int,
-//    Drg string,
-//    PatientType string,
-//    PatientAccountNumber string,
-//    GrossCharges double,
-//    ServiceFrom string,
-//    ServiceTo string,
-//    BillPayrClassSmry int,
-//    RepriceType int,
-//    AdmitDate string,
-//    ModifiedDate string,
-//    ModifiedTime string,
-//    Domdef string,
-//    PatientDOB string,
-//    PatientSex string,
-//	INDEX Syskey //Name of index
-//    CLUSTERED (Syskey ASC) //Column to cluster by
-//    DISTRIBUTED BY HASH (FacilityId) //Column to partition by
-//);
-
-DROP TABLE IF EXISTS TestingDb.dbo.BillMast;
-CREATE TABLE TestingDb.dbo.BillMast (
-       INDEX clx_Syskey CLUSTERED(Syskey ASC) 
-       DISTRIBUTED BY HASH (Syskey)
-) AS EXTRACT     Syskey string,
-    FacilityId int,
-    Drg string,
-    PatientType string,
-    PatientAccountNumber string,
-    GrossCharges double,
-    ServiceFrom string,
-    ServiceTo string,
-    BillPayrClassSmry int,
-    RepriceType int,
-    AdmitDate string,
-    ModifiedDate string,
-    ModifiedTime string,
-    Domdef string,
-    PatientDOB string,
-    PatientSex string
-    FROM "/ServiceCategory/52060/BillMast/BillMast.52060.20180621.csv"
-    USING Extractors.Csv();
-	
-	@searchlog = 
-    EXTRACT     Syskey string,
-    FacilityId int,
-    Drg string,
-    PatientType string,
-    PatientAccountNumber string,
-    GrossCharges double,
-    ServiceFrom string,
-    ServiceTo string,
-    BillPayrClassSmry int,
-    RepriceType int,
-    AdmitDate string,
-    ModifiedDate string,
-    ModifiedTime string,
-    Domdef string,
-    PatientDOB string,
-    PatientSex string
-    FROM "/ServiceCategory/52060/BillMast/BillMast.52060.20180621.csv"
-    USING Extractors.Csv();
-
-@output =
+@varResults =
     SELECT *
-    FROM @searchlog
-         WHERE PatientSex == @PatientSex;
+    FROM(
+        VALUES
+        (
+            @FacId,
+            @DomDef,
+            @PatientType,
+            @AdmitDateRange,
+            @DateRangeInMonths,
+            @CptRange,
+            @Variance,
+            @Lvl_Confidence,
+            @AutoCreate,
+            @Charge_Preference,
+            @Rev_Rollup_Threshold,
+            @MinPatClmCount,
+            @Icd_Ver,
+            @Rev_Rollup_Threshold_Op,
+            @SqlQuery,
+            @GroupBy
+        )) AS T(FacId, 
+				DomDef, 
+				PatientType, 
+				AdmitDateRange, 
+				DateRangeInMonths, 
+				CptRange, 
+				Variance,
+				LvlConfidence,
+				AutoCreate,
+				ChangePreference,
+				RevRollupThreshold,
+				MinPatClmCount,
+				Icd_Ver,
+				RevRollupThresholdOp,
+				SqlQuery,
+				GroupBy);
 
-OUTPUT @output 
-    TO "/Scripts/52060/BillMast/BillMastOutput.csv"
-    USING Outputters.Csv();
+OUTPUT @varResults
+TO "/ServiceCategory/52060/Output/VariableOutputTest.csv"
+USING Outputters.Csv(quoting : false);
+
+

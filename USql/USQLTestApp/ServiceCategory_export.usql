@@ -1,0 +1,338 @@
+// U-SQL Database Export Script
+// Generated : 6/25/2018 2:57:06 PM
+// Export Account : servicecategory
+// Export Database : ServiceCategory
+// Export Contents List :
+//  Schemas 1/1 : usql
+//  Tables 14/14 : dbo.BillDiag, dbo.BillMast, dbo.BillPayrClassSmry, dbo.BillPhys, dbo.BillProc, dbo.BillRevc, dbo.ChargeData, dbo.ChargeDataCustomFields, dbo.CpLogPkgParam, dbo.CpPackage_Params, dbo.CpPackageDef, dbo.CpPackageDtls, dbo.CpPackagerl, dbo.CpPkg_Params_Dtls
+// Exported table data and assembly files are saved to 'C:\Users\chbrown\AppData\Local\USQLDataRoot\ServiceCategory_export'
+
+// Start of generated U-SQL script
+
+CREATE DATABASE IF NOT EXISTS [ServiceCategory];
+USE DATABASE [ServiceCategory];
+
+
+// -- Schemas -- 
+// SCHEMA usql 
+CREATE SCHEMA IF NOT EXISTS [usql];
+
+
+
+// -- Tables -- 
+// TABLE BillDiag 
+CREATE TABLE IF NOT EXISTS [dbo].[BillDiag] 
+(
+    [BillMast] System.String
+   ,[Syskey] System.String
+   ,[FacilityId] System.Int32?
+   ,[Sequence] System.String
+   ,[DiagCode] System.String
+   ,[Domdef] System.String
+   ,[ModifiedDate] System.String
+   ,[date] System.DateTime
+   ,INDEX [clx_BillMast] CLUSTERED (BillMast ASC) DISTRIBUTED BY HASH (BillMast)
+);
+
+// TABLE BillMast 
+CREATE TABLE IF NOT EXISTS [dbo].[BillMast] 
+(
+    [Syskey] System.String
+   ,[FacilityId] System.Int32?
+   ,[Drg] System.String
+   ,[PatientType] System.String
+   ,[PatientAccountNumber] System.String
+   ,[GrossCharges] System.Double?
+   ,[ServiceFrom] System.String
+   ,[ServiceTo] System.String
+   ,[BillPayrClassSmry] System.Int32?
+   ,[RepriceType] System.Int32?
+   ,[AdmitDate] System.String
+   ,[ModifiedDate] System.String
+   ,[ModifiedTime] System.String
+   ,[Domdef] System.String
+   ,[PatientDOB] System.String
+   ,[PatientSex] System.String
+   ,[date] System.DateTime
+   ,INDEX [clx_Syskey] CLUSTERED (Syskey ASC) DISTRIBUTED BY HASH (Syskey)
+);
+
+// TABLE BillPayrClassSmry 
+CREATE TABLE IF NOT EXISTS [dbo].[BillPayrClassSmry] 
+(
+    [Syskey] System.Int32?
+   ,[FacilityId] System.Int32?
+   ,[PayerClass] System.Int32?
+   ,[ModifiedDate] System.String
+   ,[date] System.DateTime
+   ,INDEX [clx_Syskey] CLUSTERED (Syskey ASC) DISTRIBUTED BY HASH (Syskey)
+);
+
+// TABLE BillPhys 
+CREATE TABLE IF NOT EXISTS [dbo].[BillPhys] 
+(
+    [BillMast] System.String
+   ,[Syskey] System.String
+   ,[FacilityId] System.Int32?
+   ,[PhysicianName] System.String
+   ,[Npi] System.String
+   ,[Sequence] System.String
+   ,[PhysicianType] System.String
+   ,[Domdef] System.String
+   ,[ModifiedDate] System.String
+   ,[date] System.DateTime
+   ,INDEX [clx_Syskey] CLUSTERED (Syskey ASC) DISTRIBUTED BY HASH (Syskey)
+);
+
+// TABLE BillProc 
+CREATE TABLE IF NOT EXISTS [dbo].[BillProc] 
+(
+    [BillMast] System.String
+   ,[Syskey] System.String
+   ,[FacilityId] System.Int32?
+   ,[Sequence] System.String
+   ,[ProcedureCode] System.String
+   ,[CodeType] System.String
+   ,[Domdef] System.String
+   ,[ModifiedDate] System.String
+   ,[date] System.DateTime
+   ,INDEX [clx_Syskey] CLUSTERED (Syskey ASC) DISTRIBUTED BY HASH (Syskey)
+);
+
+// TABLE BillRevc 
+CREATE TABLE IF NOT EXISTS [dbo].[BillRevc] 
+(
+    [BillMast] System.String
+   ,[Syskey] System.String
+   ,[FacilityId] System.Int32?
+   ,[HcpcsRates] System.String
+   ,[RevCode] System.String
+   ,[Domdef] System.String
+   ,[ModifiedDate] System.String
+   ,[date] System.DateTime
+   ,INDEX [clx_Syskey] CLUSTERED (Syskey ASC) DISTRIBUTED BY HASH (Syskey)
+);
+
+// TABLE ChargeData 
+CREATE TABLE IF NOT EXISTS [dbo].[ChargeData] 
+(
+    [Id] System.Int32?
+   ,[FacilityId] System.String
+   ,[FacilityName] System.String
+   ,[PatientAccountNumber] System.String
+   ,[ChargeCode] System.String
+   ,[ChargeDescription] System.String
+   ,[UnitChargeAmount] System.Int32?
+   ,[ServiceUnits] System.Int32?
+   ,[ExtendedChargeAmount] System.Int32?
+   ,[ServiceDate] System.DateTime
+   ,[TransactionDate] System.DateTime
+   ,[HCPCSCPTCode] System.String
+   ,[HCPCSCPTCodeModifiers] System.String
+   ,[RevenueCode] System.String
+   ,[ServiceCategoryId] System.String
+   ,[ServiceCategoryDescription] System.String
+   ,[UniqueChargeId] System.String
+   ,[CreatedOn] System.DateTime
+   ,[CreatedBy] System.String
+   ,[ModifiedOn] System.DateTime
+   ,[ModifiedBy] System.String
+   ,[CustomField1] System.String
+   ,[CustomField2] System.String
+   ,[CustomField3] System.String
+   ,[CustomField4] System.String
+   ,[CustomField5] System.String
+   ,[date] System.DateTime
+   ,INDEX [clx_Id] CLUSTERED (Id ASC) DISTRIBUTED BY HASH (Id)
+);
+
+// TABLE ChargeDataCustomFields 
+CREATE TABLE IF NOT EXISTS [dbo].[ChargeDataCustomFields] 
+(
+    [FacilityId] System.String
+   ,[CustomField1] System.String
+   ,[CustomField2] System.String
+   ,[CustomField3] System.String
+   ,[CustomField4] System.String
+   ,[CustomField5] System.String
+   ,[CreatedOn] System.DateTime
+   ,[CreatedBy] System.String
+   ,[ModifiedOn] System.DateTime
+   ,[ModifiedBy] System.String
+   ,[date] System.DateTime
+   ,INDEX [clx_FacilityId] CLUSTERED (FacilityId ASC) DISTRIBUTED BY HASH (FacilityId)
+);
+
+// TABLE CpLogPkgParam 
+CREATE TABLE IF NOT EXISTS [dbo].[CpLogPkgParam] 
+(
+    [Facid] System.Int32?
+   ,[Deptid] System.Int32?
+   ,[Job_datefrom] System.String
+   ,[Job_dateto] System.String
+   ,[Variance] System.String
+   ,[Fac_lvlofconfidence] System.String
+   ,[Job_charge_pref_used] System.String
+   ,[Job_auto_create_override] System.String
+   ,[Mdate] System.String
+   ,[Mtime] System.String
+   ,[Muser] System.String
+   ,[Domdef] System.String
+   ,[Job_min_pat_count] System.Int32?
+   ,[Sql_query_used] System.String
+   ,[Pkg_param_date_range_used] System.String
+   ,[Nsyskey] System.Int32?
+   ,[Event] System.String
+   ,[Fac_charge_pref] System.String
+   ,[Fac_auto_create] System.String
+   ,[Fac_min_pat_count] System.Int32?
+   ,[Fac_def_date_rng] System.Int32?
+   ,[Fac_rev_rollup_thresh] System.Int32?
+   ,[Fac_rev_rollup_thresh_op] System.Int32?
+   ,[date] System.DateTime
+   ,INDEX [clx_Facid] CLUSTERED (Facid ASC) DISTRIBUTED BY HASH (Facid)
+);
+
+// TABLE CpPackage_Params 
+CREATE TABLE IF NOT EXISTS [dbo].[CpPackage_Params] 
+(
+    [Syskey] System.String
+   ,[Pattype] System.String
+   ,[Datefrom] System.String
+   ,[Dateto] System.String
+   ,[Losmax] System.Int32?
+   ,[Losmin] System.Int32?
+   ,[Cdate] System.String
+   ,[Ctime] System.String
+   ,[Cuser] System.String
+   ,[Mdate] System.String
+   ,[Mtime] System.String
+   ,[Muser] System.String
+   ,[Domdef] System.String
+   ,[Eff_date] System.DateTime
+   ,[Trm_date] System.DateTime
+   ,[Npi] System.String
+   ,[date] System.DateTime
+   ,INDEX [clx_Syskey] CLUSTERED (Syskey ASC) DISTRIBUTED BY HASH (Syskey)
+);
+
+// TABLE CpPackageDef 
+CREATE TABLE IF NOT EXISTS [dbo].[CpPackageDef] 
+(
+    [Syskey] System.String
+   ,[Servtype] System.String
+   ,[Description] System.String
+   ,[Er] System.String
+   ,[Outpatient] System.String
+   ,[Inpatient] System.String
+   ,[Drg] System.String
+   ,[Eff_date] System.String
+   ,[Trm_date] System.String
+   ,[Mdate] System.String
+   ,[Mtime] System.String
+   ,[Muser] System.String
+   ,[Domdef] System.String
+   ,[Formord] System.Int32?
+   ,[Mcommord] System.Int32?
+   ,[Mselord] System.Int32?
+   ,[Icd9] System.String
+   ,[Altdesc] System.String
+   ,[Audit] System.String
+   ,[Hichgs] System.Double?
+   ,[Avgchgs] System.Double?
+   ,[Lochgs] System.Double?
+   ,[Xmitlog] System.String
+   ,[Level] System.String
+   ,[FInclass] System.String
+   ,[Deptid] System.Int32?
+   ,[Lvl_confidence] System.String
+   ,[Modechgs] System.Double?
+   ,[Modefreq] System.String
+   ,[Medianchgs] System.Double?
+   ,[Stdevchgs] System.Double?
+   ,[Cppackage_params] System.String
+   ,[Losmax] System.Int32?
+   ,[Losmin] System.Int32?
+   ,[Losavg] System.Int32?
+   ,[Cplogpkgparam] System.String
+   ,[Median_age] System.Double?
+   ,[Mode_gender] System.String
+   ,[Pkg_type] System.String
+   ,[Clmmast] System.String
+   ,[ICd_ver] System.String
+   ,[Sc_type] System.String
+   ,[Patnum] System.String
+   ,[date] System.DateTime
+   ,INDEX [clx_Syskey] CLUSTERED (Syskey ASC) DISTRIBUTED BY HASH (Syskey)
+);
+
+// TABLE CpPackageDtls 
+CREATE TABLE IF NOT EXISTS [dbo].[CpPackageDtls] 
+(
+    [Syskey] System.String
+   ,[Cppackagedef] System.String
+   ,[Cdmcode] System.String
+   ,[Revcode] System.String
+   ,[Hcpcsrates] System.String
+   ,[Totunits] System.Int32?
+   ,[Avgunits] System.Int32?
+   ,[Percentage] System.String
+   ,[Totalcharges] System.Double?
+   ,[Statunitcharge] System.Double?
+   ,[Cdmunitcharge] System.Double?
+   ,[Cdate] System.String
+   ,[Ctime] System.String
+   ,[Cuser] System.String
+   ,[Mdate] System.String
+   ,[Mtime] System.String
+   ,[Muser] System.String
+   ,[Domdef] System.String
+   ,[date] System.DateTime
+   ,INDEX [clx_Syskey] CLUSTERED (Syskey ASC) DISTRIBUTED BY HASH (Syskey)
+);
+
+// TABLE CpPackagerl 
+CREATE TABLE IF NOT EXISTS [dbo].[CpPackagerl] 
+(
+    [Syskey] System.String
+   ,[Cppackagedef] System.String
+   ,[Chargecode] System.String
+   ,[Units] System.Int32?
+   ,[Mdate] System.String
+   ,[Mtime] System.String
+   ,[Muser] System.String
+   ,[Domdef] System.String
+   ,[Sequence] System.Int32?
+   ,[Mod1] System.String
+   ,[Mod2] System.String
+   ,[Mod3] System.String
+   ,[Mod4] System.String
+   ,[Perrelevance] System.String
+   ,[Cpt4] System.String
+   ,[Revcode] System.String
+   ,[Revdesc] System.String
+   ,[Hcpcsrates] System.String
+   ,[Statcharge] System.Double?
+   ,[Cdmcharge] System.Double?
+   ,[Linecharge] System.Double?
+   ,[Unitsordays] System.String
+   ,[Unitweight] System.Double?
+   ,[Manual] System.String
+   ,[date] System.DateTime
+   ,INDEX [clx_Syskey] CLUSTERED (Syskey ASC) DISTRIBUTED BY HASH (Syskey)
+);
+
+// TABLE CpPkg_Params_Dtls 
+CREATE TABLE IF NOT EXISTS [dbo].[CpPkg_Params_Dtls] 
+(
+    [Nsyskey] System.Int32?
+   ,[Cppackage_params] System.String
+   ,[Codetype] System.String
+   ,[Code] System.String
+   ,[date] System.DateTime
+   ,INDEX [clx_Nsyskey] CLUSTERED (Nsyskey ASC) DISTRIBUTED BY HASH (Nsyskey)
+);
+
+
+
+// End of generated U-SQL script

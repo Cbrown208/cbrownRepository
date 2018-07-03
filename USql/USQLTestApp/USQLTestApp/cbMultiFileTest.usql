@@ -26,6 +26,8 @@ DECLARE @file_set_path2 string = @dir +".{date:yyyy}{date:MM}{date:dd}.csv";
     FROM @file_set_path2
     USING Extractors.Csv();
 
+
+
 @result =
     SELECT *
     FROM @data
