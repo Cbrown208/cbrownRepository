@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C65D2EF4-3256-46B9-8C98-7D6F70B684FE}</ProjectGuid>
+    <ProjectGuid>{E513628C-4590-46D6-A735-09144DAB19A5}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Common.Formaters</RootNamespace>
-    <AssemblyName>Common.Formaters</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>CopyDataUtil.Svc</RootNamespace>
+    <AssemblyName>CopyDataUtil.Svc</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
@@ -32,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\GenericService\bin\Debug\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,16 +42,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convertors\Base64Convertors.cs" />
-    <Compile Include="Convertors\ConcreteTypeConverter.cs" />
-    <Compile Include="Convertors\ParsingConvertors.cs" />
-    <Compile Include="DatabaseStringFormatter.cs" />
-    <Compile Include="FormatManager.cs" />
+    <Compile Include="DatabaseCopyManager.cs" />
+    <Compile Include="FileCopyManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CopyDataUtil.Core\CopyDataUtil.Core.csproj">
+      <Project>{491B077E-3049-4263-880A-7DE1DB0796FF}</Project>
+      <Name>CopyDataUtil.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CopyDataUtil.DataAccess\CopyDataUtil.DataAccess.csproj">
+      <Project>{70697ED7-E42C-45F5-8C44-1614ED459DA5}</Project>
+      <Name>CopyDataUtil.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

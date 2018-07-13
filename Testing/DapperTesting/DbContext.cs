@@ -71,7 +71,6 @@ namespace DapperTesting
 				XmlElement root = doc.DocumentElement;
 
 				var ending = doc;
-
 			}
 			return "true";
 		}

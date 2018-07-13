@@ -1,0 +1,23 @@
+﻿{
+	"Configurations": [
+		{
+			"SourceTable": "dbo.BillPayrClassSmry",
+			"DestinationTable": "dbo.BillPayrClassSmry",
+			"StagingTable": "dbo.BillPayrClassSmry_Staging",
+			"SourceDestinationColumnMapping": [
+				{
+					"SourceColumn": "NSYSKEY",
+					"DestinationColumn": "Syskey"
+				},
+				{
+					"SourceColumn": "PAYER_CLASS",
+					"DestinationColumn": "PayerClass"
+				},
+				{
+					"SourceColumn": "MDATE",
+					"DestinationColumn": "ModifiedOn"
+				}
+			]
+		}
+	]
+}
