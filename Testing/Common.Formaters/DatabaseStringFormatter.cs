@@ -9,7 +9,7 @@ namespace Common.Formaters
 		{
 			var sqlStringList = new List<string>
 			{
-				" all ", " and ", " any ", " as ", " between ","Case ", " char ", " count(", " create ", " cross ", " datetime ","declare ","delete ", "distinct "," else ", " end ", " exec ", " exists ", " from ", "getdate()"," group by ", " if (", " if(", " in ", " index ", " inner ", " insert ", " int ", " into ", " is ", " join ", " left ", " like ", " not ", " nvarchar", " on ", " or ", " order by ", " outer ", " right ", "select ", " table ", " then ", " union ", " varchar", " when ", " where ", " xml "
+				" all ", " and ", " any ", " as ", " between ","Case ", " char ", " count(", " create ", " cross ", " datetime ","declare ","delete ", "distinct "," else ", " end ", " exec ", " exists ", "from ", "getdate()"," group by ", " if (", " if(", " in ", " index ", " inner ", " insert ", " int ", " into ", " is ", " join ", " left ", " like ", " not ", " nvarchar", " on ", " or ", " order by ", " outer ", " right ", "select ", " table ", " then ", " union ", " varchar", " when ", " where ", " xml "
 			};
 			return sqlStringList;
 		}
@@ -89,16 +89,39 @@ namespace Common.Formaters
 			str = str.Replace(".AGE", ".Age");
 			str = str.Replace(".SEX", ".Sex");
 			str = str.Replace(".HCPCS", ".Hcpcs");
+			str = str.Replace("ADMDATE", "AdmDate");
+			str = str.Replace("HCPCSRATES", "HcpcsRates");
+			str = str.Replace("HCPCS", "Hcpcs");
 
-
-
+			str = str.Replace("snCP_PRO_CPTEXCL", "SncpProCptexcl");
+			str = str.Replace("CPT_EXCL", "CptExcl");
 
 			str = str.Replace("GROSSCHGS", "GrossCharges");
+			str = str.Replace("Payer_Class", "PayerClass");
+
+			str = RemoveUnderscores(str);
+
+			var today = DateTime.MinValue;
 
 
-			var today = DateTime.Today;
+			return str;
+		}
 
+		public string RemoveUnderscores(string str)
+		{
+			if (str.Contains("_"))
+			{
+				//var foundIndexes = new List<int>();
 
+				long t1 = DateTime.Now.Ticks;
+				for (var i = str.IndexOf('_'); i > -1; i = str.IndexOf('_', i + 1))
+				{
+
+					//foundIndexes.Add(i);
+					var found = str[i + 1];
+					str = str.Replace("_" + found, found.ToString().ToUpper());
+				}
+			}
 			return str;
 		}
 	}

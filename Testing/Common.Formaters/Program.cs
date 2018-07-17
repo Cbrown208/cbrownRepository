@@ -11,17 +11,23 @@ namespace Common.Formaters
 			RunFormatDisplay();
 
 			var stringToFormat =
-				@"  select distinct patnum, PkgParamSyskey        
-   into #TEMP_CLAIM_DATA        
-   from TEMP_CLAIM_DATA        
-   where RIGHT('0000' + RTRIM(revcode), 4) BETWEEN '0100' AND '0219'        
-           
-   delete a        
-   from  TEMP_CLAIM_DATA a        
-   where a.pattype = 'I'        
-   and not exists         
-   (select 1 from #TEMP_CLAIM_DATA b         
-   WHERE a.patnum = b.patnum AND a.PkgParamSyskey = b.PkgParamSyskey )        ";
+				@" Select Distinct s.HCPCSRATES,  
+ COUNT(b.PATNUM) AS Cnt,   
+ SUM(CONVERT(money, b.GROSSCHGS)) AS GROSSCHGS,   
+ AVG(CONVERT(money, b.GROSSCHGS)) AS AVGCHGS,   
+ STDEV(CONVERT(money, b.GROSSCHGS)) AS STDEVCHGS,   
+ ' ' AS REVCODE,   
+ ' ' AS DRG,   
+ ' ' AS PROCCODE,   
+ ' ' AS DIAGCODE  
+into #tmp_sum  
+From #tmp_details b  
+ join #tmp_stdev s on b.HCPCSRATES = s.HCPCSRATES  
+ LEFT JOIN (SELECT CODE FROM #PrelimAnalysisParams WHERE NPI = '') q ON q.CODE = s.HCPCSRATES  
+where  b.GROSSCHGS BETWEEN s.LStdGrossChgs and s.HStdGrossChgs   
+ AND q.CODE IS NULL  
+GROUP BY s.HCPCSRATES  
+HAVING      (COUNT(b.PATNUM) >= @PatCount)   ";
 			var scrubbedString = Manager.FormatToUsqlString(stringToFormat);
 
 			Console.WriteLine("*** Formatted String ***");
