@@ -1,0 +1,24 @@
+﻿CREATE DATABASE IF NOT EXISTS TestReferenceDB;
+USE DATABASE TestReferenceDB;
+
+DROP TABLE IF EXISTS dbo.simpleTable;
+CREATE TABLE dbo.simpleTable
+(
+    EmpID int,
+    EmpName string,
+    DeptID int,
+    Salary int,
+    StartDate DateTime,
+    PhoneNumbers string,
+    INDEX clx_EmpID CLUSTERED(EmpID)
+    DISTRIBUTED BY HASH (EmpID) 
+);
+
+INSERT dbo.simpleTable
+VALUES
+(1, "Noah",   100, 10000, new DateTime(2012,05,31), "cell:030-0074321,office:030-0076545"),
+(3, "Liam",   100, 30000, new DateTime(2014,09,14), "cell:(5) 555-3932"),
+(6, "Emma",   200, 8000,  new DateTime(2014,03,08), (string)null),
+(7, "Jacob",  200, 8000,  new DateTime(2014,09,02), ""),
+(8, "Olivia", 200, 8000,  new DateTime(2013,12,11), "office:88.60.15.32"),
+(9, "Mason",  300, 50000, new DateTime(2016,01,01), "cell:(91) 555 22 82,office:(91) 555 91 99, home:(425) 555-2819");

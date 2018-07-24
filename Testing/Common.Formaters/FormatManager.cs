@@ -60,5 +60,10 @@ namespace Common.Formaters
 			var results = _dbStringFormatter.FormatUsqlString(str);
 			return results;
 		}
+		public string FormatSqlString(string str)
+		{
+			var results = _dbStringFormatter.FormatSqlString(str);
+			return results;
+		}
 	}
 }

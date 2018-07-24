@@ -56,7 +56,7 @@ namespace CopyDataUtil.DataAccess
 		public string BuildCheckStatement(string tableName, string column, string value)
 		{
 			var checkStatement = "BEGIN" + Environment.NewLine;
-			checkStatement = checkStatement + string.Format("IF NOT exists(select 1 from [{0}] where {1} = '{2}')", tableName, column, value);
+			checkStatement = checkStatement + string.Format("IF NOT EXISTS(SELECT 1 FROM [{0}] WHERE {1} = '{2}')", tableName, column, value);
 			checkStatement = checkStatement + Environment.NewLine;
 			return checkStatement;
 		}

@@ -1,0 +1,23 @@
+﻿@drivers = 
+    SELECT * FROM 
+        ( VALUES
+        (1, "Maria",     "Anders",   "12209",    "Germany"),
+        (3, "Antonio",   "Moreno",   "5023",     "Mexico"),
+        (4, "Thomas",    "Hardy",    "WA1 1DP",  "UK"),
+        (5, "Christina", "Berglund", "S-958 22", "Sweden"),
+        (8, "Martín",    "Sommer",   "28023",    "Spain")
+        ) AS T(id, first_name, last_name, zipcode, country);
+
+@drivers_processed =
+    PROCESS @drivers
+    PRODUCE name string,
+            id int,
+            zipcode string,
+            country string
+    READONLY id, zipcode, country
+    REQUIRED first_name, last_name
+    USING new ReferenceGuide_Examples.NameProcessor();
+
+OUTPUT @drivers_processed
+TO "/Output/ReferenceGuide/StatementsAndExpressions/PrimaryRowsetExpressions/Process/drivers_processed.txt"
+USING Outputters.Tsv(quoting:false);

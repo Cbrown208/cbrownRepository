@@ -45,8 +45,38 @@ namespace CopyDataUtil.DataAccess
 			using (IDbConnection dbConnection = _dbConnection)
 			{
 				dbConnection.Open();
-				var results = dbConnection.Query<ColumnInfoSchema>(@"SELECT * FROM Information_Schema.Columns where Table_Name = '"+ tableName +"' ORDER BY Ordinal_Position").ToList();
+				var results = dbConnection.Query<ColumnInfoSchema>(@"SELECT * FROM Information_Schema.Columns where Table_Name = '"+ tableName + "' ORDER BY Column_Name").ToList();
+				return results;
+			}
+		}
 
+		public List<ColumnInfoSchema> GetColumnsNamesForTable(string tableName, List<string> columnsToSkip)
+		{
+			RenewConnection();
+			using (IDbConnection dbConnection = _dbConnection)
+			{
+				var queryString = @"SELECT * FROM Information_Schema.Columns where Table_Name = '" + tableName+ "' ";
+				if (columnsToSkip != null && columnsToSkip.Any())
+				{
+					queryString = queryString + "AND (";
+					var i = 0;
+					foreach (var col in columnsToSkip)
+					{
+						if (i < columnsToSkip.Count && i != 0)
+						{
+							queryString = queryString + "OR";
+						}
+
+						queryString = queryString + " Column_Name NOT LIKE '%" + col + "%' ";
+						if (i == columnsToSkip.Count)
+						{
+							queryString = queryString + ")";
+						}
+					}
+				}
+				queryString = queryString + @" ORDER BY Column_Name";
+				dbConnection.Open();
+				var results = dbConnection.Query<ColumnInfoSchema>(queryString).ToList();
 				return results;
 			}
 		}
@@ -151,6 +181,24 @@ namespace CopyDataUtil.DataAccess
 				var results = dbConnection.Execute(insertQuery);
 				return "";
 			}
+		}
+
+		public string BuildIdempotentInsertScript(string tableName, List<ColumnInfoSchema> columnNames, List<dynamic> tableDataList)
+		{
+			var resultQuery = "";
+			var insertStatement = _queryBuilder.BuildInsertQuery(tableName, columnNames);
+			var endStatement = _queryBuilder.BuildEndStatement();
+			foreach (var data in tableDataList)
+			{
+				var queryValueList = "";
+
+				var checkStatement = _queryBuilder.BuildCheckStatement(tableName, "ZLEVEL", data.ZLEVEL);
+				var query = _queryBuilder.BuildInsertValueString(columnNames);
+
+				queryValueList = queryValueList + string.Format(query, data.ZLEVEL,data.ZVALUE);
+				resultQuery = resultQuery + checkStatement + insertStatement + queryValueList + endStatement;
+			}
+			return resultQuery;
 		}
 	}
 }

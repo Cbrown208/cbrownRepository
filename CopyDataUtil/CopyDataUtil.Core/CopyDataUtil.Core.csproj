@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mappings\BulkCopyDetails.cs" />
     <Compile Include="Mappings\Configuration.cs" />
     <Compile Include="Mappings\RootObject.cs" />
     <Compile Include="Mappings\SourceDestinationColumnMapper.cs" />
@@ -57,6 +58,7 @@
     <None Include="Mappings\SourceDestinationColumnMappings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Mappings\TempMappings.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

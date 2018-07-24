@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{182E2583-ECAD-465B-BB50-91101D7C24CE}") = "USQLTestApp", "USQLTestApp\USQLTestApp.usqlproj", "{C2A3C0F9-A08D-4124-8205-0E80D8938F2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USqlTestApp.Core", "USqlTestApp.Core\USqlTestApp.Core.csproj", "{5C61D713-03BF-4062-B724-D4EECBCA9DBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{C2A3C0F9-A08D-4124-8205-0E80D8938F2D}.Release|x64.Build.0 = Release|x64
 		{C2A3C0F9-A08D-4124-8205-0E80D8938F2D}.Release|x86.ActiveCfg = Release|x86
 		{C2A3C0F9-A08D-4124-8205-0E80D8938F2D}.Release|x86.Build.0 = Release|x86
+		{5C61D713-03BF-4062-B724-D4EECBCA9DBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C61D713-03BF-4062-B724-D4EECBCA9DBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C61D713-03BF-4062-B724-D4EECBCA9DBB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5C61D713-03BF-4062-B724-D4EECBCA9DBB}.Debug|x64.Build.0 = Debug|Any CPU
+		{5C61D713-03BF-4062-B724-D4EECBCA9DBB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5C61D713-03BF-4062-B724-D4EECBCA9DBB}.Debug|x86.Build.0 = Debug|Any CPU
+		{5C61D713-03BF-4062-B724-D4EECBCA9DBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C61D713-03BF-4062-B724-D4EECBCA9DBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C61D713-03BF-4062-B724-D4EECBCA9DBB}.Release|x64.ActiveCfg = Release|Any CPU
+		{5C61D713-03BF-4062-B724-D4EECBCA9DBB}.Release|x64.Build.0 = Release|Any CPU
+		{5C61D713-03BF-4062-B724-D4EECBCA9DBB}.Release|x86.ActiveCfg = Release|Any CPU
+		{5C61D713-03BF-4062-B724-D4EECBCA9DBB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,25 +10,11 @@ namespace Common.Formaters
 		{
 			RunFormatDisplay();
 
+			// String to Format
 			var stringToFormat =
-				@" Select Distinct s.HCPCSRATES,  
- COUNT(b.PATNUM) AS Cnt,   
- SUM(CONVERT(money, b.GROSSCHGS)) AS GROSSCHGS,   
- AVG(CONVERT(money, b.GROSSCHGS)) AS AVGCHGS,   
- STDEV(CONVERT(money, b.GROSSCHGS)) AS STDEVCHGS,   
- ' ' AS REVCODE,   
- ' ' AS DRG,   
- ' ' AS PROCCODE,   
- ' ' AS DIAGCODE  
-into #tmp_sum  
-From #tmp_details b  
- join #tmp_stdev s on b.HCPCSRATES = s.HCPCSRATES  
- LEFT JOIN (SELECT CODE FROM #PrelimAnalysisParams WHERE NPI = '') q ON q.CODE = s.HCPCSRATES  
-where  b.GROSSCHGS BETWEEN s.LStdGrossChgs and s.HStdGrossChgs   
- AND q.CODE IS NULL  
-GROUP BY s.HCPCSRATES  
-HAVING      (COUNT(b.PATNUM) >= @PatCount)   ";
+				@"     ";
 			var scrubbedString = Manager.FormatToUsqlString(stringToFormat);
+			var sqlScrubbedString = Manager.FormatSqlString(stringToFormat);
 
 			Console.WriteLine("*** Formatted String ***");
 			Console.WriteLine(Environment.NewLine);

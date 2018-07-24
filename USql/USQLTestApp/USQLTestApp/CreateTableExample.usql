@@ -1,0 +1,35 @@
+﻿CREATE DATABASE IF NOT EXISTS SampleDBTutorials;
+
+//********* Create Empty Table **************/ 
+DROP TABLE IF EXISTS dbo.CpConfidenceLevels;
+CREATE TABLE dbo.CpConfidenceLevels
+( 	
+ZLevel string,
+ZValue string,
+  INDEX clx_ZLevel
+  CLUSTERED(ZLevel ASC)
+  DISTRIBUTED BY HASH(ZLevel)
+);
+
+//********* Create Table From File **************/
+DECLARE EXTERNAL @ClientId string = "52060";
+DECLARE @tableName_CpConfidenceLevels string = "CpConfidenceLevels";
+DECLARE @dir_CpConfidenceLevels string = "/ServiceCategory/" + @ClientId + "/" + @tableName_CpConfidenceLevels + "/" + @tableName_CpConfidenceLevels + "." + @ClientId;
+DECLARE @file_set_path_CpConfidenceLevels string = @dir_CpConfidenceLevels + ".tsv";
+
+@data_CpConfidenceLevels =
+    EXTRACT ZLevel string,
+			ZValue string
+    FROM @file_set_path_CpConfidenceLevels
+    USING Extractors.Tsv(nullEscape:"\\N");
+
+DROP TABLE IF EXISTS dbo.CpConfidenceLevels;
+CREATE TABLE dbo.CpConfidenceLevels
+(
+    INDEX clx_Nsyskey
+    CLUSTERED(Nsyskey ASC)
+    DISTRIBUTED BY
+    HASH(Nsyskey)
+) AS
+SELECT *
+FROM @data_CpConfidenceLevels;

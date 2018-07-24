@@ -1,0 +1,83 @@
+{
+	"Configurations": [
+		{
+			"SourceTable": "GLT1DET",
+			"DestinationTable": "Glt1det",
+			"StagingTable": null,
+			"SourceDestinationColumnMapping": [
+				{
+					"SourceColumn": "BASEPRICE",
+					"DestinationColumn": "BasePrice"
+				},
+				{
+					"SourceColumn": "CODEFROM",
+					"DestinationColumn": "CodeFrom"
+				},
+				{
+					"SourceColumn": "CODETO",
+					"DestinationColumn": "CodeTo"
+				},
+				{
+					"SourceColumn": "CODETYPE",
+					"DestinationColumn": "CodeType"
+				},
+				{
+					"SourceColumn": "EFF_DATE",
+					"DestinationColumn": "EffDate"
+				},
+				{
+					"SourceColumn": "GLTABLE1",
+					"DestinationColumn": "Gltable1"
+				},
+				{
+					"SourceColumn": "MDATE",
+					"DestinationColumn": "Mdate"
+				},
+				{
+					"SourceColumn": "MODIFIER",
+					"DestinationColumn": "Modifier"
+				},
+				{
+					"SourceColumn": "MODIFIER2",
+					"DestinationColumn": "Modifier2"
+				},
+				{
+					"SourceColumn": "MODIFIER3",
+					"DestinationColumn": "Modifier3"
+				},
+				{
+					"SourceColumn": "MODIFIER4",
+					"DestinationColumn": "Modifier4"
+				},
+				{
+					"SourceColumn": "MODIFIER5",
+					"DestinationColumn": "Modifier5"
+				},
+				{
+					"SourceColumn": "MORG",
+					"DestinationColumn": "Morg"
+				},
+				{
+					"SourceColumn": "MUSER",
+					"DestinationColumn": "Muser"
+				},
+				{
+					"SourceColumn": "NSYSKEY",
+					"DestinationColumn": "Nsyskey"
+				},
+				{
+					"SourceColumn": "PROCOPT",
+					"DestinationColumn": "Procopt"
+				},
+				{
+					"SourceColumn": "REVCODE",
+					"DestinationColumn": "RevCode"
+				},
+				{
+					"SourceColumn": "SYSKEY",
+					"DestinationColumn": "Syskey"
+				}
+			]
+		}
+	]
+}

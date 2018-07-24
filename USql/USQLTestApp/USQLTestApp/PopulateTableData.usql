@@ -1,55 +1,55 @@
-﻿CREATE DATABASE IF NOT EXISTS SampleDBTutorials;
+﻿	CREATE DATABASE IF NOT EXISTS SampleDBTutorials;
 
-DROP FUNCTION IF EXISTS SampleDBTutorials.dbo.WeblogsView;
+	DROP FUNCTION IF EXISTS SampleDBTutorials.dbo.WeblogsView;
 
-//create TVF WeblogsView on space-delimited website log data
-CREATE FUNCTION SampleDBTutorials.dbo.WeblogsView()
-RETURNS @result TABLE
-(
-    s_date DateTime,
-    s_time string,
-    s_sitename string,
-    cs_method string, 
-    cs_uristem string,
-    cs_uriquery string,
-    s_port int,
-    cs_username string, 
-    c_ip string,
-    cs_useragent string,
-    cs_cookie string,
-    cs_referer string, 
-    cs_host string,
-    sc_status int,
-    sc_substatus int,
-    sc_win32status int, 
-    sc_bytes int,
-    cs_bytes int,
-    s_timetaken int
-)
-AS
-BEGIN
+	//create TVF WeblogsView on space-delimited website log data
+	CREATE FUNCTION SampleDBTutorials.dbo.WeblogsView()
+	RETURNS @result TABLE
+	(
+		s_date DateTime,
+		s_time string,
+		s_sitename string,
+		cs_method string, 
+		cs_uristem string,
+		cs_uriquery string,
+		s_port int,
+		cs_username string, 
+		c_ip string,
+		cs_useragent string,
+		cs_cookie string,
+		cs_referer string, 
+		cs_host string,
+		sc_status int,
+		sc_substatus int,
+		sc_win32status int, 
+		sc_bytes int,
+		cs_bytes int,
+		s_timetaken int
+	)
+	AS
+	BEGIN
 
-    @result = EXTRACT
-        s_date DateTime,
-        s_time string,
-        s_sitename string,
-        cs_method string,
-        cs_uristem string,
-        cs_uriquery string,
-        s_port int,
-        cs_username string,
-        c_ip string,
-        cs_useragent string,
-        cs_cookie string,
-        cs_referer string,
-        cs_host string,
-        sc_status int,
-        sc_substatus int,
-        sc_win32status int,
-        sc_bytes int,
-        cs_bytes int,
-        s_timetaken int
-    FROM @"/Samples/Data/WebLog.log"
-    USING Extractors.Text(delimiter:' ');
+		@result = EXTRACT
+			s_date DateTime,
+			s_time string,
+			s_sitename string,
+			cs_method string,
+			cs_uristem string,
+			cs_uriquery string,
+			s_port int,
+			cs_username string,
+			c_ip string,
+			cs_useragent string,
+			cs_cookie string,
+			cs_referer string,
+			cs_host string,
+			sc_status int,
+			sc_substatus int,
+			sc_win32status int,
+			sc_bytes int,
+			cs_bytes int,
+			s_timetaken int
+		FROM @"/Samples/Data/WebLog.log"
+		USING Extractors.Text(delimiter:' ');
 
-END;
+	END;

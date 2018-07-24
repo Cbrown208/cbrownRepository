@@ -1,0 +1,8 @@
+﻿@result =
+    SELECT EmpName,
+           USQLTestApp.CodeBehindExampleClass.myFirstFunction(EmpName) AS myFirstFunction_CB
+    FROM TestReferenceDB.dbo.simpleTable;
+
+OUTPUT @result
+TO "/Output/CodeBehindExample/CodeBehindExample_Cb.txt"
+USING Outputters.Tsv();

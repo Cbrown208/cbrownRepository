@@ -21,25 +21,25 @@ namespace CopyDataUtil.DataAccess
             this.auditLogId = auditLogId;
         }
 
-        public void Copy(string sourceConnectionString, string destinationConnectionString, string sourceTable, string destinationTable, List<SourceDestinationColumnMapping> columnMapping, int facilityId, string fromDate)
+        public void Copy(BulkCopyDetails copyDetails)
         {
             try
             {
                 var batchSize = 10000;
                 var notifyAfterCount = 500;
-
-                var sqlString = GetSelectQuery(sourceTable, columnMapping, fromDate, facilityId);
-                var totalRowCount = GetTotalRowCount(sourceConnectionString, sourceTable, fromDate, facilityId);
+				var sqlString = GetSelectQuery(copyDetails.Config.SourceTable, copyDetails.Config.SourceDestinationColumnMapping);
+                var totalRowCount = GetTotalRowCount(copyDetails.SourceConnectionString, copyDetails.Config.SourceTable, null);
+				Console.WriteLine($"Attempting to Copy {totalRowCount:n} rows.");
 
                 //Logger.Info("Bulk Insert Started for Table " + destinationTable + " at {0}", DateTime.Now);
 
-                using (SqlConnection sourceConnection = new SqlConnection(sourceConnectionString))
+                using (SqlConnection sourceConnection = new SqlConnection(copyDetails.SourceConnectionString))
                 {
                     SqlCommand cmd = new SqlCommand(sqlString.ToString(), sourceConnection);
                     sourceConnection.Open();
                     using (SqlDataReader dataReader = cmd.ExecuteReader())
                     {
-                        using (SqlConnection destinationConnection = new SqlConnection(destinationConnectionString))
+                        using (SqlConnection destinationConnection = new SqlConnection(copyDetails.DestinationConnectionString))
                         {
                             using (SqlBulkCopy bulkCopy = new SqlBulkCopy(destinationConnection))
                             {
@@ -47,13 +47,13 @@ namespace CopyDataUtil.DataAccess
                                 bulkCopy.NotifyAfter = notifyAfterCount;
 
                                 bulkCopy.SqlRowsCopied += new SqlRowsCopiedEventHandler(BulkCopy_SqlRowsCopied);
-                                bulkCopy.DestinationTableName = destinationTable;
+                                bulkCopy.DestinationTableName = copyDetails.Config.DestinationTable;
 
-                                foreach (var mapping in columnMapping)
+                                foreach (var mapping in copyDetails.Config.SourceDestinationColumnMapping)
                                 {
                                     bulkCopy.ColumnMappings.Add(mapping.SourceColumn, mapping.DestinationColumn);
                                 }
-                                bulkCopy.ColumnMappings.Add("FacilityId", "FacilityId");
+                                //bulkCopy.ColumnMappings.Add("FacilityId", "FacilityId");
 
                                 destinationConnection.Open();
                                 bulkCopy.WriteToServer(dataReader);
@@ -68,14 +68,13 @@ namespace CopyDataUtil.DataAccess
                         }
                     }
                 }
+	            Console.WriteLine($"Number of Rows Successfully Copied: {totalRowCount:n}");
 
-                //Logger.Info("Bulk Insert End for Table " + destinationTable + " at {0}", DateTime.Now);
-            }
+				//Logger.Info("Bulk Insert End for Table " + destinationTable + " at {0}", DateTime.Now);
+			}
             catch (Exception e)
             {
 				Console.WriteLine(e.Message);
-                //Logger.Error(e.Message);
-                //Logger.Error(e.InnerException);
                 throw;
             }
         }
@@ -85,7 +84,7 @@ namespace CopyDataUtil.DataAccess
             //_etlProcessorRepository.UpdateServiceCategoryETLAuditLogEntry(auditLogId, -1, "", e.RowsCopied.ToString(), null);
         }
 
-        private int GetTotalRowCount(string sourceConnectionString, string sourceTable, string fromDate, int facilityId)
+        private int GetTotalRowCount(string sourceConnectionString, string sourceTable, string fromDate)
         {
             var query = new StringBuilder("Select Count(*)");
 
@@ -117,27 +116,24 @@ namespace CopyDataUtil.DataAccess
 
         }
 
-        private StringBuilder GetSelectQuery(string sourceTable, List<SourceDestinationColumnMapping> columnMapping, string fromDate, int facilityId)
+        private StringBuilder GetSelectQuery(string sourceTable, List<SourceDestinationColumnMapping> columnMapping)
         {
             var query = new StringBuilder("Select ");
-
+	        var count = columnMapping.Count;
+	        var i = 0;
             foreach (var mapping in columnMapping)
             {
                 query.Append(mapping.SourceColumn);
-                query.Append(",");
-            }
+	            //query.Append(",");
+				if (i < count - 1)
+				{
+					query.Append(",");
+				}
+				i = i + 1;
+			}
 
-            query.Append(facilityId).Append(" as FacilityId");
+           // query.Append(facilityId).Append(" as FacilityId");
             query.Append(" from ").Append(sourceTable);
-
-            if (!string.IsNullOrWhiteSpace(fromDate))
-            {
-                if (string.Equals(sourceTable, "dbo.BillPayrClassSmry", StringComparison.InvariantCultureIgnoreCase))
-                    query.Append(" where MDATE_TIME > ").Append("'" + fromDate + "'");
-                else
-                    query.Append(" where CAST(MDATE as datetime) > ").Append("'" + fromDate + "'");
-            }
-
             return query;
         }
     }

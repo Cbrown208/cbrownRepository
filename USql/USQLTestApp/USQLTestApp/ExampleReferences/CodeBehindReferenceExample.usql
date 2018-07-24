@@ -1,0 +1,53 @@
+﻿/************* Create Assembly Reference *************/
+
+USE DATABASE TestReferenceDB;
+DROP ASSEMBLY IF EXISTS myFirstAssembly;
+
+// modify with your actual path to myFirstAssembly.dll
+CREATE ASSEMBLY myFirstAssembly
+FROM @"C:\Dev\cbrownRepository\USql\USQLTestApp\USqlTestApp.Core\bin\Debug\USqlTestApp.Core.dll";
+
+USE DATABASE TestReferenceDB;
+
+/************* Method 1 *************/
+REFERENCE ASSEMBLY myFirstAssembly;
+
+@result =
+    SELECT "Method 1" AS Method,
+            EmpName,
+            USqlTestApp.Core.CodeBehindReferenceClass.MyFirstFunction(EmpName) AS MyFirstFunction_AR
+    FROM TestReferenceDB.dbo.simpleTable;
+
+OUTPUT @result
+TO "/Output/CodeBehindExample/MyFirstFunction_AR1.txt"
+USING Outputters.Tsv();
+
+
+/************* Method 2 *************/
+REFERENCE ASSEMBLY myFirstAssembly;
+USING  USqlTestApp.Core; // changes here
+
+@result =
+    SELECT "Method 2" AS Method,
+            EmpName,
+            CodeBehindReferenceClass.MyFirstFunction(EmpName) AS MyFirstFunction_AR
+    FROM TestReferenceDB.dbo.simpleTable;
+
+OUTPUT @result
+TO "/Output/CodeBehindExample/MyFirstFunction_AR2.txt"
+USING Outputters.Tsv();
+
+
+/************* Method 3 *************/
+REFERENCE ASSEMBLY myFirstAssembly;
+USING xx = USqlTestApp.Core.CodeBehindReferenceClass; // changes here
+
+@result =
+    SELECT "Method 3" AS Method,
+            EmpName,
+            xx.MyFirstFunction(EmpName) AS MyFirstFunction_AR
+    FROM TestReferenceDB.dbo.simpleTable;
+
+OUTPUT @result
+TO "/Output/CodeBehindExample/MyFirstFunction_AR3.txt"
+USING Outputters.Tsv();

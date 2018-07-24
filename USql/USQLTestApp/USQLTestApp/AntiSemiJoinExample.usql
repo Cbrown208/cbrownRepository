@@ -1,0 +1,85 @@
+﻿//The following query finds all departments without an employee
+
+//Setup Data
+@employees = SELECT *  
+               FROM (VALUES   
+                      ("Rafferty", (int?) 31)  
+                    , ("Jones", (int?) 33)  
+                    , ("Heisenberg", (int?) 33)  
+                    , ("Robinson", (int?) 34)  
+                    , ("Smith", (int?) 34)  
+                    , ("Williams", (int?) null)) AS E(EmpName, DepId);  
+
+@departments = SELECT *  
+                FROM (VALUES  
+                       ((int) 31, "Sales")  
+                     , ((int) 33, "Engineering")  
+                     , ((int) 34, "Clerical")  
+                     , ((int) 35, "Marketing")) AS D(DepId, DepName);  
+
+/********************************* LEFT ANTI SEMI JOIN *********************************/
+// The following query finds all employees that are not in a valid department by 
+// finding all the employees in the left @employees rowset 
+// that do not have a depID that is listed in the right @departments rowset):
+
+//Sql Query
+// SELECT * FROM employees 
+// WHERE DeptId NOT IN (SELECT DepId FROM departments)
+
+// U-Sql Query
+@emps_notin_valid_dept =  
+    SELECT e.EmpName, e.DepId  
+    FROM @employees AS e  
+         LEFT ANTISEMIJOIN (SELECT (int?) DepId AS DepId, DepName FROM @departments) AS d  
+         ON e.DepId == d.DepId;  
+
+
+OUTPUT @emps_notin_valid_dept   
+TO "/output/LeftAntiSemiJoinOutput.csv"  
+USING Outputters.Csv();
+
+
+/******************************** RIGHT ANTI SEMI JOIN *********************************/
+//Sql query
+//SELECT * FROM departments
+//WHERE DepId NOT in (SELECT DepId FROM employees)
+
+// U-SQL Query
+@depts_without_emps =  
+    SELECT d.DepName, d.DepId  
+    FROM @employees AS e  
+         RIGHT ANTISEMIJOIN (SELECT (int?) DepId AS DepId, DepName FROM @departments) AS d   
+         ON e.DepId == d.DepId;  
+
+OUTPUT @depts_without_emps   
+TO "/output/RightAntiSemiJoinOutput.csv"  
+USING Outputters.Csv();
+
+@employeesCompare = 
+    SELECT * FROM 
+        ( VALUES
+        (1, "Noah",   100, (int?)10000, new DateTime(2012,05,31), "cell:030-0074321,office:030-0076545"),
+        (2, "Sophia", 100, (int?)15000, new DateTime(2012,03,19), "cell:(5) 555-4729,office:(5) 555-3745"),
+        (3, "Liam",   100, (int?)30000, new DateTime(2014,09,14), "cell:(5) 555-3932"),
+        (4, "Amy",    100, (int?)35000, new DateTime(1999,02,27), "cell:(171) 555-7788,office:(171) 555-6750, home:(425) 555-6238"),
+        (5, "Justin", 100, (int?)15000, new DateTime(2015,01,12), "cell:0921-12 34 65,office:0921-12 34 67"),
+        (6, "Emma",   200, (int?)8000,  new DateTime(2014,03,08), (string)null),
+        (7, "Jacob",  200, (int?)8000,  new DateTime(2014,09,02), ""),
+        (8, "Olivia", 200, (int?)8000,  new DateTime(2013,12,11), "cell:88.60.15.31,office:88.60.15.32"),
+        (9, "Mason",  300, (int?)50000, new DateTime(2016,01,01), "cell:(91) 555 22 82,office:(91) 555 91 99, home:(425) 555-2819"),
+        (10, "Ava",   400, (int?)15000, new DateTime(2014,09,14), "cell:91.24.45.40,office:91.24.45.41"),
+        (11, "Ethan", 400, (int?)9000,  new DateTime(2015,08,22), "cell:(604) 555-4729,office:(604) 555-3745"),
+        (12, "David", 800, (int?)100,   new DateTime(2016,11,01), "cell:(171) 555-1212"),
+        (13, "Andrew", 100, (int?)null, new DateTime(1995,07,16), "cell:(1) 135-5555,office:(1) 135-4892"),
+        (14, "Jennie", 100, (int?)34000, new DateTime(2000,02,12), "cell:(5) 555-3392,office:(5) 555-7293")
+        ) AS T(EmpID, EmpName, DeptID, Salary, StartDate, PhoneNumbers);
+
+@result =
+    SELECT *
+    FROM @employeesCompare
+    WHERE EmpName.CompareTo("J") >= 0 AND EmpName.Substring(0, 1).CompareTo("N") <= 0;
+
+OUTPUT @result
+TO "/Output/ReferenceGuide/BuiltInFunctions/CSharpFunctions/CompareToB.csv"
+ORDER BY EmpName ASC
+USING Outputters.Csv();
