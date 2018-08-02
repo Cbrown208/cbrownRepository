@@ -17,8 +17,15 @@ namespace CopyDataUtil.Svc
 
 			/***** Bulk Copy *****/
 			/***** Get Mappings File Setup *****/
-			var sourceTableName = "CpDrg";
-			var destinationTableName = "CpDrg";
+			var sourceTableName = "CPPKG_PARAMS_DTLS";
+			var destinationTableName = "CpPkgParamsDtls";
+
+			sourceTableName = "CPPACKAGE_PARAMS";
+			destinationTableName = "CpPackageParams";
+
+			sourceTableName = "CP_REVCODE_DETAILS";
+			destinationTableName = "CpRevcodeDetails";
+
 			var columnsToSkip = new List<string> { "MTIME" };
 			
 			//dbCopyManager.CreateBulkCopyMappingJson(sourceTableName, destinationTableName, columnsToSkip);
@@ -29,8 +36,12 @@ namespace CopyDataUtil.Svc
 
 			if (input != null && input.ToLower() == "y")
 			{
+				Console.WriteLine("Would you like to Temp Mappings file? Y:Yes N:no");
+				var mappingInput = Console.ReadLine();
+				var useTempMappings = mappingInput != null && mappingInput.ToLower() == "y";
+
 				/***** Copy *****/
-				dbCopyManager.BulkCopyDatabaseData();
+				dbCopyManager.BulkCopyDatabaseData(useTempMappings);
 				Console.ReadLine();
 			}
 			//dbCopyManager.CopyDataBaseData();

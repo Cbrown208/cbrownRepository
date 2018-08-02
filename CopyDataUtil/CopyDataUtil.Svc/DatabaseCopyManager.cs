@@ -85,7 +85,8 @@ namespace CopyDataUtil.Svc
 		public string CreateBulkCopyMappingJson(string sourceTableName, string destinationTableName, List<string> columnsToSkip)
 		{
 			//var sourceConnectionString = @"Data Source = LEWVQCMGDB02.nthrivenp.nthcrpnp.com\VAL_GLOBAL01; Initial Catalog = CBO_Global; Integrated Security = True;";
-			var sourceConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True;";
+			//var sourceConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True;";
+			var sourceConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHSC_Contract; Integrated Security = True;";
 			var destinationConnectionString = @"Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog =SC_Centura; Integrated Security = True;";
 			//var sourceTableName = "CP_DTPROC";
 			//var destinationTableName = "CpDtProc";
@@ -130,10 +131,11 @@ namespace CopyDataUtil.Svc
 			return jsonOutput;
 		}
 
-		public string BulkCopyDatabaseData()
+		public string BulkCopyDatabaseData(bool useTempMappings)
 		{
 			//var sourceConnectionString = @"Data Source = LEWVQCMGDB02.nthrivenp.nthcrpnp.com\VAL_GLOBAL01; Initial Catalog = CBO_Global; Integrated Security = True;";
-			var sourceConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True;";
+			//var sourceConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True;";
+			var sourceConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHSC_Contract; Integrated Security = True;";
 			var destinationConnectionString = @"Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog =SC_Centura; Integrated Security = True;";
 			var bulkHelper = new BulkCopyHelper();
 
@@ -143,7 +145,8 @@ namespace CopyDataUtil.Svc
 				DestinationConnectionString = destinationConnectionString,
 				Config = new Configuration()
 			};
-			var sourceDestinationTableMappings = SourceDestinationColumnMapper.GetMappings();
+
+			var sourceDestinationTableMappings = useTempMappings ? SourceDestinationColumnMapper.GetTempMappings() : SourceDestinationColumnMapper.GetMappings();
 
 			foreach (var mappings in sourceDestinationTableMappings.Configurations)
 			{
@@ -154,16 +157,16 @@ namespace CopyDataUtil.Svc
 
 				var copyTimer = new Stopwatch();
 				copyTimer.Start();
-				Console.WriteLine("Copy Data from "+ mappings.SourceTable );
-				Console.WriteLine("Copy Data to   " + mappings.DestinationTable);
+				Console.WriteLine("Copy From: "+ mappings.SourceTable );
+				Console.WriteLine("Copy To:   " + mappings.DestinationTable);
 				bulkHelper.Copy(copyDetails);
 				copyTimer.Stop();
-				Console.WriteLine("Copy Data Finished Successfully!");
+				Console.WriteLine("Result:     Successful");
 
 				// Format and display the TimeSpan value.
 				var elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",copyTimer.Elapsed.Hours, copyTimer.Elapsed.Minutes, copyTimer.Elapsed.Seconds,
 					copyTimer.Elapsed.Milliseconds / 10);
-				Console.WriteLine("RunTime " + elapsedTime);
+				Console.WriteLine("RunTime:   " + elapsedTime + Environment.NewLine);
 			}
 
 			return "Testing";

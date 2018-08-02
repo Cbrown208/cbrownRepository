@@ -33,6 +33,8 @@
     <Script Include="MultiFileExample.usql" />
     <Script Include="PopulateTableData.usql" />
     <Script Include="Script.usql" />
+    <Script Include="StoredProcedure\StoredProcedureEx.usql" />
+    <Script Include="StoredProcedure\StoredProcedureSetup.usql" />
     <Script Include="Testing\cbGetCboTesting.usql" />
     <Script Include="Testing\cbMultiFileTest.usql" />
     <Script Include="Testing\CreateAllTables.usql" />
@@ -69,6 +71,12 @@
     <ScriptCode Include="Script.usql.cs">
       <DependentUpon>Script.usql</DependentUpon>
     </ScriptCode>
+    <ScriptCode Include="StoredProcedure\StoredProcedureEx.usql.cs">
+      <DependentUpon>StoredProcedure\StoredProcedureEx.usql</DependentUpon>
+    </ScriptCode>
+    <ScriptCode Include="StoredProcedure\StoredProcedureSetup.usql.cs">
+      <DependentUpon>StoredProcedure\StoredProcedureSetup.usql</DependentUpon>
+    </ScriptCode>
     <ScriptCode Include="Testing\cbGetCboTesting.usql.cs">
       <DependentUpon>Testing\cbGetCboTesting.usql</DependentUpon>
     </ScriptCode>
@@ -81,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ExampleReferences" />
+    <Folder Include="StoredProcedure" />
     <Folder Include="Testing" />
   </ItemGroup>
   <!--target for CICD build added by project migration tool-->

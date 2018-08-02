@@ -9,7 +9,7 @@ namespace Common.Formaters
 		{
 			var sqlStringList = new List<string>
 			{
-				" all ", " and ", " any ", " as ", " between ","Case ", " char ", " count(", " create ","Create ", " cross ","dateadd(", " datetime ","declare ","Declare ","delete ", "distinct "," else "," Else ", " end ", " exec ", " exists ", "from ", "getdate()"," group by ","group by ", " if (","if("," if(","If ","isnull(", " in ", " index ", " inner ", " insert ", " int ", " into ", " is ", " join ", " left ", " like ","ltrim(", " not ", " nvarchar", " on ", " or ", " order by ","order by ", " outer "," Procedure "," procedure ", " right ","replace(","rtrim(", "select ","Select ", " set "," Set ", " table ", " then ", " union ", " varchar", " when ", " where ", " xml "
+				" all ", " and ", " any ", " as ", " between ","Case ", " char ", " count(", " create ","Create ", " cross ","dateadd(", " datetime ","declare ","Declare ","delete ", "distinct "," else "," Else ", " end ", " exec ", " exists ", "from ", "getdate()"," group by ","group by ", " if (","if("," if(","If ","isnull(", " in ", " index ", " inner "," Inner ", " insert ", " int ", " into ", " is ", " join ", " left ", " like ","ltrim(", " not ", " nvarchar", " on ", " or ", " order by ","order by ", " outer "," Procedure "," procedure ", " right ","replace(","rtrim(", "select ","Select ", " set "," Set ", " table ", " then ", " union ", " varchar", " when ", " where ", " xml "
 			};
 			return sqlStringList;
 		}
@@ -100,6 +100,20 @@ namespace Common.Formaters
 			str = str.Replace("Payer_Class", "PayerClass");
 			str = str.Replace("ZLEVEL", "ZLevel");
 			str = str.Replace("ZVALUE", "ZValue");
+
+			str = str.Replace("HcpcsRATES", "HcpcsRates");
+			str = str.Replace("PHYAVGCHGS", "PhyAvgChgs");
+			str = str.Replace("PHYSTDEVCHGS", "PhyStdevChgs");
+			str = str.Replace(".CODE", ".Code");
+			str = str.Replace("PHYSTYPE", "PhysType");
+			str = str.Replace("BILLPhys", "BillPhys");
+			str = str.Replace("PHYSNAMEAS", "PhysNameAs");
+			str = str.Replace("PHYSNAME", "PhysName");
+			str = str.Replace("PHYCNT", "PhyCnt");
+
+			str = str.Replace("NPI", "Npi");
+			str = str.Replace("PHYS", "Phys");
+			str = str.Replace("PHY", "Phy");
 
 			str = RemoveUnderscores(str);
 

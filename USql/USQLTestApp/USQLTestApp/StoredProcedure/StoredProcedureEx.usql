@@ -1,0 +1,77 @@
+﻿/* Procedure without Params 
+The following example creates a stored procedure called myFirstStoredProc that outputs 
+the content of somePeople to a CSV file.
+*/
+DROP PROCEDURE IF EXISTS TestReferenceDB.dbo.myFirstStoredProc;
+CREATE PROCEDURE TestReferenceDB.dbo.myFirstStoredProc()  
+AS  
+BEGIN 
+    @result =  
+        SELECT *  
+        FROM TestReferenceDB.dbo.somePeople;  
+
+    OUTPUT @result  
+    TO "/Output/StoredProcedure/myFirstStoredProc.csv"  
+    USING Outputters.Csv();    
+END;
+
+
+/* Procedure with Params
+The following example creates a stored procedure called myStoredProcWithParameters that 
+outputs the content of somePeople that matches the city and date passed to the procedure.
+*/
+DROP PROCEDURE IF EXISTS TestReferenceDB.dbo.myStoredProcWithParameters;
+CREATE PROCEDURE TestReferenceDB.dbo.myStoredProcWithParameters(@deptID int, @startDate DateTime)
+AS  
+BEGIN 
+@result =  
+    SELECT *  
+    FROM TestReferenceDB.dbo.somePeople
+    WHERE DeptID == @deptID  
+    AND StartDate == @startDate;  
+
+    OUTPUT @result  
+    TO "/Output/StoredProcedure/myStoredProcWithParameters.csv"  
+    USING Outputters.Csv();  
+END;
+
+/* getPeople Procedure
+The following example creates a stored procedure called getPeople that outputs the content of 
+somePeople that matches the array of DeptID values passed to the procedure. In addition, you 
+can pass the location of the output to the @filePath parameter. A default value for @filePath is assigned.
+*/
+DROP PROCEDURE IF EXISTS TestReferenceDB.dbo.getPeople;
+CREATE PROCEDURE TestReferenceDB.dbo.getPeople(
+    @deptIDarray SQL.ARRAY<int>, 
+    @filePath string = "/Output/StoredProcedure/getPeople.csv") 
+AS  
+BEGIN 
+    @result =
+        SELECT *
+        FROM TestReferenceDB.dbo.somePeople
+        WHERE @deptIDarray.Contains(DeptID);
+
+    OUTPUT @result
+    TO @filePath
+    USING Outputters.Csv();
+END;
+
+/***************************** Calling Stored Procedures ****************************/
+// This example will call the procedure myFirstStoredProc:
+TestReferenceDB.dbo.myFirstStoredProc();
+
+
+// This example will call the procedure myStoredProcWithParameters:
+TestReferenceDB.dbo.myStoredProcWithParameters  
+(  
+    200,  
+    DateTime.Parse("12/11/2013")   
+); 
+
+
+// These two examples will call the procedure getPeople:
+// Using default value for @filePath
+TestReferenceDB.dbo.getPeople((new SQL.ARRAY<int>{100, 300, 800}), DEFAULT); 
+
+// Specifying value for @filePath
+TestReferenceDB.dbo.getPeople((new SQL.ARRAY<int>{100, 300, 800}), "/Output/StoredProcedure/getPeople2.csv"); 

@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Convertors\Base36Convertors.cs" />
     <Compile Include="Convertors\Base64Convertors.cs" />
     <Compile Include="Convertors\ConcreteTypeConverter.cs" />
     <Compile Include="Convertors\ParsingConvertors.cs" />

@@ -3,6 +3,10 @@ using System.Linq;
 
 namespace Common.Formaters
 {
+	using System.Collections.Generic;
+
+	using Common.Formaters.Convertors;
+
 	public class Program
 	{
 		private static readonly FormatManager Manager = new FormatManager();
@@ -10,9 +14,15 @@ namespace Common.Formaters
 		{
 			RunFormatDisplay();
 
+			var converter = new Base36Convertors();
+
+			//var syskey = "000";
+			//var syskeyList = converter.GetPartialList(syskey, 1000);
+			//Console.WriteLine(syskeyList.Count);
+
 			// String to Format
 			var stringToFormat =
-				@"     ";
+				@" and (activation_dt <= getdate())";
 			var scrubbedString = Manager.FormatToUsqlString(stringToFormat);
 			var sqlScrubbedString = Manager.FormatSqlString(stringToFormat);
 

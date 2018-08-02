@@ -1,81 +1,115 @@
 {
 	"Configurations": [
 		{
-			"SourceTable": "GLT1DET",
-			"DestinationTable": "Glt1det",
+			"SourceTable": "CPPKG_PARAMS_DTLS",
+			"DestinationTable": "CpPkgParamsDtls",
 			"StagingTable": null,
 			"SourceDestinationColumnMapping": [
 				{
-					"SourceColumn": "BASEPRICE",
-					"DestinationColumn": "BasePrice"
-				},
-				{
-					"SourceColumn": "CODEFROM",
-					"DestinationColumn": "CodeFrom"
-				},
-				{
-					"SourceColumn": "CODETO",
-					"DestinationColumn": "CodeTo"
+					"SourceColumn": "CODE",
+					"DestinationColumn": "Code"
 				},
 				{
 					"SourceColumn": "CODETYPE",
 					"DestinationColumn": "CodeType"
 				},
 				{
+					"SourceColumn": "CPPACKAGE_PARAMS",
+					"DestinationColumn": "CpPackageParams"
+				},
+				{
+					"SourceColumn": "NSYSKEY",
+					"DestinationColumn": "Nsyskey"
+				}
+			]
+		},
+		{
+			"SourceTable": "CPPACKAGE_PARAMS",
+			"DestinationTable": "CpPackageParams",
+			"StagingTable": null,
+			"SourceDestinationColumnMapping": [
+				{
+					"SourceColumn": "CDATE",
+					"DestinationColumn": "Cdate"
+				},
+				{
+					"SourceColumn": "CTIME",
+					"DestinationColumn": "Ctime"
+				},
+				{
+					"SourceColumn": "CUSER",
+					"DestinationColumn": "Cuser"
+				},
+				{
+					"SourceColumn": "DATEFROM",
+					"DestinationColumn": "DateFrom"
+				},
+				{
+					"SourceColumn": "DATETO",
+					"DestinationColumn": "DateTo"
+				},
+				{
+					"SourceColumn": "DOMDEF",
+					"DestinationColumn": "Domdef"
+				},
+				{
 					"SourceColumn": "EFF_DATE",
 					"DestinationColumn": "EffDate"
 				},
 				{
-					"SourceColumn": "GLTABLE1",
-					"DestinationColumn": "Gltable1"
+					"SourceColumn": "LOSMAX",
+					"DestinationColumn": "LosMax"
+				},
+				{
+					"SourceColumn": "LOSMIN",
+					"DestinationColumn": "LosMin"
 				},
 				{
 					"SourceColumn": "MDATE",
 					"DestinationColumn": "Mdate"
 				},
 				{
-					"SourceColumn": "MODIFIER",
-					"DestinationColumn": "Modifier"
-				},
-				{
-					"SourceColumn": "MODIFIER2",
-					"DestinationColumn": "Modifier2"
-				},
-				{
-					"SourceColumn": "MODIFIER3",
-					"DestinationColumn": "Modifier3"
-				},
-				{
-					"SourceColumn": "MODIFIER4",
-					"DestinationColumn": "Modifier4"
-				},
-				{
-					"SourceColumn": "MODIFIER5",
-					"DestinationColumn": "Modifier5"
-				},
-				{
-					"SourceColumn": "MORG",
-					"DestinationColumn": "Morg"
+					"SourceColumn": "MTIME",
+					"DestinationColumn": "Mtime"
 				},
 				{
 					"SourceColumn": "MUSER",
 					"DestinationColumn": "Muser"
 				},
 				{
-					"SourceColumn": "NSYSKEY",
-					"DestinationColumn": "Nsyskey"
+					"SourceColumn": "NPI",
+					"DestinationColumn": "Npi"
 				},
 				{
-					"SourceColumn": "PROCOPT",
-					"DestinationColumn": "Procopt"
-				},
-				{
-					"SourceColumn": "REVCODE",
-					"DestinationColumn": "RevCode"
+					"SourceColumn": "PATTYPE",
+					"DestinationColumn": "PatientType"
 				},
 				{
 					"SourceColumn": "SYSKEY",
 					"DestinationColumn": "Syskey"
+				},
+				{
+					"SourceColumn": "TRM_DATE",
+					"DestinationColumn": "TrmDate"
+				}
+			]
+		},
+		{
+			"SourceTable": "CP_REVCODE_DETAILS",
+			"DestinationTable": "CpRevcodeDetails",
+			"StagingTable": null,
+			"SourceDestinationColumnMapping": [
+				{
+					"SourceColumn": "CPPKG_PARAMS_DTLS",
+					"DestinationColumn": "CpPkgParamsDtls"
+				},
+				{
+					"SourceColumn": "NSYSKEY",
+					"DestinationColumn": "Nsyskey"
+				},
+				{
+					"SourceColumn": "REVCODE",
+					"DestinationColumn": "RevCode"
 				}
 			]
 		}

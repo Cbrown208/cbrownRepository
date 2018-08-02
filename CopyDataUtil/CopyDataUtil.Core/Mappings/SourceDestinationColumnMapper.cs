@@ -14,16 +14,13 @@ namespace CopyDataUtil.Core.Mappings
 			return sourceDestinationMappings;
 		}
 
-		public static string SaveToMappingFile(RootObject configForFile)
+		public static RootObject GetTempMappings()
 		{
-			string path = Directory.GetCurrentDirectory() + "\\Mappings\\SourceDestinationColumnMappings.json";
-			using (StreamWriter file = File.CreateText(path))
-			{
-				JsonSerializer serializer = new JsonSerializer();
-				//serialize object directly into file stream
-				serializer.Serialize(file, configForFile);
-			}
-			return Directory.GetCurrentDirectory() + "\\Mappings\\SourceDestinationColumnMappings.json";
+			string path = Directory.GetCurrentDirectory() + "\\Mappings\\TempMappings.json";
+
+			var sourceDestinationMappings = JsonConvert.DeserializeObject<RootObject>(File.ReadAllText(path));
+
+			return sourceDestinationMappings;
 		}
 	}
 }
