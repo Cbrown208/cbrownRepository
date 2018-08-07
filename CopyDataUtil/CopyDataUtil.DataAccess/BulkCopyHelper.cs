@@ -42,7 +42,7 @@ namespace CopyDataUtil.DataAccess
                                 bulkCopy.NotifyAfter = notifyAfterCount;
 
                                 bulkCopy.SqlRowsCopied += BulkCopy_SqlRowsCopied;
-                                bulkCopy.DestinationTableName = copyDetails.Config.DestinationTable;
+								bulkCopy.DestinationTableName = copyDetails.Config.DestinationTable;
 
                                 foreach (var mapping in copyDetails.Config.SourceDestinationColumnMapping)
                                 {

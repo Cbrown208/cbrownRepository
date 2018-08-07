@@ -65,5 +65,11 @@ namespace Common.Formaters
 			var results = _dbStringFormatter.FormatSqlString(str);
 			return results;
 		}
+
+		public string FormatToCustom(string str)
+		{
+			var results = _dbStringFormatter.FormatCustomSqlString(str);
+			return results;
+		}
 	}
 }

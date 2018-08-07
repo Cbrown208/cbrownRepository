@@ -1,60 +1,93 @@
 {
 	"Configurations": [
 		{
-			"SourceTable": "CPPKG_PARAMS_DTLS",
-			"DestinationTable": "CpPkgParamsDtls",
+			"SourceTable": "CPPACKAGEDEF",
+			"DestinationTable": "CpPackageDef",
 			"StagingTable": null,
 			"SourceDestinationColumnMapping": [
 				{
-					"SourceColumn": "CODE",
-					"DestinationColumn": "Code"
+					"SourceColumn": "ALTDESC",
+					"DestinationColumn": "AltDesc"
 				},
 				{
-					"SourceColumn": "CODETYPE",
-					"DestinationColumn": "CodeType"
+					"SourceColumn": "AUDIT",
+					"DestinationColumn": "Audit"
+				},
+				{
+					"SourceColumn": "AVGCHGS",
+					"DestinationColumn": "AvgChgs"
+				},
+				{
+					"SourceColumn": "CLMMAST",
+					"DestinationColumn": "ClmMast"
+				},
+				{
+					"SourceColumn": "CPLOGPKGPARAM",
+					"DestinationColumn": "CpLogPkgParam"
 				},
 				{
 					"SourceColumn": "CPPACKAGE_PARAMS",
-					"DestinationColumn": "CpPackageParams"
+					"DestinationColumn": "CppackageParams"
 				},
 				{
-					"SourceColumn": "NSYSKEY",
-					"DestinationColumn": "Nsyskey"
-				}
-			]
-		},
-		{
-			"SourceTable": "CPPACKAGE_PARAMS",
-			"DestinationTable": "CpPackageParams",
-			"StagingTable": null,
-			"SourceDestinationColumnMapping": [
-				{
-					"SourceColumn": "CDATE",
-					"DestinationColumn": "Cdate"
+					"SourceColumn": "DEPTID",
+					"DestinationColumn": "DeptId"
 				},
 				{
-					"SourceColumn": "CTIME",
-					"DestinationColumn": "Ctime"
-				},
-				{
-					"SourceColumn": "CUSER",
-					"DestinationColumn": "Cuser"
-				},
-				{
-					"SourceColumn": "DATEFROM",
-					"DestinationColumn": "DateFrom"
-				},
-				{
-					"SourceColumn": "DATETO",
-					"DestinationColumn": "DateTo"
+					"SourceColumn": "DESCRIPTION",
+					"DestinationColumn": "Description"
 				},
 				{
 					"SourceColumn": "DOMDEF",
 					"DestinationColumn": "Domdef"
 				},
 				{
+					"SourceColumn": "DRG",
+					"DestinationColumn": "Drg"
+				},
+				{
 					"SourceColumn": "EFF_DATE",
 					"DestinationColumn": "EffDate"
+				},
+				{
+					"SourceColumn": "ER",
+					"DestinationColumn": "Er"
+				},
+				{
+					"SourceColumn": "FINCLASS",
+					"DestinationColumn": "FinClass"
+				},
+				{
+					"SourceColumn": "FORMORD",
+					"DestinationColumn": "Formord"
+				},
+				{
+					"SourceColumn": "HICHGS",
+					"DestinationColumn": "HiChgs"
+				},
+				{
+					"SourceColumn": "ICD_VER",
+					"DestinationColumn": "IcdVer"
+				},
+				{
+					"SourceColumn": "ICD9",
+					"DestinationColumn": "Icd9"
+				},
+				{
+					"SourceColumn": "INPATIENT",
+					"DestinationColumn": "Inpatient"
+				},
+				{
+					"SourceColumn": "LEVEL",
+					"DestinationColumn": "Level"
+				},
+				{
+					"SourceColumn": "LOCHGS",
+					"DestinationColumn": "LoChgs"
+				},
+				{
+					"SourceColumn": "LOSAVG",
+					"DestinationColumn": "LosAvg"
 				},
 				{
 					"SourceColumn": "LOSMAX",
@@ -65,8 +98,40 @@
 					"DestinationColumn": "LosMin"
 				},
 				{
+					"SourceColumn": "LVL_CONFIDENCE",
+					"DestinationColumn": "LvlConfidence"
+				},
+				{
+					"SourceColumn": "MCOMMORD",
+					"DestinationColumn": "Mcommord"
+				},
+				{
 					"SourceColumn": "MDATE",
 					"DestinationColumn": "Mdate"
+				},
+				{
+					"SourceColumn": "MEDIAN_AGE",
+					"DestinationColumn": "MedianAge"
+				},
+				{
+					"SourceColumn": "MEDIANCHGS",
+					"DestinationColumn": "MedianChgs"
+				},
+				{
+					"SourceColumn": "MODE_GENDER",
+					"DestinationColumn": "ModeGender"
+				},
+				{
+					"SourceColumn": "MODECHGS",
+					"DestinationColumn": "ModeChgs"
+				},
+				{
+					"SourceColumn": "MODEFREQ",
+					"DestinationColumn": "ModeFreq"
+				},
+				{
+					"SourceColumn": "MSELORD",
+					"DestinationColumn": "Mselord"
 				},
 				{
 					"SourceColumn": "MTIME",
@@ -77,12 +142,28 @@
 					"DestinationColumn": "Muser"
 				},
 				{
-					"SourceColumn": "NPI",
-					"DestinationColumn": "Npi"
+					"SourceColumn": "OUTPATIENT",
+					"DestinationColumn": "Outpatient"
 				},
 				{
-					"SourceColumn": "PATTYPE",
-					"DestinationColumn": "PatientType"
+					"SourceColumn": "PATNUM",
+					"DestinationColumn": "PatNum"
+				},
+				{
+					"SourceColumn": "PKG_TYPE",
+					"DestinationColumn": "PkgType"
+				},
+				{
+					"SourceColumn": "SC_TYPE",
+					"DestinationColumn": "ScType"
+				},
+				{
+					"SourceColumn": "SERVTYPE",
+					"DestinationColumn": "ServiceType"
+				},
+				{
+					"SourceColumn": "STDEVCHGS",
+					"DestinationColumn": "StdevChgs"
 				},
 				{
 					"SourceColumn": "SYSKEY",
@@ -91,27 +172,128 @@
 				{
 					"SourceColumn": "TRM_DATE",
 					"DestinationColumn": "TrmDate"
-				}
-			]
-		},
-		{
-			"SourceTable": "CP_REVCODE_DETAILS",
-			"DestinationTable": "CpRevcodeDetails",
-			"StagingTable": null,
-			"SourceDestinationColumnMapping": [
-				{
-					"SourceColumn": "CPPKG_PARAMS_DTLS",
-					"DestinationColumn": "CpPkgParamsDtls"
 				},
 				{
-					"SourceColumn": "NSYSKEY",
-					"DestinationColumn": "Nsyskey"
-				},
-				{
-					"SourceColumn": "REVCODE",
-					"DestinationColumn": "RevCode"
+					"SourceColumn": "XMITLOG",
+					"DestinationColumn": "XmitLog"
 				}
 			]
 		}
 	]
+
+	//"Configurations": [
+	//	{
+	//		"SourceTable": "CPPKG_PARAMS_DTLS",
+	//		"DestinationTable": "CpPkgParamsDtls",
+	//		"StagingTable": null,
+	//		"SourceDestinationColumnMapping": [
+	//			{
+	//				"SourceColumn": "CODE",
+	//				"DestinationColumn": "Code"
+	//			},
+	//			{
+	//				"SourceColumn": "CODETYPE",
+	//				"DestinationColumn": "CodeType"
+	//			},
+	//			{
+	//				"SourceColumn": "CPPACKAGE_PARAMS",
+	//				"DestinationColumn": "CpPackageParams"
+	//			},
+	//			{
+	//				"SourceColumn": "NSYSKEY",
+	//				"DestinationColumn": "Nsyskey"
+	//			}
+	//		]
+	//	},
+	//	{
+	//		"SourceTable": "CPPACKAGE_PARAMS",
+	//		"DestinationTable": "CpPackageParams",
+	//		"StagingTable": null,
+	//		"SourceDestinationColumnMapping": [
+	//			{
+	//				"SourceColumn": "CDATE",
+	//				"DestinationColumn": "Cdate"
+	//			},
+	//			{
+	//				"SourceColumn": "CTIME",
+	//				"DestinationColumn": "Ctime"
+	//			},
+	//			{
+	//				"SourceColumn": "CUSER",
+	//				"DestinationColumn": "Cuser"
+	//			},
+	//			{
+	//				"SourceColumn": "DATEFROM",
+	//				"DestinationColumn": "DateFrom"
+	//			},
+	//			{
+	//				"SourceColumn": "DATETO",
+	//				"DestinationColumn": "DateTo"
+	//			},
+	//			{
+	//				"SourceColumn": "DOMDEF",
+	//				"DestinationColumn": "Domdef"
+	//			},
+	//			{
+	//				"SourceColumn": "EFF_DATE",
+	//				"DestinationColumn": "EffDate"
+	//			},
+	//			{
+	//				"SourceColumn": "LOSMAX",
+	//				"DestinationColumn": "LosMax"
+	//			},
+	//			{
+	//				"SourceColumn": "LOSMIN",
+	//				"DestinationColumn": "LosMin"
+	//			},
+	//			{
+	//				"SourceColumn": "MDATE",
+	//				"DestinationColumn": "Mdate"
+	//			},
+	//			{
+	//				"SourceColumn": "MTIME",
+	//				"DestinationColumn": "Mtime"
+	//			},
+	//			{
+	//				"SourceColumn": "MUSER",
+	//				"DestinationColumn": "Muser"
+	//			},
+	//			{
+	//				"SourceColumn": "NPI",
+	//				"DestinationColumn": "Npi"
+	//			},
+	//			{
+	//				"SourceColumn": "PATTYPE",
+	//				"DestinationColumn": "PatientType"
+	//			},
+	//			{
+	//				"SourceColumn": "SYSKEY",
+	//				"DestinationColumn": "Syskey"
+	//			},
+	//			{
+	//				"SourceColumn": "TRM_DATE",
+	//				"DestinationColumn": "TrmDate"
+	//			}
+	//		]
+	//	},
+	//	{
+	//		"SourceTable": "CP_REVCODE_DETAILS",
+	//		"DestinationTable": "CpRevcodeDetails",
+	//		"StagingTable": null,
+	//		"SourceDestinationColumnMapping": [
+	//			{
+	//				"SourceColumn": "CPPKG_PARAMS_DTLS",
+	//				"DestinationColumn": "CpPkgParamsDtls"
+	//			},
+	//			{
+	//				"SourceColumn": "NSYSKEY",
+	//				"DestinationColumn": "Nsyskey"
+	//			},
+	//			{
+	//				"SourceColumn": "REVCODE",
+	//				"DestinationColumn": "RevCode"
+	//			}
+	//		]
+	//	}
+	//]
 }

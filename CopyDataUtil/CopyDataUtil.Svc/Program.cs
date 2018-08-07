@@ -23,8 +23,8 @@ namespace CopyDataUtil.Svc
 			sourceTableName = "CPPACKAGE_PARAMS";
 			destinationTableName = "CpPackageParams";
 
-			sourceTableName = "CP_REVCODE_DETAILS";
-			destinationTableName = "CpRevcodeDetails";
+			sourceTableName = "CPPACKAGEDEF";
+			destinationTableName = "CpPackageDef";
 
 			var columnsToSkip = new List<string> { "MTIME" };
 			
@@ -36,7 +36,7 @@ namespace CopyDataUtil.Svc
 
 			if (input != null && input.ToLower() == "y")
 			{
-				Console.WriteLine("Would you like to Temp Mappings file? Y:Yes N:no");
+				Console.WriteLine("Would you like to use Temp Mappings file? Y:Yes N:no");
 				var mappingInput = Console.ReadLine();
 				var useTempMappings = mappingInput != null && mappingInput.ToLower() == "y";
 

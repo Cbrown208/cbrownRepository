@@ -29,6 +29,86 @@ namespace Common.Formaters
 			return str;
 		}
 
+		public string FormatCustomSqlString(string str)
+		{
+			var sqlStringList = GetSqlStringFormatList();
+			sqlStringList.Sort();
+
+			foreach (var sqlOperator in sqlStringList)
+			{
+				if (str.Contains(sqlOperator))
+				{
+					str = str.Replace(sqlOperator, sqlOperator.ToUpper());
+				}
+			}
+			str = str.Replace("SYSKEY", "Syskey");
+			str = str.Replace("PROCCODE", "ProcCode");
+			str = str.Replace("CODE_CNT", "CodeCnt");
+			str = str.Replace(" CODETYPE_CNT ", " CodeTypeCnt ");
+			str = str.Replace(" CODETYPE", " CodeType");
+			str = str.Replace("CODETYPE", "CodeType");
+			str = str.Replace(" CODETYPE,", " CodeType,");
+			str = str.Replace(".REVCODE", ".RevCode ");
+			str = str.Replace("REVCODE", "RevCode");
+			str = str.Replace("BILLMAST", "BillMast");
+			str = str.Replace(".ICD_VER", ".IcdVer");
+			str = str.Replace("@ICD_VER", "@Icd_Ver");
+			str = str.Replace("PATTYPE", "PatientType");
+			str = str.Replace("PATNUM", "PatientAccountNumber");
+			str = str.Replace("PATDOB", "PatientDob");
+			str = str.Replace("PATSEX", "PatientSex");
+			str = str.Replace(".RPC_TYPE", ".RepriceType");
+			str = str.Replace(".RPCType", ".RepriceType");
+			str = str.Replace(" DRG", " Drg");
+			str = str.Replace(".DRG", ".Drg");
+			str = str.Replace(" HCPCS", " Hcpcs");
+			str = str.Replace(" DIAG_SEQUENCE", " DiagSequence");
+			str = str.Replace("SEQUENCE", "Sequence");
+			str = str.Replace(" BILLPROC", " BillProc");
+			str = str.Replace(".DIAGCODE", ".DiagCode");
+			str = str.Replace("DIAGCODE", "DiagCode");
+			str = str.Replace("BILLDIAG", "BillDiag");
+			str = str.Replace("UNITS", "Units");
+			str = str.Replace("CHARGES", "Charges");
+			str = str.Replace(".LOS", ".Los");
+			str = str.Replace(".AGE", ".Age");
+			str = str.Replace(".SEX", ".Sex");
+			str = str.Replace(".HCPCS", ".Hcpcs");
+			str = str.Replace("ADMDATE", "AdmitDate");
+			str = str.Replace("AdmDate", "AdmitDate");
+			str = str.Replace("HCPCSRATES", "HcpcsRates");
+			str = str.Replace("HCPCS", "Hcpcs");
+
+			str = str.Replace("snCP_PRO_CPTEXCL", "SncpProCptexcl");
+			str = str.Replace("CPT_EXCL", "CptExcl");
+
+			str = str.Replace("GROSSCHGS", "GrossCharges");
+			str = str.Replace("GrossChgs", "GrossCharges");
+			
+			str = str.Replace("Payer_Class", "PayerClass");
+			str = str.Replace("ZLEVEL", "ZLevel");
+			str = str.Replace("ZVALUE", "ZValue");
+
+			str = str.Replace("HcpcsRATES", "HcpcsRates");
+			str = str.Replace("PHYAVGCHGS", "PhyAvgChgs");
+			str = str.Replace("PHYSTDEVCHGS", "PhyStdevChgs");
+			str = str.Replace(".CODE", ".Code");
+			str = str.Replace("PHYSTYPE", "PhysType");
+			str = str.Replace("BILLPhys", "BillPhys");
+			str = str.Replace("PHYSNAMEAS", "PhysNameAs");
+			str = str.Replace("PHYSNAME", "PhysName");
+			str = str.Replace("PHYCNT", "PhyCnt");
+
+			str = str.Replace("NPI", "Npi");
+			str = str.Replace("PHYS", "Phys");
+			str = str.Replace("PHY", "Phy");
+			str = RemoveUnderscores(str);
+			str = str.Replace("#tmpDetails", "#tmp_Details");
+			str = str.Replace("@HcpcsEndLong", "@HcpcsEnd_Long");
+			str = str.Replace("@patnumFilter", "@patnum_Filter");
+			return str;
+		}
+
 		public string FormatUsqlString(string str)
 		{
 			var sqlStringList = GetSqlStringFormatList();
@@ -48,6 +128,7 @@ namespace Common.Formaters
 			str = str.Replace("         ", " ");
 			str = str.Replace("        ", " ");
 			str = str.Replace("  ", "");
+
 
 			// CBO Custom 
 			str = str.Replace("SYSKEY", "Syskey");

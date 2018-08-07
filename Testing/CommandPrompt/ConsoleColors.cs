@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ConsoleOutputColors
+namespace CommandPrompt
 {
-	class Program
+	public class ConsoleColors
 	{
-		static void Main(string[] args)
+		public void RunColorChangeEx()
 		{
 			// Get an array with the values of ConsoleColor enumeration members.
 			ConsoleColor[] colors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
@@ -17,8 +13,7 @@ namespace ConsoleOutputColors
 			ConsoleColor currentForeground = Console.ForegroundColor;
 
 			// Display all foreground colors except the one that matches the background.
-			Console.WriteLine("All the foreground colors except {0}, the background color:",
-				currentBackground);
+			Console.WriteLine("All the foreground colors except {0}, the background color:", currentBackground);
 			foreach (var color in colors)
 			{
 				if (color == currentBackground) continue;
@@ -31,8 +26,7 @@ namespace ConsoleOutputColors
 			Console.ForegroundColor = currentForeground;
 
 			// Display each background color except the one that matches the current foreground color.
-			Console.WriteLine("All the background colors except {0}, the foreground color:",
-				currentForeground);
+			Console.WriteLine("All the background colors except {0}, the foreground color:", currentForeground);
 			foreach (var color in colors)
 			{
 				if (color == currentForeground) continue;

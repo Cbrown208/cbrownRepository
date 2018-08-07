@@ -22,13 +22,14 @@ namespace Common.Formaters
 
 			// String to Format
 			var stringToFormat =
-				@" and (activation_dt <= getdate())";
+				@" And B.RPCType = 0";
 			var scrubbedString = Manager.FormatToUsqlString(stringToFormat);
 			var sqlScrubbedString = Manager.FormatSqlString(stringToFormat);
+			var sqlCustomScrubbedString = Manager.FormatToCustom(stringToFormat);
 
 			Console.WriteLine("*** Formatted String ***");
 			Console.WriteLine(Environment.NewLine);
-			Console.WriteLine(scrubbedString);
+			Console.WriteLine(sqlCustomScrubbedString);
 			Console.WriteLine(Environment.NewLine);
 
 			Console.ReadLine();
