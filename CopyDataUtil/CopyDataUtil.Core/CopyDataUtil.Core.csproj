@@ -49,6 +49,8 @@
     <Compile Include="Mappings\SourceDestinationColumnMapper.cs" />
     <Compile Include="Models\CpPackage_Params.cs" />
     <Compile Include="Models\DbModels\ColumnInfoSchema.cs" />
+    <Compile Include="Models\DbModels\Destination.cs" />
+    <Compile Include="Models\DbModels\TableStructure.cs" />
     <Compile Include="Models\DbModels\TableInfoSchema.cs" />
     <Compile Include="Mappings\SourceDestinationColumnMapping.cs" />
     <Compile Include="Models\UpdateValueDetails.cs" />

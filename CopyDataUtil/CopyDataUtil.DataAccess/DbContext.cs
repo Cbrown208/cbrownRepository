@@ -11,27 +11,18 @@ namespace CopyDataUtil.DataAccess
 {
 	public class DbContext
 	{
-		private readonly IDbConnection _db;
 		private readonly QueryBuilder _queryBuilder;
 		private string ConnectionString;
-		private IDbConnection _dbConnection;
 
 		public DbContext(string connectionString)
 		{
 			ConnectionString = connectionString;
-			_db = new SqlConnection(ConnectionString);
 			_queryBuilder = new QueryBuilder();
-		}
-
-		public void RenewConnection()
-		{
-			_dbConnection = new SqlConnection(ConnectionString);
 		}
 
 		public List<TableInfoSchema> GetListofTableNames()
 		{
-			RenewConnection();
-			using (IDbConnection dbConnection = _dbConnection)
+			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
 				dbConnection.Open();
 				var results = dbConnection.Query<TableInfoSchema>(@"SELECT * FROM Information_Schema.Tables where Table_Name not like '%Staging%' AND TABLE_NAME Not Like '%_Ref%' ORDER BY Table_Name").ToList();
@@ -41,19 +32,18 @@ namespace CopyDataUtil.DataAccess
 
 		public List<ColumnInfoSchema> GetColumnsNamesForTable(string tableName)
 		{
-			RenewConnection();
-			using (IDbConnection dbConnection = _dbConnection)
+			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
 				dbConnection.Open();
-				var results = dbConnection.Query<ColumnInfoSchema>(@"SELECT * FROM Information_Schema.Columns where Table_Name = '"+ tableName + "' ORDER BY Column_Name").ToList();
+				//var results = dbConnection.Query<ColumnInfoSchema>(@"SELECT * FROM Information_Schema.Columns where Table_Name = '"+ tableName + "' ORDER BY Column_Name").ToList();
+				var results = dbConnection.Query<ColumnInfoSchema>(@"SELECT * FROM Information_Schema.Columns where Table_Name = '" + tableName + "'").ToList();
 				return results;
 			}
 		}
 
 		public List<ColumnInfoSchema> GetColumnsNamesForTable(string tableName, List<string> columnsToSkip)
 		{
-			RenewConnection();
-			using (IDbConnection dbConnection = _dbConnection)
+			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
 				var queryString = @"SELECT * FROM Information_Schema.Columns where Table_Name = '" + tableName+ "' ";
 				if (columnsToSkip != null && columnsToSkip.Any())
@@ -83,8 +73,7 @@ namespace CopyDataUtil.DataAccess
 
 		public List<dynamic> GetTableData(string tableName)
 		{
-			RenewConnection();
-			using (IDbConnection dbConnection = _dbConnection)
+			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
 				dbConnection.Open();
 				var results = dbConnection.Query(@"SELECT TOP 999 * FROM "+ tableName).ToList();
@@ -94,8 +83,7 @@ namespace CopyDataUtil.DataAccess
 
 		public string GetInsertSetupString(string tableName)
 		{
-			RenewConnection();
-			using (IDbConnection dbConnection = _dbConnection)
+			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
 				dbConnection.Open();
 				var results = dbConnection.Query<string>(@"select 'data.' + Column_Name from INFORMATION_SCHEMA.COLUMNS where table_name like '"+tableName+"' order by ORDINAL_POSITION").ToList();
@@ -107,8 +95,7 @@ namespace CopyDataUtil.DataAccess
 
 		public List<dynamic> GetAllValuesFromTable(string tableName)
 		{
-			RenewConnection();
-			using (IDbConnection dbConnection = _dbConnection)
+			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
 				dbConnection.Open();
 				var results = dbConnection.Query<dynamic>(@"select * from " + tableName).ToList();
@@ -118,8 +105,7 @@ namespace CopyDataUtil.DataAccess
 
 		public bool UpdateValueInTable(List<UpdateValueDetails> updateValueList)
 		{
-			RenewConnection();
-			using (IDbConnection dbConnection = _dbConnection)
+			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
 				dbConnection.Open();
 				foreach (var valueDetail in updateValueList)
@@ -142,8 +128,7 @@ namespace CopyDataUtil.DataAccess
 
 		public string InsertTableData(string tableName, List<ColumnInfoSchema> columnNames, List<dynamic> tableDataList)
 		{
-			RenewConnection();
-			using (IDbConnection dbConnection = _dbConnection)
+			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
 				dbConnection.Open();
 				var insertQuery = _queryBuilder.BuildInsertQuery(tableName, columnNames);

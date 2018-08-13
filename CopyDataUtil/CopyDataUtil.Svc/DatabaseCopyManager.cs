@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 
 namespace CopyDataUtil.Svc
 {
+	using System.Diagnostics.CodeAnalysis;
+
 	public class DatabaseCopyManager
 	{
 		private readonly string InputConnectionString = "Data Source=RCM41VDCPEDB01.medassets.com;Initial Catalog = Pricing.Dev; Integrated Security = True;";
@@ -16,6 +18,7 @@ namespace CopyDataUtil.Svc
 		private readonly DbContext _inputDb;
 		private readonly DbContext _outputDb;
 
+		[SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1027:TabsMustNotBeUsed", Justification = "Reviewed. Suppression is OK here.")]
 		public DatabaseCopyManager()
 		{
 			_inputDb = new DbContext(InputConnectionString);
@@ -84,16 +87,15 @@ namespace CopyDataUtil.Svc
 
 		public string CreateBulkCopyMappingJson(string sourceTableName, string destinationTableName, List<string> columnsToSkip)
 		{
-			//var sourceConnectionString = @"Data Source = LEWVQCMGDB02.nthrivenp.nthcrpnp.com\VAL_GLOBAL01; Initial Catalog = CBO_Global; Integrated Security = True;";
-			//var sourceConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True;";
-			var sourceConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHSC_Contract; Integrated Security = True;";
-			var destinationConnectionString = @"Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog =SC_Centura; Integrated Security = True;";
+			var sourceConnectionStringContract = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHSC_Contract; Integrated Security = True;";
+			var sourceConnectionStringRepo = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True;";
+			var destinationConnectionString = @"Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog =SC_CHSQ; Integrated Security = True;";
 			//var sourceTableName = "CP_DTPROC";
 			//var destinationTableName = "CpDtProc";
 
 			//var columnsToSkip = new List<string> {"MTIME"};
 
-			var souceConDb = new DbContext(sourceConnectionString);
+			var souceConDb = new DbContext(sourceConnectionStringContract);
 			var destinationConDb = new DbContext(destinationConnectionString);
 			var configMappings = new Configuration()
 			{
@@ -133,15 +135,14 @@ namespace CopyDataUtil.Svc
 
 		public string BulkCopyDatabaseData(bool useTempMappings)
 		{
-			//var sourceConnectionString = @"Data Source = LEWVQCMGDB02.nthrivenp.nthcrpnp.com\VAL_GLOBAL01; Initial Catalog = CBO_Global; Integrated Security = True;";
-			//var sourceConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True;";
-			var sourceConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHSC_Contract; Integrated Security = True;";
-			var destinationConnectionString = @"Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog =SC_Centura; Integrated Security = True;";
+			var sourceConnectionStringContract = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHSC_Contract; Integrated Security = True;";
+			var sourceConnectionStringRepo = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True;";
+			var destinationConnectionString = @"Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog =SC_CHSQ; Integrated Security = True;";
 			var bulkHelper = new BulkCopyHelper();
 
 			var copyDetails = new BulkCopyDetails()
 			{
-				SourceConnectionString = sourceConnectionString,
+				SourceConnectionString = sourceConnectionStringContract,
 				DestinationConnectionString = destinationConnectionString,
 				Config = new Configuration()
 			};

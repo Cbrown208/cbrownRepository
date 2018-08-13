@@ -3,12 +3,29 @@ using System.Collections.Generic;
 
 namespace CopyDataUtil.Svc
 {
-	class Program
+	using System.Windows.Forms;
+
+	public class Program
 	{
-		static void Main()
+		[STAThread]
+		public static void Main()
+		{
+			//RunSchemaManager();
+			RunCopyManager();
+		}
+
+		public static void RunSchemaManager()
+		{
+			var tableName = "BillMast";
+			var schemaManager = new DatabaseSchemaManager();
+			var schemaResult = schemaManager.GetJsonSchemaFormat(tableName);
+			Clipboard.SetText(schemaResult);
+			Console.WriteLine(schemaResult);
+		}
+
+		public static void RunCopyManager()
 		{
 			var dbCopyManager = new DatabaseCopyManager();
-
 			//Run Update/ String Replace On One Column in a DB Table
 			//dbCopyManager.StringReplaceOnColumn("CpPackageDef", "DESCRIPTION", "SYSKEY");
 
@@ -23,11 +40,11 @@ namespace CopyDataUtil.Svc
 			sourceTableName = "CPPACKAGE_PARAMS";
 			destinationTableName = "CpPackageParams";
 
-			sourceTableName = "CPPACKAGEDEF";
-			destinationTableName = "CpPackageDef";
+			sourceTableName = "BILLPAYRCLASSSMRY";
+			destinationTableName = "BillPayrClassSmry";
 
 			var columnsToSkip = new List<string> { "MTIME" };
-			
+
 			//dbCopyManager.CreateBulkCopyMappingJson(sourceTableName, destinationTableName, columnsToSkip);
 			dbCopyManager.CreateBulkCopyMappingJson(sourceTableName, destinationTableName, null);
 
@@ -44,9 +61,6 @@ namespace CopyDataUtil.Svc
 				dbCopyManager.BulkCopyDatabaseData(useTempMappings);
 				Console.ReadLine();
 			}
-			//dbCopyManager.CopyDataBaseData();
-
-			
 		}
 	}
 }

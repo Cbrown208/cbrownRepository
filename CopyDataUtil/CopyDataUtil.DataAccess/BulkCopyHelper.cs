@@ -116,7 +116,7 @@ namespace CopyDataUtil.DataAccess
 				i = i + 1;
 			}
 
-           // query.Append(facilityId).Append(" as FacilityId");
+            //query.Append(",1412").Append(" as FacilityId");
             query.Append(" from ").Append(sourceTable);
             return query;
         }
