@@ -30,7 +30,7 @@ namespace CopyDataUtil.DataAccess
 
 		public string BuildInsertValueString(List<ColumnInfoSchema> columns)
 		{
-			var insertValueString = "( ";
+			var insertValueString = "(";
 			var colCounter = 0;
 			foreach (var col in columns)
 			{
@@ -39,7 +39,7 @@ namespace CopyDataUtil.DataAccess
 				{
 					insertValueString = insertValueString + "'{"+ colCounter+ "}'";
 				}
-				if (col.Data_Type.Contains("int") || col.Data_Type.Contains("money")|| col.Data_Type.Contains("double"))
+				if (col.Data_Type.Contains("int") || col.Data_Type.Contains("money")|| col.Data_Type.Contains("double") || col.Data_Type.Contains("bit"))
 				{
 					insertValueString = insertValueString + "{" + colCounter + "}";
 				}

@@ -1,1 +1,83 @@
-{"Configurations":[{"SourceTable":"BILLPAYRCLASSSMRY","DestinationTable":"BillPayrClassSmry","StagingTable":null,"SourceDestinationColumnMapping":[]}]}
+{
+	"Configurations": [
+		{
+			"SourceTable": "BillMast",
+			"DestinationTable": "BillMast",
+			"StagingTable": null,
+			"SourceDestinationColumnMapping": [
+				{
+					"SourceColumn": "Syskey",
+					"DestinationColumn": "Syskey"
+				},
+				{
+					"SourceColumn": "FacilityId",
+					"DestinationColumn": "FacilityId"
+				},
+				{
+					"SourceColumn": "DRG",
+					"DestinationColumn": "DRG"
+				},
+				{
+					"SourceColumn": "PatientType",
+					"DestinationColumn": "PatientType"
+				},
+				{
+					"SourceColumn": "PatientAccountNumber",
+					"DestinationColumn": "PatientAccountNumber"
+				},
+				{
+					"SourceColumn": "GrossCharges",
+					"DestinationColumn": "GrossCharges"
+				},
+				{
+					"SourceColumn": "ServiceFrom",
+					"DestinationColumn": "ServiceFrom"
+				},
+				{
+					"SourceColumn": "ServiceTo",
+					"DestinationColumn": "ServiceTo"
+				},
+				{
+					"SourceColumn": "BillPayrClassSmry",
+					"DestinationColumn": "BillPayrClassSmry"
+				},
+				{
+					"SourceColumn": "RepriceType",
+					"DestinationColumn": "RepriceType"
+				},
+				{
+					"SourceColumn": "AdmitDate",
+					"DestinationColumn": "AdmitDate"
+				},
+				{
+					"SourceColumn": "ModifiedDate",
+					"DestinationColumn": "ModifiedDate"
+				},
+				{
+					"SourceColumn": "ModifiedTime",
+					"DestinationColumn": "ModifiedTime"
+				},
+				{
+					"SourceColumn": "Domdef",
+					"DestinationColumn": "Domdef"
+				},
+				{
+					"SourceColumn": "PatientDOB",
+					"DestinationColumn": "PatientDOB"
+				},
+				{
+					"SourceColumn": "PatientSex",
+					"DestinationColumn": "PatientSex"
+				},
+				{
+					"SourceColumn": "Icd_Ver",
+					"DestinationColumn": "Icd_Ver"
+				},
+				{
+					"SourceColumn": "Los",
+					"DestinationColumn": "Los"
+				}
+			]
+		}
+	]
+}

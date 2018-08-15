@@ -18,21 +18,18 @@ namespace CopyDataUtil.Svc
 		private readonly DbContext _inputDb;
 		private readonly DbContext _outputDb;
 
-		[SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1027:TabsMustNotBeUsed", Justification = "Reviewed. Suppression is OK here.")]
 		public DatabaseCopyManager()
 		{
 			_inputDb = new DbContext(InputConnectionString);
 			_outputDb = new DbContext(OutputConnectionString);
 		}
-		//private readonly string centuraConnectionString = @" Database = Pricing.Dev; Trusted_Connection = true;";
-		//private readonly string serviceCategoryCenturaConnectionString = @"Server = RCM41VSPASDB02.medassets.com; Database = SC_Centura; Trusted_Connection = true;";
 
 		public string CopyDataBaseData()
 		{
 			var tableName = "CPPACKAGEDEF";
 
 			var temp = _outputDb.GetInsertSetupString(tableName);
-			//var tableList = outputdbContext.GetListofTableNames();
+			// var tableList = outputdbContext.GetListofTableNames();
 			var inputData = _inputDb.GetTableData(tableName);
 
 			var columnList = _outputDb.GetColumnsNamesForTable(tableName);
@@ -51,7 +48,7 @@ namespace CopyDataUtil.Svc
 			var tableName = "CPPACKAGEDEF";
 
 			var temp = _outputDb.GetInsertSetupString(tableName);
-			//var tableList = outputdbContext.GetListofTableNames();
+			// var tableList = outputdbContext.GetListofTableNames();
 			var inputData = _inputDb.GetTableData(tableName);
 
 			var columnList = _outputDb.GetColumnsNamesForTable(tableName);
@@ -65,16 +62,16 @@ namespace CopyDataUtil.Svc
 			return "True";
 		}
 
-		public string CreateIdempotentInsertScript()
+		public string CreateIdempotentInsertScript(string sourceConnectionString, string tableName)
 		{
-			var inputConTempDb = new DbContext(@"Data Source = LEWVQCMGDB02.nthrivenp.nthcrpnp.com\VAL_GLOBAL01; Initial Catalog = CBO_Global; Integrated Security = True;");
-			var tableName = "CP_CONFIDENCE_LEVELS";
-
+			var inputConTempDb = new DbContext(sourceConnectionString);
 			var temp = inputConTempDb.GetInsertSetupString(tableName);
-			//var tableList = outputdbContext.GetListofTableNames();
+			// var tableList = outputdbContext.GetListofTableNames();
 			var inputData = inputConTempDb.GetTableData(tableName);
 
 			var columnList = inputConTempDb.GetColumnsNamesForTable(tableName);
+
+
 
 			var outputString = inputConTempDb.BuildIdempotentInsertScript(tableName, columnList, inputData);
 
@@ -82,20 +79,12 @@ namespace CopyDataUtil.Svc
 			{
 				Console.WriteLine(col.Column_Name);
 			}
-			return "True";
+			return outputString;
 		}
 
-		public string CreateBulkCopyMappingJson(string sourceTableName, string destinationTableName, List<string> columnsToSkip)
+		public string CreateBulkCopyMappingJson(string sourceTableName, string destinationTableName, List<string> columnsToSkip, string sourceConnectionString, string destinationConnectionString)
 		{
-			var sourceConnectionStringContract = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHSC_Contract; Integrated Security = True;";
-			var sourceConnectionStringRepo = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True;";
-			var destinationConnectionString = @"Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog =SC_CHSQ; Integrated Security = True;";
-			//var sourceTableName = "CP_DTPROC";
-			//var destinationTableName = "CpDtProc";
-
-			//var columnsToSkip = new List<string> {"MTIME"};
-
-			var souceConDb = new DbContext(sourceConnectionStringContract);
+			var souceConDb = new DbContext(sourceConnectionString);
 			var destinationConDb = new DbContext(destinationConnectionString);
 			var configMappings = new Configuration()
 			{
@@ -103,7 +92,7 @@ namespace CopyDataUtil.Svc
 				DestinationTable = destinationTableName,
 				SourceDestinationColumnMapping = new List<SourceDestinationColumnMapping>()
 			};
-			var sourceColumnList = souceConDb.GetColumnsNamesForTable(sourceTableName,columnsToSkip).ToArray();
+			var sourceColumnList = souceConDb.GetColumnsNamesForTable(sourceTableName, columnsToSkip).ToArray();
 			var destinationColumnList = destinationConDb.GetColumnsNamesForTable(destinationTableName).ToArray();
 
 			for (var i = 0; i < sourceColumnList.Length; i++)
@@ -133,16 +122,13 @@ namespace CopyDataUtil.Svc
 			return jsonOutput;
 		}
 
-		public string BulkCopyDatabaseData(bool useTempMappings)
+		public string BulkCopyDatabaseData(bool useTempMappings, string sourceConnectionString, string destinationConnectionString)
 		{
-			var sourceConnectionStringContract = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHSC_Contract; Integrated Security = True;";
-			var sourceConnectionStringRepo = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True;";
-			var destinationConnectionString = @"Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog =SC_CHSQ; Integrated Security = True;";
 			var bulkHelper = new BulkCopyHelper();
 
 			var copyDetails = new BulkCopyDetails()
 			{
-				SourceConnectionString = sourceConnectionStringContract,
+				SourceConnectionString = sourceConnectionString,
 				DestinationConnectionString = destinationConnectionString,
 				Config = new Configuration()
 			};
@@ -158,14 +144,14 @@ namespace CopyDataUtil.Svc
 
 				var copyTimer = new Stopwatch();
 				copyTimer.Start();
-				Console.WriteLine("Copy From: "+ mappings.SourceTable );
+				Console.WriteLine("Copy From: " + mappings.SourceTable);
 				Console.WriteLine("Copy To:   " + mappings.DestinationTable);
 				bulkHelper.Copy(copyDetails);
 				copyTimer.Stop();
 				Console.WriteLine("Result:     Successful");
 
 				// Format and display the TimeSpan value.
-				var elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",copyTimer.Elapsed.Hours, copyTimer.Elapsed.Minutes, copyTimer.Elapsed.Seconds,
+				var elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", copyTimer.Elapsed.Hours, copyTimer.Elapsed.Minutes, copyTimer.Elapsed.Seconds,
 					copyTimer.Elapsed.Milliseconds / 10);
 				Console.WriteLine("RunTime:   " + elapsedTime + Environment.NewLine);
 			}
@@ -206,11 +192,9 @@ namespace CopyDataUtil.Svc
 			using (StreamWriter file = File.CreateText(path))
 			{
 				JsonSerializer serializer = new JsonSerializer();
-
-				var configForFile = new RootObject() {Configurations = new List<Configuration>()};
+				var configForFile = new RootObject { Configurations = new List<Configuration>() };
 				configForFile.Configurations.Add(configMappings);
 
-				//serialize object directly into file stream
 				serializer.Serialize(file, configForFile);
 			}
 			return true;

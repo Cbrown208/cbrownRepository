@@ -9,6 +9,8 @@ using Dapper;
 
 namespace CopyDataUtil.DataAccess
 {
+	using System.Text;
+
 	public class DbContext
 	{
 		private readonly QueryBuilder _queryBuilder;
@@ -41,6 +43,20 @@ namespace CopyDataUtil.DataAccess
 			}
 		}
 
+		public List<ColumnInfoSchema> CustomChemaCheckTable(string tableName)
+		{
+			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
+			{
+				dbConnection.Open();
+				var query = new StringBuilder();
+				query.Append(@"SELECT * FROM Information_Schema.Columns where ");
+				query.Append(
+					@"(Column_Name like '%ModifiedOn%' OR Column_Name like '%ModifiedDate%' OR Column_Name like 'Mdate%') AND TABLE_NAME NOT LIKE '%_Staging%'");
+				var results = dbConnection.Query<ColumnInfoSchema>(query.ToString()).ToList();
+				return results;
+			}
+		}
+
 		public List<ColumnInfoSchema> GetColumnsNamesForTable(string tableName, List<string> columnsToSkip)
 		{
 			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
@@ -64,7 +80,7 @@ namespace CopyDataUtil.DataAccess
 						}
 					}
 				}
-				queryString = queryString + @" ORDER BY Column_Name";
+				//queryString = queryString + @" ORDER BY Column_Name";
 				dbConnection.Open();
 				var results = dbConnection.Query<ColumnInfoSchema>(queryString).ToList();
 				return results;
@@ -76,7 +92,7 @@ namespace CopyDataUtil.DataAccess
 			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
 				dbConnection.Open();
-				var results = dbConnection.Query(@"SELECT TOP 999 * FROM "+ tableName).ToList();
+				var results = dbConnection.Query(@"SELECT TOP 999 * FROM " + tableName).ToList();
 				return results;
 			}
 		}
@@ -171,16 +187,39 @@ namespace CopyDataUtil.DataAccess
 		public string BuildIdempotentInsertScript(string tableName, List<ColumnInfoSchema> columnNames, List<dynamic> tableDataList)
 		{
 			var resultQuery = "";
+
+			var schemaList = CustomChemaCheckTable(tableName);
+
 			var insertStatement = _queryBuilder.BuildInsertQuery(tableName, columnNames);
 			var endStatement = _queryBuilder.BuildEndStatement();
 			foreach (var data in tableDataList)
 			{
 				var queryValueList = "";
 
-				var checkStatement = _queryBuilder.BuildCheckStatement(tableName, "ZLEVEL", data.ZLEVEL);
+				var checkStatement = _queryBuilder.BuildCheckStatement(tableName, "TableName", data.TableName);
 				var query = _queryBuilder.BuildInsertValueString(columnNames);
 
-				queryValueList = queryValueList + string.Format(query, data.ZLEVEL,data.ZVALUE);
+				//foreach (var val in data)
+				//{
+				//	Console.WriteLine("Key: "+val.Key);
+				//	Console.WriteLine("Value: "+val.Value);
+
+				//}
+
+				var doesTableExsist = schemaList.FirstOrDefault(x => x.Table_Name == data.TableName);
+				var customColumnName = "";
+				var customColumnType = "";
+				var customModifiedDate = "";
+				var customGetEntierTable = 1;
+				if (doesTableExsist != null)
+				{
+					customColumnName = doesTableExsist.Column_Name;
+					customColumnType = "DateTime";
+					customModifiedDate = DateTime.MinValue.ToString("yyyy/MM/dd");
+					customGetEntierTable = 0;
+				}
+
+				queryValueList = queryValueList + string.Format(query, data.TableName, customColumnName, customColumnType, customModifiedDate, customGetEntierTable);
 				resultQuery = resultQuery + checkStatement + insertStatement + queryValueList + endStatement;
 			}
 			return resultQuery;
