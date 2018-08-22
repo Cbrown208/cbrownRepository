@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using CopyDataUtil.Core.Mappings;
 using CopyDataUtil.Core.Models;
 using CopyDataUtil.DataAccess;
@@ -9,69 +10,24 @@ using Newtonsoft.Json;
 
 namespace CopyDataUtil.Svc
 {
-	using System.Diagnostics.CodeAnalysis;
-
 	public class DatabaseCopyManager
 	{
-		private readonly string InputConnectionString = "Data Source=RCM41VDCPEDB01.medassets.com;Initial Catalog = Pricing.Dev; Integrated Security = True;";
 		private readonly string OutputConnectionString = "Data Source=RCM41VSPASDB02.medassets.com;Initial Catalog = SC_Centura; Integrated Security = True;";
-		private readonly DbContext _inputDb;
 		private readonly DbContext _outputDb;
 
 		public DatabaseCopyManager()
 		{
-			_inputDb = new DbContext(InputConnectionString);
 			_outputDb = new DbContext(OutputConnectionString);
-		}
-
-		public string CopyDataBaseData()
-		{
-			var tableName = "CPPACKAGEDEF";
-
-			var temp = _outputDb.GetInsertSetupString(tableName);
-			// var tableList = outputdbContext.GetListofTableNames();
-			var inputData = _inputDb.GetTableData(tableName);
-
-			var columnList = _outputDb.GetColumnsNamesForTable(tableName);
-
-			_outputDb.InsertTableData(tableName, columnList, inputData);
-
-			foreach (var col in columnList)
-			{
-				Console.WriteLine(col.Column_Name);
-			}
-			return "True";
-		}
-
-		public string CreateInsertStatement()
-		{
-			var tableName = "CPPACKAGEDEF";
-
-			var temp = _outputDb.GetInsertSetupString(tableName);
-			// var tableList = outputdbContext.GetListofTableNames();
-			var inputData = _inputDb.GetTableData(tableName);
-
-			var columnList = _outputDb.GetColumnsNamesForTable(tableName);
-
-			_outputDb.InsertTableData(tableName, columnList, inputData);
-
-			foreach (var col in columnList)
-			{
-				Console.WriteLine(col.Column_Name);
-			}
-			return "True";
 		}
 
 		public string CreateIdempotentInsertScript(string sourceConnectionString, string tableName)
 		{
 			var inputConTempDb = new DbContext(sourceConnectionString);
 			var temp = inputConTempDb.GetInsertSetupString(tableName);
-			// var tableList = outputdbContext.GetListofTableNames();
+			//var tableList = outputdbContext.GetListofTableNames();
 			var inputData = inputConTempDb.GetTableData(tableName);
 
 			var columnList = inputConTempDb.GetColumnsNamesForTable(tableName);
-
-
 
 			var outputString = inputConTempDb.BuildIdempotentInsertScript(tableName, columnList, inputData);
 
@@ -82,18 +38,18 @@ namespace CopyDataUtil.Svc
 			return outputString;
 		}
 
-		public string CreateBulkCopyMappingJson(string sourceTableName, string destinationTableName, List<string> columnsToSkip, string sourceConnectionString, string destinationConnectionString)
+		public string CreateBulkCopyMappingJson(BulkCopyParams copyParams)
 		{
-			var souceConDb = new DbContext(sourceConnectionString);
-			var destinationConDb = new DbContext(destinationConnectionString);
+			var sourceConDb = new DbContext(copyParams.SourceConnectionString);
+			var destinationConDb = new DbContext(copyParams.DestinationConnectionString);
 			var configMappings = new Configuration()
 			{
-				SourceTable = sourceTableName,
-				DestinationTable = destinationTableName,
+				SourceTable = copyParams.SourceTableName,
+				DestinationTable = copyParams.DestinationTableName,
 				SourceDestinationColumnMapping = new List<SourceDestinationColumnMapping>()
 			};
-			var sourceColumnList = souceConDb.GetColumnsNamesForTable(sourceTableName, columnsToSkip).ToArray();
-			var destinationColumnList = destinationConDb.GetColumnsNamesForTable(destinationTableName).ToArray();
+			var sourceColumnList = sourceConDb.GetColumnsNamesForTable(copyParams.SourceTableName, copyParams.ColumnsToSkip).ToArray();
+			var destinationColumnList = destinationConDb.GetColumnsNamesForTable(copyParams.DestinationTableName).ToArray();
 
 			for (var i = 0; i < sourceColumnList.Length; i++)
 			{
@@ -119,17 +75,24 @@ namespace CopyDataUtil.Svc
 			SaveToFile(path, configMappings);
 			SaveToFile(debugPath, configMappings);
 			Console.WriteLine("Json Config Saved to File");
+
+			var isMappingMissmatched = configMappings.SourceDestinationColumnMapping.FirstOrDefault(x =>
+				x.SourceColumn.ToLower() != x.DestinationColumn.ToLower());
+			if (isMappingMissmatched != null)
+			{
+				Console.WriteLine("Warning! Mappings Are Missmatched");
+			}
 			return jsonOutput;
 		}
 
-		public string BulkCopyDatabaseData(bool useTempMappings, string sourceConnectionString, string destinationConnectionString)
+		public string BulkCopyDatabaseData(bool useTempMappings, BulkCopyParams copyParams, int? facilityId)
 		{
 			var bulkHelper = new BulkCopyHelper();
 
 			var copyDetails = new BulkCopyDetails()
 			{
-				SourceConnectionString = sourceConnectionString,
-				DestinationConnectionString = destinationConnectionString,
+				SourceConnectionString = copyParams.SourceConnectionString,
+				DestinationConnectionString = copyParams.DestinationConnectionString,
 				Config = new Configuration()
 			};
 
@@ -146,8 +109,10 @@ namespace CopyDataUtil.Svc
 				copyTimer.Start();
 				Console.WriteLine("Copy From: " + mappings.SourceTable);
 				Console.WriteLine("Copy To:   " + mappings.DestinationTable);
-				bulkHelper.Copy(copyDetails);
+
+				bulkHelper.Copy(copyDetails, facilityId);
 				copyTimer.Stop();
+
 				Console.WriteLine("Result:     Successful");
 
 				// Format and display the TimeSpan value.

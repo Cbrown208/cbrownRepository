@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mappings\BulkCopyDetails.cs" />
+    <Compile Include="Mappings\BulkCopyParams.cs" />
     <Compile Include="Mappings\Configuration.cs" />
     <Compile Include="Mappings\RootObject.cs" />
     <Compile Include="Mappings\SourceDestinationColumnMapper.cs" />

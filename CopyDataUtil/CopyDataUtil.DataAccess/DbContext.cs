@@ -37,8 +37,9 @@ namespace CopyDataUtil.DataAccess
 			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
 				dbConnection.Open();
-				//var results = dbConnection.Query<ColumnInfoSchema>(@"SELECT * FROM Information_Schema.Columns where Table_Name = '"+ tableName + "' ORDER BY Column_Name").ToList();
-				var results = dbConnection.Query<ColumnInfoSchema>(@"SELECT * FROM Information_Schema.Columns where Table_Name = '" + tableName + "'").ToList();
+				//var query = @"SELECT * FROM Information_Schema.Columns where Table_Name = '" + tableName + "' ORDER BY Column_Name";
+				var query = @"SELECT * FROM Information_Schema.Columns where Table_Name = '" + tableName + "'";
+				var results = dbConnection.Query<ColumnInfoSchema>(query).ToList();
 				return results;
 			}
 		}
@@ -92,7 +93,8 @@ namespace CopyDataUtil.DataAccess
 			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
 				dbConnection.Open();
-				var results = dbConnection.Query(@"SELECT TOP 999 * FROM " + tableName).ToList();
+				var query = @"SELECT TOP 999 * FROM " + tableName;
+				var results = dbConnection.Query(query).ToList();
 				return results;
 			}
 		}

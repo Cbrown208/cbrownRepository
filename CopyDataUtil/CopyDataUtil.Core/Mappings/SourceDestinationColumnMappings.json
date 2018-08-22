@@ -1,81 +1,81 @@
 {
 	"Configurations": [
 		{
-			"SourceTable": "BillMast",
-			"DestinationTable": "BillMast",
+			"SourceTable": "CPPACKAGEDTLS",
+			"DestinationTable": "CpPackageDtls",
 			"StagingTable": null,
 			"SourceDestinationColumnMapping": [
 				{
-					"SourceColumn": "Syskey",
+					"SourceColumn": "SYSKEY",
 					"DestinationColumn": "Syskey"
 				},
 				{
-					"SourceColumn": "FacilityId",
-					"DestinationColumn": "FacilityId"
+					"SourceColumn": "CPPACKAGEDEF",
+					"DestinationColumn": "CpPackageDef"
 				},
 				{
-					"SourceColumn": "DRG",
-					"DestinationColumn": "DRG"
+					"SourceColumn": "CDMCODE",
+					"DestinationColumn": "CdmCode"
 				},
 				{
-					"SourceColumn": "PatientType",
-					"DestinationColumn": "PatientType"
+					"SourceColumn": "REVCODE",
+					"DestinationColumn": "RevCode"
 				},
 				{
-					"SourceColumn": "PatientAccountNumber",
-					"DestinationColumn": "PatientAccountNumber"
+					"SourceColumn": "HCPCSRATES",
+					"DestinationColumn": "HcpcsRates"
 				},
 				{
-					"SourceColumn": "GrossCharges",
-					"DestinationColumn": "GrossCharges"
+					"SourceColumn": "TOTUNITS",
+					"DestinationColumn": "TotUnits"
 				},
 				{
-					"SourceColumn": "ServiceFrom",
-					"DestinationColumn": "ServiceFrom"
+					"SourceColumn": "AVGUNITS",
+					"DestinationColumn": "AvgUnits"
 				},
 				{
-					"SourceColumn": "ServiceTo",
-					"DestinationColumn": "ServiceTo"
+					"SourceColumn": "PERCENTAGE",
+					"DestinationColumn": "Percentage"
 				},
 				{
-					"SourceColumn": "BillPayrClassSmry",
-					"DestinationColumn": "BillPayrClassSmry"
+					"SourceColumn": "TOTALCHARGES",
+					"DestinationColumn": "TotalCharges"
 				},
 				{
-					"SourceColumn": "RepriceType",
-					"DestinationColumn": "RepriceType"
+					"SourceColumn": "STATUNITCHARGE",
+					"DestinationColumn": "StatUnitCharge"
 				},
 				{
-					"SourceColumn": "AdmitDate",
-					"DestinationColumn": "AdmitDate"
+					"SourceColumn": "CDMUNITCHARGE",
+					"DestinationColumn": "CdmUnitCharge"
 				},
 				{
-					"SourceColumn": "ModifiedDate",
-					"DestinationColumn": "ModifiedDate"
+					"SourceColumn": "CDATE",
+					"DestinationColumn": "Cdate"
 				},
 				{
-					"SourceColumn": "ModifiedTime",
-					"DestinationColumn": "ModifiedTime"
+					"SourceColumn": "CTIME",
+					"DestinationColumn": "Ctime"
 				},
 				{
-					"SourceColumn": "Domdef",
+					"SourceColumn": "CUSER",
+					"DestinationColumn": "Cuser"
+				},
+				{
+					"SourceColumn": "MDATE",
+					"DestinationColumn": "Mdate"
+				},
+				{
+					"SourceColumn": "MTIME",
+					"DestinationColumn": "Mtime"
+				},
+				{
+					"SourceColumn": "MUSER",
+					"DestinationColumn": "Muser"
+				},
+				{
+					"SourceColumn": "DOMDEF",
 					"DestinationColumn": "Domdef"
-				},
-				{
-					"SourceColumn": "PatientDOB",
-					"DestinationColumn": "PatientDOB"
-				},
-				{
-					"SourceColumn": "PatientSex",
-					"DestinationColumn": "PatientSex"
-				},
-				{
-					"SourceColumn": "Icd_Ver",
-					"DestinationColumn": "Icd_Ver"
-				},
-				{
-					"SourceColumn": "Los",
-					"DestinationColumn": "Los"
 				}
 			]
 		}

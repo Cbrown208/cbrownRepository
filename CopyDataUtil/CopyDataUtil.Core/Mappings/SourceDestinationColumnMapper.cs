@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using CopyDataUtil.Core.Models.DbModels;
 using Newtonsoft.Json;
 
 namespace CopyDataUtil.Core.Mappings
@@ -19,6 +21,15 @@ namespace CopyDataUtil.Core.Mappings
 			string path = Directory.GetCurrentDirectory() + "\\Mappings\\TempMappings.json";
 
 			var sourceDestinationMappings = JsonConvert.DeserializeObject<RootObject>(File.ReadAllText(path));
+
+			return sourceDestinationMappings;
+		}
+
+		public static List<DataFactoryTableSchema> GetServiceCategoryMappings()
+		{
+			string path = @"C:\Dev\PAS_ServiceCategory\src\Pas.ServiceCategory.Processor\Pas.DataFactory.Pipeline.Template\ScSchemaMappings.json";
+
+			var sourceDestinationMappings = JsonConvert.DeserializeObject<List<DataFactoryTableSchema>>(File.ReadAllText(path));
 
 			return sourceDestinationMappings;
 		}

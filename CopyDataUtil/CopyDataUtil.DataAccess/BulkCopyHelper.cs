@@ -9,13 +9,13 @@ namespace CopyDataUtil.DataAccess
 {
     public class BulkCopyHelper
     {
-        public void Copy(BulkCopyDetails copyDetails)
+        public void Copy(BulkCopyDetails copyDetails, int? facilityId)
         {
             try
             {
                 var batchSize = 10000;
                 var notifyAfterCount = 5000;
-				var sqlString = GetSelectQuery(copyDetails.Config.SourceTable, copyDetails.Config.SourceDestinationColumnMapping);
+				var sqlString = GetSelectQuery(copyDetails.Config.SourceTable, copyDetails.Config.SourceDestinationColumnMapping, facilityId);
                 var totalRowCount = GetTotalRowCount(copyDetails.SourceConnectionString, copyDetails.Config.SourceTable, null);
 
 	            var formattedTotalCount = string.Format("{0:n0}", totalRowCount);
@@ -48,8 +48,11 @@ namespace CopyDataUtil.DataAccess
                                 {
                                     bulkCopy.ColumnMappings.Add(mapping.SourceColumn, mapping.DestinationColumn);
                                 }
-                                //bulkCopy.ColumnMappings.Add("FacilityId", "FacilityId");
-                                destinationConnection.Open();
+	                            if (facilityId != null && facilityId != 0)
+	                            {
+		                            bulkCopy.ColumnMappings.Add("FacilityId", "FacilityId");
+	                            }
+	                            destinationConnection.Open();
                                 bulkCopy.WriteToServer(dataReader);
                             }
                         }
@@ -101,7 +104,7 @@ namespace CopyDataUtil.DataAccess
 
         }
 
-        private StringBuilder GetSelectQuery(string sourceTable, List<SourceDestinationColumnMapping> columnMapping)
+        private StringBuilder GetSelectQuery(string sourceTable, List<SourceDestinationColumnMapping> columnMapping, int? facilityId)
         {
             var query = new StringBuilder("Select ");
 	        var count = columnMapping.Count;
@@ -116,8 +119,11 @@ namespace CopyDataUtil.DataAccess
 				i = i + 1;
 			}
 
-            //query.Append(",1412").Append(" as FacilityId");
-            query.Append(" from ").Append(sourceTable);
+	        if (facilityId != null && facilityId != 0)
+	        {
+				query.Append(","+facilityId).Append(" as FacilityId");
+	        }
+	        query.Append(" from ").Append(sourceTable);
             return query;
         }
     }

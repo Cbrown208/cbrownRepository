@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using CopyDataUtil.Core.Mappings;
+using System.Windows.Forms;
 
 namespace CopyDataUtil.Svc
 {
-	using System.Windows.Forms;
-
 	public class Program
 	{
 		[STAThread]
@@ -14,6 +14,7 @@ namespace CopyDataUtil.Svc
 			Console.WriteLine("1: Bulk Copy Manager");
 			Console.WriteLine("2: Create Idempotent Script");
 			Console.WriteLine("3: Run Schema Manager");
+			Console.WriteLine("4: Read Schema Mappings");
 			Console.WriteLine("q: Quit");
 			var input = Console.ReadLine();
 
@@ -28,6 +29,10 @@ namespace CopyDataUtil.Svc
 			else if (!string.IsNullOrWhiteSpace(input) && input.Contains("3"))
 			{
 				RunSchemaManager();
+			}
+			else if (!string.IsNullOrWhiteSpace(input) && input.Contains("4"))
+			{
+				ReadScMappingFile();
 			}
 			Console.ReadLine();
 		}
@@ -45,11 +50,20 @@ namespace CopyDataUtil.Svc
 
 		public static void RunSchemaManager()
 		{
+			var connectionString = "Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog = SC_CHSQ; Integrated Security = True; ";
 			var tableName = "BillMast";
 			var schemaManager = new DatabaseSchemaManager();
-			var schemaResult = schemaManager.GetJsonSchemaFormat(tableName);
+			var schemaResult = schemaManager.GetJsonSchemaFormat(connectionString,tableName);
 			Clipboard.SetText(schemaResult);
 			Console.WriteLine(schemaResult);
+		}
+
+		public static void ReadScMappingFile()
+		{
+			var schemaManager = new DatabaseSchemaManager();
+			var tableList = schemaManager.ReadFromConfigFile();
+			Clipboard.SetText(tableList);
+			Console.WriteLine(tableList);
 		}
 
 		public static void RunCopyManager()
@@ -59,39 +73,45 @@ namespace CopyDataUtil.Svc
 
 			//dbCopyManager.StringReplaceOnColumn("CpPackageDef", "DESCRIPTION", "SYSKEY");
 
-
-			var sourceConnectionStringContract = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHSC_Contract; Integrated Security = True;";
-			var sourceConnectionStringRepo = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True;";
+			var CboGlobalConnectionString = @"Data Source = LEWVQCMGDB02.nthrivenp.nthcrpnp.com\VAL_GLOBAL01; Initial Catalog = CBO_Global; Integrated Security = True;";
+			var CooperContractConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHSC_Contract; Integrated Security = True;";
+			var CooperRepoConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True;";
 			var serviceCategoryConnectionString = @"Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog =SC_CHSQ; Integrated Security = True;";
-
 			var azureConnectionString = @"Data Source = servicecategorysqldb.database.windows.net;uid=Dragon;password=SetMe*963.; Initial Catalog =SC_CHSQ; Integrated Security = False;";
 
-			var sourceConnectionString = serviceCategoryConnectionString;
-			var destinationConnectionString = azureConnectionString;
+			var copyDetails = new BulkCopyParams
+			{
+				SourceConnectionString = CooperRepoConnectionString,
+				DestinationConnectionString = serviceCategoryConnectionString,
+				SourceTableName = "BillMast",
+				DestinationTableName = "BillMast",
+				ColumnsToSkip = null
+			};
 
-			//dbCopyManager.CreateIdempotentInsertScript();
+			var facilityId = 1412;
 
-			/***** Bulk Copy *****/
-			/***** Get Mappings File Setup *****/
-			var sourceTableName = "BillMast";
-			var destinationTableName = "BillMast";
+			Console.WriteLine("Would you like to use Temp Mappings file? Y:Yes N:no");
+			var mappingInput = Console.ReadLine();
+			var useTempMappings = mappingInput != null && mappingInput.ToLower() == "y";
 
-			var columnsToSkip = new List<string> { "MTIME" };
+			if (!useTempMappings)
+			{
+				Console.WriteLine("Creating Mapping File...");
+				/***** Get Mappings File Setup *****/
+				var columnsToSkip = new List<string> {"MTIME"};
 
-			//dbCopyManager.CreateBulkCopyMappingJson(sourceTableName, destinationTableName, columnsToSkip, sourceConnectionString, destinationConnectionString);
-			dbCopyManager.CreateBulkCopyMappingJson(sourceTableName, destinationTableName, null, sourceConnectionString, destinationConnectionString);
+				//dbCopyManager.CreateBulkCopyMappingJson(copyDetails);
+
+				Console.WriteLine("Mapping File Created Successfully!");
+			}
 
 			Console.WriteLine("Would you like to Start Copy? Y:Yes N:no");
 			var input = Console.ReadLine();
 
 			if (input != null && input.ToLower() == "y")
 			{
-				Console.WriteLine("Would you like to use Temp Mappings file? Y:Yes N:no");
-				var mappingInput = Console.ReadLine();
-				var useTempMappings = mappingInput != null && mappingInput.ToLower() == "y";
-
 				/***** Copy *****/
-				dbCopyManager.BulkCopyDatabaseData(useTempMappings, sourceConnectionString, destinationConnectionString);
+				dbCopyManager.BulkCopyDatabaseData(useTempMappings, copyDetails, null);
 			}
 		}
 	}

@@ -1,75 +1,104 @@
 ﻿using System.Collections.Generic;
+using System;
+using System.Linq;
+using CopyDataUtil.Core.Mappings;
+using CopyDataUtil.Core.Models.DbModels;
+using CopyDataUtil.DataAccess;
+using Newtonsoft.Json;
 
 namespace CopyDataUtil.Svc
 {
-	using CopyDataUtil.Core.Models.DbModels;
-	using CopyDataUtil.DataAccess;
-
-	using Newtonsoft.Json;
-
 	public class DatabaseSchemaManager
 	{
-		private readonly string DbConnectionString = "Data Source=RCM41VSPASDB02.medassets.com;Initial Catalog = SC_Centura; Integrated Security = True;";
-		private readonly DbContext _inputDb;
-		private readonly Dictionary<string,string> AzureColumnDict;
+		private readonly Dictionary<string, string> _azureColumnDict;
 
 		public DatabaseSchemaManager()
 		{
-			AzureColumnDict = PopulateAzureColumnDict();
-			_inputDb = new DbContext(DbConnectionString);
+			_azureColumnDict = PopulateAzureColumnDict();
 		}
 
-		public string GetJsonSchemaFormat(string tableName)
+		public string GetJsonSchemaFormat(string connectionString, string tableName)
 		{
-			var outputColumns = _inputDb.GetColumnsNamesForTable(tableName);
-			var result = new destination { structure = new List<TableStructure>(), tableName = @"[dbo].["+tableName+"]" };
+			var inputDb = new DbContext(connectionString);
+			var outputColumns = inputDb.GetColumnsNamesForTable(tableName);
+
+			var result = new TableStructure { structure = new List<TableColumnStructure>(), tableName = @"[dbo].[" + tableName + "]" };
+			var lastColumnInList = outputColumns.LastOrDefault();
+			var dictTest = new Dictionary<string, string>();
+			if (lastColumnInList == null)
+			{
+				throw new ApplicationException("Could not find Last Column in List");
+			}
+
 			foreach (var tableColumnInfo in outputColumns)
 			{
-				var value = AzureColumnDict[tableColumnInfo.Data_Type]; 
-				var colInfo = new TableStructure() { name = tableColumnInfo.Column_Name, type = value, };
+				var value = _azureColumnDict[tableColumnInfo.Data_Type];
+				var colInfo = new TableColumnStructure() { name = tableColumnInfo.Column_Name, type = value, };
 				result.structure.Add(colInfo);
+				dictTest.Add(tableColumnInfo.Column_Name, tableColumnInfo.Column_Name);
 			}
-			var stringResult = JsonConvert.SerializeObject(result);
+
+			var copySchema = new DataFactoryTableSchema
+			{
+				source = result,
+				destination = result,
+				copyActivity = new CopyActivity { translator = new CopyTranslator { columnMappings = dictTest } }
+			};
+
+			var stringResult = JsonConvert.SerializeObject(copySchema);
 			return stringResult;
+		}
+
+		public string ReadFromConfigFile()
+		{
+			var mappingList = SourceDestinationColumnMapper.GetServiceCategoryMappings();
+			var tableList = "";
+			foreach (var tableSchema in mappingList)
+			{
+				var formattedTableName = tableSchema.source.tableName.Replace("[dbo].[", "");
+				formattedTableName=  formattedTableName.Replace("]", "");
+				tableList = tableList + formattedTableName + Environment.NewLine;
+			}
+
+			return tableList;
 		}
 
 		public Dictionary<string, string> PopulateAzureColumnDict()
 		{
 			return new Dictionary<string, string>
-				           {
-					           { "bigint", "Int64" },
-					           { "binary", "Byte[]" },
-					           { "bit", "Boolean" },
-					           { "char", "String" },
-					           { "date", "DateTime" },
-					           { "datetime", "DateTime" },
-					           { "datetime2", "DateTime" },
-					           { "datetimeoffset", "DateTimeOffset" },
-					           { "decimal", "Decimal" },
-					           { "FILESTREAM attribute (varbinary(max))", "Byte[]" },
-					           { "Float", "Double" },
-					           { "image", "Byte[]" },
-					           { "int", "Int32" },
-					           { "money", "Decimal" },
-					           { "nchar", "String" },
-					           { "ntext", "String" },
-					           { "numeric", "Decimal" },
-					           { "nvarchar", "String" },
-					           { "real", "Single" },
-					           { "rowversion", "Byte[]" },
-					           { "smalldatetime", "DateTime" },
-					           { "smallint", "Int16" },
-					           { "smallmoney", "Decimal" },
-					           { "text", "String" },
-					           { "time", "TimeSpan" },
-					           { "timestamp", "Byte[]" },
-					           { "tinyint", "Int16" },
-					           { "uniqueidentifier", "Guid" },
-					           { "varbinary", "Byte[]" },
-					           { "varchar", "String" },
-					           { "xml", "Xml" }
-				           };
+						   {
+							   { "bigint", "Int64" },
+							   { "binary", "Byte[]" },
+							   { "bit", "Boolean" },
+							   { "char", "String" },
+							   { "date", "DateTime" },
+							   { "datetime", "DateTime" },
+							   { "datetime2", "DateTime" },
+							   { "datetimeoffset", "DateTimeOffset" },
+							   { "decimal", "Decimal" },
+							   { "FILESTREAM attribute (varbinary(max))", "Byte[]" },
+							   { "Float", "Double" },
+							   { "image", "Byte[]" },
+							   { "int", "Int32" },
+							   { "money", "Decimal" },
+							   { "nchar", "String" },
+							   { "ntext", "String" },
+							   { "numeric", "Decimal" },
+							   { "nvarchar", "String" },
+							   { "real", "Single" },
+							   { "rowversion", "Byte[]" },
+							   { "smalldatetime", "DateTime" },
+							   { "smallint", "Int16" },
+							   { "smallmoney", "Decimal" },
+							   { "text", "String" },
+							   { "time", "TimeSpan" },
+							   { "timestamp", "Byte[]" },
+							   { "tinyint", "Int16" },
+							   { "uniqueidentifier", "Guid" },
+							   { "varbinary", "Byte[]" },
+							   { "varchar", "String" },
+							   { "xml", "Xml" }
+						   };
 		}
-
 	}
 }
