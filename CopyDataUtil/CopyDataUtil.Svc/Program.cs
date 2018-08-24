@@ -34,6 +34,10 @@ namespace CopyDataUtil.Svc
 			{
 				ReadScMappingFile();
 			}
+			else if (!string.IsNullOrWhiteSpace(input) && input.ToLower().Contains("q"))
+			{
+				return;
+			}
 			Console.ReadLine();
 		}
 
@@ -100,7 +104,7 @@ namespace CopyDataUtil.Svc
 				/***** Get Mappings File Setup *****/
 				var columnsToSkip = new List<string> {"MTIME"};
 
-				//dbCopyManager.CreateBulkCopyMappingJson(copyDetails);
+				dbCopyManager.CreateBulkCopyMappingJson(copyDetails);
 
 				Console.WriteLine("Mapping File Created Successfully!");
 			}
@@ -111,7 +115,7 @@ namespace CopyDataUtil.Svc
 			if (input != null && input.ToLower() == "y")
 			{
 				/***** Copy *****/
-				dbCopyManager.BulkCopyDatabaseData(useTempMappings, copyDetails, null);
+				dbCopyManager.BulkCopyDatabaseData(useTempMappings, copyDetails, facilityId);
 			}
 		}
 	}

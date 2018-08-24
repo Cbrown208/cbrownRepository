@@ -109,6 +109,7 @@ namespace CopyDataUtil.Svc
 				copyTimer.Start();
 				Console.WriteLine("Copy From: " + mappings.SourceTable);
 				Console.WriteLine("Copy To:   " + mappings.DestinationTable);
+				Console.WriteLine("Copy Starting At: " + DateTime.Now.ToString("MM/dd/yyyy h:mm tt")+ "...");
 
 				bulkHelper.Copy(copyDetails, facilityId);
 				copyTimer.Stop();

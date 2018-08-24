@@ -19,6 +19,7 @@ namespace CopyDataUtil.Core.Mappings
 		public static RootObject GetTempMappings()
 		{
 			string path = Directory.GetCurrentDirectory() + "\\Mappings\\TempMappings.json";
+			path = @"C:\Dev\cbrownRepository\CopyDataUtil\CopyDataUtil.Core\Mappings\TempMappings.json";
 
 			var sourceDestinationMappings = JsonConvert.DeserializeObject<RootObject>(File.ReadAllText(path));
 

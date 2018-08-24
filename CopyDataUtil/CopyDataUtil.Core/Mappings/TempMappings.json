@@ -179,8 +179,6 @@
 		//			}
 		//		]
 		//	}
-
-		//"Configurations": [
 		//	{
 		//			"SourceTable": "CPPKG_PARAMS_DTLS",
 		//			"DestinationTable": "CpPkgParamsDtls",
@@ -294,10 +292,77 @@
 		//		}
 		//	]
 		//}
+		/******************************************** REPO TABLES ********************************************/
+		{
+			"SourceTable": "BillDiag",
+			"DestinationTable": "BillDiag",
+			"StagingTable": "BillDiag_Staging",
+			"SourceDestinationColumnMapping": [
+				{
+					"SourceColumn": "SYSKEY",
+					"DestinationColumn": "Syskey"
+				},
+				{
+					"SourceColumn": "BillMast",
+					"DestinationColumn": "BillMast"
+				},
+				{
+					"SourceColumn": "Sequence",
+					"DestinationColumn": "Sequence"
+				},
+				{
+					"SourceColumn": "DiagCode",
+					"DestinationColumn": "DiagCode"
+				},
+				{
+					"SourceColumn": "Domdef",
+					"DestinationColumn": "Domdef"
+				},
+				{
+					"SourceColumn": "MDATE",
+					"DestinationColumn": "ModifiedDate"
+				}
+			]
+		},
 		//{
-		//	"SourceTable": "dbo.BILLPAYRCLASSSMRY",
-		//	"DestinationTable": "dbo.BillPayrClassSmry",
-		//	"StagingTable": "dbo.BillPayrClassSmry_Staging",
+		//	"SourceTable": "BILLPROC",
+		//	"DestinationTable": "BillProc",
+		//	"StagingTable": "BillProc_Staging",
+		//	"SourceDestinationColumnMapping": [
+		//		{
+		//			"SourceColumn": "SYSKEY",
+		//			"DestinationColumn": "Syskey"
+		//		},
+		//		{
+		//			"SourceColumn": "BillMast",
+		//			"DestinationColumn": "BillMast"
+		//		},
+		//		{
+		//			"SourceColumn": "Sequence",
+		//			"DestinationColumn": "Sequence"
+		//		},
+		//		{
+		//			"SourceColumn": "PROCCODE",
+		//			"DestinationColumn": "ProcedureCode"
+		//		},
+		//		{
+		//			"SourceColumn": "CodeType",
+		//			"DestinationColumn": "CodeType"
+		//		},
+		//		{
+		//			"SourceColumn": "Domdef",
+		//			"DestinationColumn": "Domdef"
+		//		},
+		//		{
+		//			"SourceColumn": "MDATE",
+		//			"DestinationColumn": "ModifiedDate"
+		//		}
+		//	]
+		//},
+		//{
+		//	"SourceTable": "BILLPAYRCLASSSMRY",
+		//	"DestinationTable": "BillPayrClassSmry",
+		//	"StagingTable": "BillPayrClassSmry_Staging",
 		//	"SourceDestinationColumnMapping": [
 		//		{
 		//			"SourceColumn": "NSYSKEY",
@@ -316,90 +381,203 @@
 		//			"DestinationColumn": "ModifiedDate"
 		//		}
 		//	]
+		//},
+		//{
+		//	"SourceTable": "BillRevc",
+		//	"DestinationTable": "BillRevc",
+		//	"StagingTable": "BillRevc_Staging",
+		//	"SourceDestinationColumnMapping": [
+		//		{
+		//			"SourceColumn": "SYSKEY",
+		//			"DestinationColumn": "Syskey"
+		//		},
+		//		{
+		//			"SourceColumn": "BILLMAST",
+		//			"DestinationColumn": "BillMast"
+		//		},
+		//		{
+		//			"SourceColumn": "HCPCSRATES",
+		//			"DestinationColumn": "HcpcsRates"
+		//		},
+		//		{
+		//			"SourceColumn": "REVCODE",
+		//			"DestinationColumn": "RevCode"
+		//		},
+		//		{
+		//			"SourceColumn": "DOMDEF",
+		//			"DestinationColumn": "Domdef"
+		//		},
+		//		{
+		//			"SourceColumn": "MDATE",
+		//			"DestinationColumn": "ModifiedDate"
+		//		},
+		//		{
+		//			"SourceColumn": "UNITS",
+		//			"DestinationColumn": "Units"
+		//		},
+		//		{
+		//			"SourceColumn": "CHARGES",
+		//			"DestinationColumn": "Charges"
+		//		}
+		//	]
 		//}
+		//{
+		//	"SourceTable": "BILLPHYS",
+		//	"DestinationTable": "BillPhys",
+		//	"StagingTable": "BillPhys_Staging",
+		//	"SourceDestinationColumnMapping": [
+		//		{
+		//			"SourceColumn": "SYSKEY",
+		//			"DestinationColumn": "Syskey"
+		//		},
+		//		{
+		//			"SourceColumn": "BILLMAST",
+		//			"DestinationColumn": "BillMast"
+		//		},
+		//		{
+		//			"SourceColumn": "PHYSNAME",
+		//			"DestinationColumn": "PhysicianName"
+		//		},
+		//		{
+		//			"SourceColumn": "NPI",
+		//			"DestinationColumn": "NPI"
+		//		},
+		//		{
+		//			"SourceColumn": "SEQUENCE",
+		//			"DestinationColumn": "Sequence"
+		//		},
+		//		{
+		//			"SourceColumn": "PHYSTYPE",
+		//			"DestinationColumn": "PhysicianType"
+		//		},
+		//		{
+		//			"SourceColumn": "DOMDEF",
+		//			"DestinationColumn": "Domdef"
+		//		},
+		//		{
+		//			"SourceColumn": "MDATE",
+		//			"DestinationColumn": "ModifiedDate"
+		//		}
+		//	]
+		//},
+		//{
+		//	"SourceTable": "BILLMAST",
+		//	"DestinationTable": "BillMast",
+		//	"StagingTable": "BillMast_Staging",
+		//	"SourceDestinationColumnMapping": [
+		//		{
+		//			"SourceColumn": "SYSKEY",
+		//			"DestinationColumn": "Syskey"
+		//		},
+		//		{
+		//			"SourceColumn": "DRG",
+		//			"DestinationColumn": "DRG"
+		//		},
+		//		{
+		//			"SourceColumn": "PATTYPE",
+		//			"DestinationColumn": "PatientType"
+		//		},
+		//		{
+		//			"SourceColumn": "PATNUM",
+		//			"DestinationColumn": "PatientAccountNumber"
+		//		},
+		//		{
+		//			"SourceColumn": "GROSSCHGS",
+		//			"DestinationColumn": "GrossCharges"
+		//		},
+		//		{
+		//			"SourceColumn": "SERVFROM",
+		//			"DestinationColumn": "ServiceFrom"
+		//		},
+		//		{
+		//			"SourceColumn": "SERVTO",
+		//			"DestinationColumn": "ServiceTo"
+		//		},
+		//		{
+		//			"SourceColumn": "BillPayrClassSmry",
+		//			"DestinationColumn": "BillPayrClassSmry"
+		//		},
+		//		{
+		//			"SourceColumn": "RPC_TYPE",
+		//			"DestinationColumn": "RepriceType"
+		//		},
+		//		{
+		//			"SourceColumn": "ADMDATE",
+		//			"DestinationColumn": "AdmitDate"
+		//		},
+		//		{
+		//			"SourceColumn": "MDATE",
+		//			"DestinationColumn": "ModifiedDate"
+		//		},
+		//		{
+		//			"SourceColumn": "MTIME",
+		//			"DestinationColumn": "ModifiedTime"
+		//		},
+		//		{
+		//			"SourceColumn": "Domdef",
+		//			"DestinationColumn": "Domdef"
+		//		},
+		//		{
+		//			"SourceColumn": "PATDOB",
+		//			"DestinationColumn": "PatientDOB"
+		//		},
+		//		{
+		//			"SourceColumn": "PATSEX",
+		//			"DestinationColumn": "PatientSex"
+		//		},
+		//		{
+		//			"SourceColumn": "ICD_VER",
+		//			"DestinationColumn": "Icd_Ver"
+		//		},
+		//		{
+		//			"SourceColumn": "LOS",
+		//			"DestinationColumn": "Los"
+		//		},
+		//		{
+		//			"SourceColumn": "BILLTYPE",
+		//			"DestinationColumn": "BillType"
+		//		}
+		//	]
+		//},
+		//{
+		//	"SourceTable": "CPDRG",
+		//	"DestinationTable": "CpDrg",
+		//	"StagingTable": "CpDrg_Staging",
+		//	"SourceDestinationColumnMapping": [
+		//		{
+		//			"SourceColumn": "NSYSKEY",
+		//			"DestinationColumn": "Nsyskey"
+		//		},
+		//		{
+		//			"SourceColumn": "BILLMAST",
+		//			"DestinationColumn": "BillMast"
+		//		},
+		//		{
+		//			"SourceColumn": "DRG",
+		//			"DestinationColumn": "Drg"
+		//		},
+		//		{
+		//			"SourceColumn": "DRG_VER",
+		//			"DestinationColumn": "DrgVer"
+		//		},
+		//		{
+		//			"SourceColumn": "MDATE",
+		//			"DestinationColumn": "Mdate"
+		//		},
+		//		{
+		//			"SourceColumn": "MTIME",
+		//			"DestinationColumn": "Mtime"
+		//		},
+		//		{
+		//			"SourceColumn": "MUSER",
+		//			"DestinationColumn": "Muser"
+		//		}
+		//	]
+		//},
 		{
-			"SourceTable": "dbo.BillMast",
-			"DestinationTable": "dbo.BillMast",
-			"StagingTable": "dbo.BillMast_Staging",
-			"SourceDestinationColumnMapping": [
-				{
-					"SourceColumn": "SYSKEY",
-					"DestinationColumn": "Syskey"
-				},
-				{
-					"SourceColumn": "DRG",
-					"DestinationColumn": "DRG"
-				},
-				{
-					"SourceColumn": "PATTYPE",
-					"DestinationColumn": "PatientType"
-				},
-				{
-					"SourceColumn": "PATNUM",
-					"DestinationColumn": "PatientAccountNumber"
-				},
-				{
-					"SourceColumn": "GROSSCHGS",
-					"DestinationColumn": "GrossCharges"
-				},
-				{
-					"SourceColumn": "SERVFROM",
-					"DestinationColumn": "ServiceFrom"
-				},
-				{
-					"SourceColumn": "SERVTO",
-					"DestinationColumn": "ServiceTo"
-				},
-				{
-					"SourceColumn": "BillPayrClassSmry",
-					"DestinationColumn": "BillPayrClassSmry"
-				},
-				{
-					"SourceColumn": "RPC_TYPE",
-					"DestinationColumn": "RepriceType"
-				},
-				{
-					"SourceColumn": "ADMDATE",
-					"DestinationColumn": "AdmitDate"
-				},
-				{
-					"SourceColumn": "MDATE",
-					"DestinationColumn": "ModifiedDate"
-				},
-				{
-					"SourceColumn": "MTIME",
-					"DestinationColumn": "ModifiedTime"
-				},
-				{
-					"SourceColumn": "Domdef",
-					"DestinationColumn": "Domdef"
-				},
-				{
-					"SourceColumn": "PATDOB",
-					"DestinationColumn": "PatientDOB"
-				},
-				{
-					"SourceColumn": "PATSEX",
-					"DestinationColumn": "PatientSex"
-				},
-				{
-					"SourceColumn": "ICD_VER",
-					"DestinationColumn": "Icd_Ver"
-				},
-				{
-					"SourceColumn": "LOS",
-					"DestinationColumn": "Los"
-				},
-				{
-					"SourceColumn": "BILLTYPE",
-					"DestinationColumn": "BillType"
-				}
-			]
-		},
-		{
-			"SourceTable": "dbo.Clmchgx",
-			"DestinationTable": "dbo.ClmChgx",
-			"StagingTable": "dbo.ClmChgx_Staging",
+			"SourceTable": "Clmchgx",
+			"DestinationTable": "ClmChgx",
+			"StagingTable": "ClmChgx_Staging",
 			"SourceDestinationColumnMapping": [
 				{
 					"SourceColumn": "SYSKEY",
