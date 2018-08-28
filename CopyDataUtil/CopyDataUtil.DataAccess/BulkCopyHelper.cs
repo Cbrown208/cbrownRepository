@@ -4,12 +4,14 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Text;
 using CopyDataUtil.Core.Mappings;
+using NLog;
 
 namespace CopyDataUtil.DataAccess
 {
     public class BulkCopyHelper
     {
-        public void Copy(BulkCopyDetails copyDetails, int? facilityId)
+	    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+		public void Copy(BulkCopyDetails copyDetails, int? facilityId)
         {
             try
             {
@@ -25,10 +27,13 @@ namespace CopyDataUtil.DataAccess
 					Console.WriteLine("No Rows to Copy, Skipping Configuration.");
 					return;
 	            }
+	            var totalInfoRowCount = $"Number of Rows: {formattedTotalCount}";
+				Console.WriteLine(totalInfoRowCount);
 
-				Console.WriteLine($"Number of Rows: {formattedTotalCount}");
+	            Logger.Info(totalInfoRowCount);
 
-                using (SqlConnection sourceConnection = new SqlConnection(copyDetails.SourceConnectionString))
+
+				using (SqlConnection sourceConnection = new SqlConnection(copyDetails.SourceConnectionString))
                 {
                     SqlCommand cmd = new SqlCommand(sqlString.ToString(), sourceConnection);
                     sourceConnection.Open();
@@ -62,6 +67,7 @@ namespace CopyDataUtil.DataAccess
             catch (Exception e)
             {
 				Console.WriteLine(e.Message);
+				Logger.Error(e);
                 throw;
             }
         }

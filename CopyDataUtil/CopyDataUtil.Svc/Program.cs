@@ -55,7 +55,7 @@ namespace CopyDataUtil.Svc
 		public static void RunSchemaManager()
 		{
 			var connectionString = "Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog = SC_CHSQ; Integrated Security = True; ";
-			var tableName = "BillMast";
+			var tableName = "BillRevc";
 			var schemaManager = new DatabaseSchemaManager();
 			var schemaResult = schemaManager.GetJsonSchemaFormat(connectionString,tableName);
 			Clipboard.SetText(schemaResult);
@@ -74,7 +74,6 @@ namespace CopyDataUtil.Svc
 		{
 			var dbCopyManager = new DatabaseCopyManager();
 			//Run Update/ String Replace On One Column in a DB Table
-
 			//dbCopyManager.StringReplaceOnColumn("CpPackageDef", "DESCRIPTION", "SYSKEY");
 
 			var CboGlobalConnectionString = @"Data Source = LEWVQCMGDB02.nthrivenp.nthcrpnp.com\VAL_GLOBAL01; Initial Catalog = CBO_Global; Integrated Security = True;";
@@ -93,19 +92,18 @@ namespace CopyDataUtil.Svc
 			};
 
 			var facilityId = 1412;
+			var shouldPurgeData = true;
 
 			Console.WriteLine("Would you like to use Temp Mappings file? Y:Yes N:no");
 			var mappingInput = Console.ReadLine();
 			var useTempMappings = mappingInput != null && mappingInput.ToLower() == "y";
 
+			/***** Get Mappings File Setup *****/
 			if (!useTempMappings)
 			{
 				Console.WriteLine("Creating Mapping File...");
-				/***** Get Mappings File Setup *****/
-				var columnsToSkip = new List<string> {"MTIME"};
-
+				//copyDetails.ColumnsToSkip = new List<string> { "MTIME" };
 				dbCopyManager.CreateBulkCopyMappingJson(copyDetails);
-
 				Console.WriteLine("Mapping File Created Successfully!");
 			}
 
@@ -115,7 +113,7 @@ namespace CopyDataUtil.Svc
 			if (input != null && input.ToLower() == "y")
 			{
 				/***** Copy *****/
-				dbCopyManager.BulkCopyDatabaseData(useTempMappings, copyDetails, facilityId);
+				dbCopyManager.BulkCopyDatabaseData(useTempMappings, copyDetails, facilityId, shouldPurgeData);
 			}
 		}
 	}

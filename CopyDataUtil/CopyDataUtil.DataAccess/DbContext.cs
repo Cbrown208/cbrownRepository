@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using CopyDataUtil.Core.Models;
 using CopyDataUtil.Core.Models.DbModels;
 using Dapper;
+using NLog;
 
 namespace CopyDataUtil.DataAccess
 {
-	using System.Text;
 
 	public class DbContext
 	{
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 		private readonly QueryBuilder _queryBuilder;
 		private string ConnectionString;
 
@@ -62,7 +64,7 @@ namespace CopyDataUtil.DataAccess
 		{
 			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
-				var queryString = @"SELECT * FROM Information_Schema.Columns where Table_Name = '" + tableName+ "' ";
+				var queryString = @"SELECT * FROM Information_Schema.Columns where Table_Name = '" + tableName + "' ";
 				if (columnsToSkip != null && columnsToSkip.Any())
 				{
 					queryString = queryString + "AND (";
@@ -99,12 +101,31 @@ namespace CopyDataUtil.DataAccess
 			}
 		}
 
+		public bool PurgeTableData(string tableName)
+		{
+			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
+			{
+				dbConnection.Open();
+				var truncateQuery = "TRUNCATE TABLE " + tableName;
+				try
+				{
+					dbConnection.Query(truncateQuery);
+					return true;
+				}
+				catch (Exception ex)
+				{
+					Logger.Error(ex);
+					return false;
+				}
+			}
+		}
+
 		public string GetInsertSetupString(string tableName)
 		{
 			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
 				dbConnection.Open();
-				var results = dbConnection.Query<string>(@"select 'data.' + Column_Name from INFORMATION_SCHEMA.COLUMNS where table_name like '"+tableName+"' order by ORDINAL_POSITION").ToList();
+				var results = dbConnection.Query<string>(@"select 'data.' + Column_Name from INFORMATION_SCHEMA.COLUMNS where table_name like '" + tableName + "' order by ORDINAL_POSITION").ToList();
 
 				var stringResults = string.Join(",", results);
 				return stringResults;
@@ -129,7 +150,7 @@ namespace CopyDataUtil.DataAccess
 				foreach (var valueDetail in updateValueList)
 				{
 					var sqlString = @"UPDATE " + valueDetail.TableName + " SET " + valueDetail.ColumnName + " = '" + valueDetail.UpdateValue + "' WHERE " +
-					                valueDetail.UniqueColumnName + " = '" + valueDetail.UniqueColumnValue + "'";
+									valueDetail.UniqueColumnName + " = '" + valueDetail.UniqueColumnValue + "'";
 					try
 					{
 						var results = dbConnection.Query(sqlString);

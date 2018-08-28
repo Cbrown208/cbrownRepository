@@ -5,11 +5,13 @@ using CopyDataUtil.Core.Mappings;
 using CopyDataUtil.Core.Models.DbModels;
 using CopyDataUtil.DataAccess;
 using Newtonsoft.Json;
+using NLog;
 
 namespace CopyDataUtil.Svc
 {
 	public class DatabaseSchemaManager
 	{
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 		private readonly Dictionary<string, string> _azureColumnDict;
 
 		public DatabaseSchemaManager()
@@ -27,6 +29,7 @@ namespace CopyDataUtil.Svc
 			var dictTest = new Dictionary<string, string>();
 			if (lastColumnInList == null)
 			{
+				Logger.Error("GetJsonSchemaFormat - Could not find Last Column in List");
 				throw new ApplicationException("Could not find Last Column in List");
 			}
 

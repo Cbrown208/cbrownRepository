@@ -7,17 +7,17 @@ using CopyDataUtil.Core.Mappings;
 using CopyDataUtil.Core.Models;
 using CopyDataUtil.DataAccess;
 using Newtonsoft.Json;
+using NLog;
 
 namespace CopyDataUtil.Svc
 {
 	public class DatabaseCopyManager
 	{
-		private readonly string OutputConnectionString = "Data Source=RCM41VSPASDB02.medassets.com;Initial Catalog = SC_Centura; Integrated Security = True;";
+		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 		private readonly DbContext _outputDb;
 
 		public DatabaseCopyManager()
 		{
-			_outputDb = new DbContext(OutputConnectionString);
 		}
 
 		public string CreateIdempotentInsertScript(string sourceConnectionString, string tableName)
@@ -65,11 +65,6 @@ namespace CopyDataUtil.Svc
 				configMappings.SourceDestinationColumnMapping.Add(mapping);
 			}
 			var jsonOutput = JsonConvert.SerializeObject(configMappings);
-			//foreach (var col in configMappings.SourceDestinationColumnMapping)
-			//{
-			//	Console.WriteLine("Source: "+col.SourceColumn);
-			//	Console.WriteLine("Dest:   " + col.DestinationColumn);
-			//}
 			var path = @"C:\Dev\cbrownRepository\CopyDataUtil\CopyDataUtil.Core\Mappings\SourceDestinationColumnMappings.json";
 			var debugPath = Directory.GetCurrentDirectory() + "\\Mappings\\SourceDestinationColumnMappings.json";
 			SaveToFile(path, configMappings);
@@ -85,7 +80,7 @@ namespace CopyDataUtil.Svc
 			return jsonOutput;
 		}
 
-		public string BulkCopyDatabaseData(bool useTempMappings, BulkCopyParams copyParams, int? facilityId)
+		public string BulkCopyDatabaseData(bool useTempMappings, BulkCopyParams copyParams, int? facilityId, bool shouldPurgeData)
 		{
 			var bulkHelper = new BulkCopyHelper();
 
@@ -105,24 +100,41 @@ namespace CopyDataUtil.Svc
 				copyDetails.Config.DestinationTable = mappings.DestinationTable;
 				copyDetails.Config.StagingTable = mappings.StagingTable;
 
+				if (shouldPurgeData)
+				{
+					var destinationDbContext = new DbContext(copyDetails.DestinationConnectionString);
+
+					destinationDbContext.PurgeTableData(mappings.DestinationTable);
+					Console.WriteLine("Truncating Table: " + mappings.DestinationTable);
+				}
 				var copyTimer = new Stopwatch();
 				copyTimer.Start();
 				Console.WriteLine("Copy From: " + mappings.SourceTable);
 				Console.WriteLine("Copy To:   " + mappings.DestinationTable);
-				Console.WriteLine("Copy Starting At: " + DateTime.Now.ToString("MM/dd/yyyy h:mm tt")+ "...");
-
-				bulkHelper.Copy(copyDetails, facilityId);
+				Console.WriteLine("Copy Starting At: " + DateTime.Now.ToString("MM/dd/yyyy h:mm tt") + "...");
+				var tableInfoDetails = "Copy From: " + mappings.SourceTable + "Copy To:   " + mappings.DestinationTable + 
+					"Copy Starting At: " + DateTime.Now.ToString("MM/dd/yyyy h:mm tt") + "...";
+				Logger.Info(tableInfoDetails);
+				try
+				{
+					bulkHelper.Copy(copyDetails, facilityId);
+					Console.WriteLine("Result:     Successful");
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					Logger.Error(e);
+				}
 				copyTimer.Stop();
-
-				Console.WriteLine("Result:     Successful");
 
 				// Format and display the TimeSpan value.
 				var elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", copyTimer.Elapsed.Hours, copyTimer.Elapsed.Minutes, copyTimer.Elapsed.Seconds,
 					copyTimer.Elapsed.Milliseconds / 10);
 				Console.WriteLine("RunTime:   " + elapsedTime + Environment.NewLine);
-			}
 
-			return "Testing";
+				Logger.Info("RunTime:   " + elapsedTime);
+			}
+			return "Finished";
 		}
 
 		public string StringReplaceOnColumn(string tableName, string targetColumnName, string uniqueColumnName)
