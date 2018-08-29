@@ -14,17 +14,20 @@ namespace CopyDataUtil.Svc
 			Console.WriteLine("1: Bulk Copy Manager");
 			Console.WriteLine("2: Create Idempotent Script");
 			Console.WriteLine("3: Run Schema Manager");
-			Console.WriteLine("4: Read Schema Mappings");
+			Console.WriteLine("4: Run Schema Manager All Tables");
+			Console.WriteLine("5: Read Schema Mappings");
 			Console.WriteLine("q: Quit");
 			var input = Console.ReadLine();
 
 			if (!string.IsNullOrWhiteSpace(input) && input.Contains("1"))
 			{
 				RunCopyManager();
+				Console.ReadLine();
 			}
 			else if (!string.IsNullOrWhiteSpace(input) && input.Contains("2"))
 			{
 				CreateIdempotentInsertScript();
+				Console.ReadLine();
 			}
 			else if (!string.IsNullOrWhiteSpace(input) && input.Contains("3"))
 			{
@@ -32,13 +35,16 @@ namespace CopyDataUtil.Svc
 			}
 			else if (!string.IsNullOrWhiteSpace(input) && input.Contains("4"))
 			{
+				RunSchemaManagerAllTables();
+			}
+			else if (!string.IsNullOrWhiteSpace(input) && input.Contains("5"))
+			{
 				ReadScMappingFile();
 			}
 			else if (!string.IsNullOrWhiteSpace(input) && input.ToLower().Contains("q"))
 			{
 				return;
 			}
-			Console.ReadLine();
 		}
 
 		public static void CreateIdempotentInsertScript()
@@ -55,11 +61,22 @@ namespace CopyDataUtil.Svc
 		public static void RunSchemaManager()
 		{
 			var connectionString = "Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog = SC_CHSQ; Integrated Security = True; ";
-			var tableName = "BillRevc";
+			var tableName = "BillPayrClassSmry";
 			var schemaManager = new DatabaseSchemaManager();
 			var schemaResult = schemaManager.GetJsonSchemaFormat(connectionString,tableName);
+
 			Clipboard.SetText(schemaResult);
 			Console.WriteLine(schemaResult);
+		}
+
+		public static void RunSchemaManagerAllTables()
+		{
+			var connectionString = "Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog = SC_CHSQ; Integrated Security = True; ";
+			var schemaManager = new DatabaseSchemaManager();
+			var schemaResultList = schemaManager.GetAllTablesJsonSchemaFormat(connectionString);
+
+			Clipboard.SetText(schemaResultList);
+			Console.WriteLine(schemaResultList);
 		}
 
 		public static void ReadScMappingFile()

@@ -628,10 +628,6 @@
 					"DestinationColumn": "REVCODE"
 				},
 				{
-					"SourceColumn": "THPCODE",
-					"DestinationColumn": "THPCODE"
-				},
-				{
 					"SourceColumn": "MDATE",
 					"DestinationColumn": "MDATE"
 				},
