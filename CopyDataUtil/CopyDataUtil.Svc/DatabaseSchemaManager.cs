@@ -50,7 +50,7 @@ namespace CopyDataUtil.Svc
 			};
 			schemaList.Add(copySchema);
 
-			var stringResult = JsonConvert.SerializeObject(schemaList);
+			var stringResult = JsonConvert.SerializeObject(schemaList, Formatting.Indented);
 			return stringResult;
 		}
 
@@ -107,7 +107,7 @@ namespace CopyDataUtil.Svc
 				};
 				schemaList.Add(copySchema);
 			}
-			var stringResult = JsonConvert.SerializeObject(schemaList);
+			var stringResult = JsonConvert.SerializeObject(schemaList, Formatting.Indented);
 			return stringResult;
 		}
 

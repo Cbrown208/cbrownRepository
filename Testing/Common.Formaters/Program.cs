@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Linq;
+using System.Windows.Forms;
+using Common.Formaters.Convertors;
 
 namespace Common.Formaters
 {
-	using System.Collections.Generic;
-
-	using Common.Formaters.Convertors;
-
 	public class Program
 	{
 		private static readonly FormatManager Manager = new FormatManager();
+		[STAThread]
 		private static void Main()
 		{
 			RunFormatDisplay();
@@ -21,11 +20,109 @@ namespace Common.Formaters
 			//Console.WriteLine(syskeyList.Count);
 
 			// String to Format
-			var stringToFormat =
-				@" And B.RPCType = 0";
+			var stringToFormat = @"CREATE PROCEDURE [dbo].[isp_ReconcileChargeRecords]
+	(@FacilityId INT = 0 )
+AS
+BEGIN
+  
+IF OBJECT_ID(N'tempdb..#tmpBillData') IS NOT NULL
+	  BEGIN DROP TABLE #tmpBillData END
+
+IF OBJECT_ID(N'tempdb..#tmpChargeData') IS NOT NULL
+	  BEGIN DROP TABLE #tmpChargeData END
+
+IF OBJECT_ID(N'tempdb..#tmpDetailData') IS NOT NULL
+	  BEGIN DROP TABLE #tmpDetailData END
+
+IF OBJECT_ID(N'tempdb..#tmpValuesToUpdate') IS NOT NULL
+	  BEGIN DROP TABLE #tmpValuesToUpdate END
+
+IF  ISNULL(@FacilityId, 0) = 0
+  SET @FacilityId = 0
+
+-- If no data is in the ChargeData table set all Billmast Records to IsReconciled = 1
+IF NOT EXISTS(SELECT 1 FROM ChargeData)
+	BEGIN 
+		PRINT 'No Charge Data Found'
+		UPDATE BillMast SET IsReconciled = 1
+		WHERE IsReconciled = 0
+	END 
+	ELSE -- Reconcile Records
+	BEGIN 
+		PRINT 'Charge Data Found! Reconciling Data... '
+		-- Build tmp Bill Data table
+		SELECT FacilityId, PatientAccountNumber, SUM(GrossCharges) AS TotalBillAmount  
+		INTO #tmpBillData 
+		FROM BillMast (nolock)
+		WHERE IsReconciled = 0
+		GROUP BY FacilityId, PatientAccountNumber
+		
+		CREATE TABLE #tmpDetailData (BM_FacilityId INT , BM_AccountNumber VARCHAR(80) ,TotalBillAmount MONEY ,TotalChargeAmount MONEY,Result VARCHAR(10))
+
+		IF (@FacilityId != 0)
+			BEGIN 
+			-- Calculate sum for charge data WITH Facility
+			SELECT FacilityId, PatientAccountNumber AS AccountNumber, SUM(ExtendedChargeAmount) AS TotalChargeAmount 
+			INTO #tmpChargeData
+			FROM ChargeData (NOLOCK)
+			WHERE FacilityId = @FacilityId
+			GROUP BY FacilityId, PatientAccountNumber
+
+			-- Bring in charge data and Reconcile accounts
+			INSERT INTO #tmpDetailData
+			SELECT bm.FacilityId AS 'BM_FacilityId', 
+					bm.PatientAccountNumber AS 'BM_AccountNumber', 
+					bm.TotalBillAmount AS TotalBillAmount,
+					cd.TotalChargeAmount,
+					CASE WHEN TotalChargeAmount = TotalBillAmount THEN 'M'
+						 WHEN TotalChargeAmount > TotalBillAmount THEN 'C'
+						 WHEN TotalChargeAmount < TotalBillAmount THEN 'B'
+						 ELSE 'NA' END AS Result
+			FROM #tmpBillData bm
+			LEFT JOIN #tmpChargeData cd ON bm.FacilityId = cd.FacilityId and bm.PatientAccountNumber = cd.AccountNumber
+			WHERE bm.FacilityId = @FacilityId
+			END
+		ELSE 
+			BEGIN 
+				-- Calculate sum for charge data without Facility
+				SELECT FacilityId, PatientAccountNumber AS AccountNumber, SUM(ExtendedChargeAmount) AS TotalChargeAmount 
+				INTO #tmpChargeData
+				FROM ChargeData (NOLOCK)
+				GROUP BY FacilityId, PatientAccountNumber
+
+				CREATE TABLE #tmpDetailData (BM_FacilityId INT , BM_AccountNumber VARCHAR(80) ,TotalBillAmount MONEY ,TotalChargeAmount MONEY,Result VARCHAR(10))
+
+				-- Bring in charge data and Reconcile accounts
+				INSERT INTO #tmpDetailData
+				SELECT bm.FacilityId AS 'BM_FacilityId', 
+						bm.PatientAccountNumber AS 'BM_AccountNumber', 
+						bm.TotalBillAmount AS TotalBillAmount,
+						cd.TotalChargeAmount,
+						CASE WHEN TotalChargeAmount = TotalBillAmount THEN 'M'
+							 WHEN TotalChargeAmount > TotalBillAmount THEN 'C'
+							 WHEN TotalChargeAmount < TotalBillAmount THEN 'B'
+							 ELSE 'NA' END AS Result
+				FROM #tmpBillData bm
+				LEFT JOIN #tmpChargeData cd ON bm.FacilityId = cd.FacilityId AND bm.PatientAccountNumber = cd.AccountNumber
+			END
+
+		select distinct FacilityId as BM_FacilityId, PatientAccountNumber as BM_AccountNumber, b.Syskey
+		INTO #tmpValuesToUpdate
+		FROM #tmpDetailData d
+		LEFT OUTER JOIN BillMast b (nolock) ON d.[BM_FacilityId] = b.FacilityId AND d.BM_AccountNumber = b.PatientAccountNumber
+		WHERE d.Result = 'M'
+
+		-- Update Bill Mast Table with Reconciled Records 
+		UPDATE BillMast SET IsReconciled = 1 
+		WHERE Syskey IN (SELECT Syskey from #tmpValuesToUpdate) AND IsReconciled = 0
+	END
+END";
+
 			var scrubbedString = Manager.FormatToUsqlString(stringToFormat);
 			var sqlScrubbedString = Manager.FormatSqlString(stringToFormat);
 			var sqlCustomScrubbedString = Manager.FormatToCustom(stringToFormat);
+
+			Clipboard.SetText(sqlScrubbedString);
 
 			Console.WriteLine("*** Formatted String ***");
 			Console.WriteLine(Environment.NewLine);

@@ -17,6 +17,7 @@ namespace Common.Formaters
 				"Case ",
 				" char ",
 				" count(",
+				" convert(",
 				" create ",
 				"Create ",
 				" cross ",

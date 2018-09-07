@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using CopyDataUtil.Core.Mappings;
 using System.Windows.Forms;
 
@@ -51,7 +50,7 @@ namespace CopyDataUtil.Svc
 		{
 			var dbCopyManager = new DatabaseCopyManager();
 			var serviceCategoryConnectionString = @"Data Source = servicecategorysqldb.database.windows.net;uid=Dragon;password=SetMe*963.; Initial Catalog =SC_CHSQ; Integrated Security = False;";
-			var tableName = "ChangeTrackingVersion";
+			var tableName = "ScProcessConfig";
 
 			var scriptResult = dbCopyManager.CreateIdempotentInsertScript(serviceCategoryConnectionString, tableName);
 			Clipboard.SetText(scriptResult);
@@ -61,7 +60,7 @@ namespace CopyDataUtil.Svc
 		public static void RunSchemaManager()
 		{
 			var connectionString = "Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog = SC_CHSQ; Integrated Security = True; ";
-			var tableName = "BillPayrClassSmry";
+			var tableName = "ClmChgx";
 			var schemaManager = new DatabaseSchemaManager();
 			var schemaResult = schemaManager.GetJsonSchemaFormat(connectionString,tableName);
 
@@ -95,13 +94,13 @@ namespace CopyDataUtil.Svc
 
 			var CboGlobalConnectionString = @"Data Source = LEWVQCMGDB02.nthrivenp.nthcrpnp.com\VAL_GLOBAL01; Initial Catalog = CBO_Global; Integrated Security = True;";
 			var CooperContractConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHSC_Contract; Integrated Security = True;";
-			var CooperRepoConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True;";
-			var serviceCategoryConnectionString = @"Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog =SC_CHSQ; Integrated Security = True;";
+			var CooperRepoConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True; Connection Timeout=90;";
+			var serviceCategoryConnectionString = @"Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog =SC_CHSQ; Integrated Security = True;Connection Timeout=90;";
 			var azureConnectionString = @"Data Source = servicecategorysqldb.database.windows.net;uid=Dragon;password=SetMe*963.; Initial Catalog =SC_CHSQ; Integrated Security = False;";
 
 			var copyDetails = new BulkCopyParams
 			{
-				SourceConnectionString = CooperRepoConnectionString,
+				SourceConnectionString = serviceCategoryConnectionString,
 				DestinationConnectionString = serviceCategoryConnectionString,
 				SourceTableName = "BillMast",
 				DestinationTableName = "BillMast",

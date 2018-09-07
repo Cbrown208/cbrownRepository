@@ -23,7 +23,7 @@ namespace CopyDataUtil.Svc
 		public string CreateIdempotentInsertScript(string sourceConnectionString, string tableName)
 		{
 			var inputConTempDb = new DbContext(sourceConnectionString);
-			var temp = inputConTempDb.GetInsertSetupString(tableName);
+			//var temp = inputConTempDb.GetInsertSetupString(tableName);
 			//var tableList = outputdbContext.GetListofTableNames();
 			var inputData = inputConTempDb.GetTableData(tableName);
 
@@ -64,7 +64,7 @@ namespace CopyDataUtil.Svc
 				}
 				configMappings.SourceDestinationColumnMapping.Add(mapping);
 			}
-			var jsonOutput = JsonConvert.SerializeObject(configMappings);
+			var jsonOutput = JsonConvert.SerializeObject(configMappings, Formatting.Indented);
 			var path = @"C:\Dev\cbrownRepository\CopyDataUtil\CopyDataUtil.Core\Mappings\SourceDestinationColumnMappings.json";
 			var debugPath = Directory.GetCurrentDirectory() + "\\Mappings\\SourceDestinationColumnMappings.json";
 			SaveToFile(path, configMappings);
@@ -172,7 +172,6 @@ namespace CopyDataUtil.Svc
 				JsonSerializer serializer = new JsonSerializer();
 				var configForFile = new RootObject { Configurations = new List<Configuration>() };
 				configForFile.Configurations.Add(configMappings);
-
 				serializer.Serialize(file, configForFile);
 			}
 			return true;
