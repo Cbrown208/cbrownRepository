@@ -218,8 +218,8 @@ namespace CopyDataUtil.DataAccess
 			foreach (var data in tableDataList)
 			{
 				var queryValueList = "";
-
-				var checkStatement = _queryBuilder.BuildCheckStatement(tableName, "TableName", data.TableName);
+				var temp = data;
+				var checkStatement = _queryBuilder.BuildCheckStatement(tableName, "FacId", data.FacId);
 				var query = _queryBuilder.BuildInsertValueString(columnNames);
 
 				//foreach (var val in data)
@@ -229,20 +229,20 @@ namespace CopyDataUtil.DataAccess
 
 				//}
 
-				var doesTableExsist = schemaList.FirstOrDefault(x => x.Table_Name == data.TableName);
-				var customColumnName = "";
-				var customColumnType = "";
-				var customModifiedDate = "";
-				var customGetEntierTable = 1;
-				if (doesTableExsist != null)
-				{
-					customColumnName = doesTableExsist.Column_Name;
-					customColumnType = "DateTime";
-					customModifiedDate = DateTime.MinValue.ToString("yyyy/MM/dd");
-					customGetEntierTable = 0;
-				}
+				//var doesTableExsist = schemaList.FirstOrDefault(x => x.Table_Name == data.TableName);
+				//var customColumnName = "";
+				//var customColumnType = "";
+				//var customModifiedDate = "";
+				//var customGetEntierTable = 1;
+				//if (doesTableExsist != null)
+				//{
+				//	customColumnName = doesTableExsist.Column_Name;
+				//	customColumnType = "DateTime";
+				//	customModifiedDate = DateTime.MinValue.ToString("yyyy/MM/dd");
+				//	customGetEntierTable = 0;
+				//}
 
-				queryValueList = queryValueList + string.Format(query, data.TableName, customColumnName, customColumnType, customModifiedDate, customGetEntierTable);
+				//queryValueList = queryValueList + string.Format(query, data.TableName, customColumnName, customColumnType, customModifiedDate, customGetEntierTable);
 				resultQuery = resultQuery + checkStatement + insertStatement + queryValueList + endStatement;
 			}
 			return resultQuery;

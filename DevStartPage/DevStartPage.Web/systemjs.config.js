@@ -24,7 +24,6 @@
             '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
             '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
-            '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
             '@swimlane/ngx-datatable': '/node_modules/@swimlane/ngx-datatable/release/index.js',
             // other libraries
             'rxjs': 'npm:rxjs',

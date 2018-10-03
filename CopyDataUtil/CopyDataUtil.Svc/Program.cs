@@ -60,7 +60,7 @@ namespace CopyDataUtil.Svc
 		public static void RunSchemaManager()
 		{
 			var connectionString = "Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog = SC_CHSQ; Integrated Security = True; ";
-			var tableName = "ClmChgx";
+			var tableName = "DtDrg";
 			var schemaManager = new DatabaseSchemaManager();
 			var schemaResult = schemaManager.GetJsonSchemaFormat(connectionString,tableName);
 

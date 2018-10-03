@@ -37,6 +37,7 @@ bld/
 /Testing/packages/
 /DevStartPage/DevStartPage.Web/public
 /src/DevStartPage/Content/generated
+/DevStartPage/DevStartPage.Web/package-lock.json
 
 
 _logs

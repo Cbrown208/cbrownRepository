@@ -2,7 +2,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule, TooltipModule } from 'ngx-bootstrap';
 import { TabsModule } from "ngx-tabs";
 import { DropdownModule } from "ngx-dropdown";
@@ -64,7 +63,6 @@ const imports = [BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpModule,
-    NgbModule.forRoot(),
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
     SharedModule,

@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using CopyDataUtil.Core.Mappings;
-using CopyDataUtil.Core.Models;
 using CopyDataUtil.DataAccess;
 using Newtonsoft.Json;
 using NLog;
@@ -14,21 +13,12 @@ namespace CopyDataUtil.Svc
 	public class DatabaseCopyManager
 	{
 		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-		private readonly DbContext _outputDb;
-
-		public DatabaseCopyManager()
-		{
-		}
 
 		public string CreateIdempotentInsertScript(string sourceConnectionString, string tableName)
 		{
 			var inputConTempDb = new DbContext(sourceConnectionString);
-			//var temp = inputConTempDb.GetInsertSetupString(tableName);
-			//var tableList = outputdbContext.GetListofTableNames();
 			var inputData = inputConTempDb.GetTableData(tableName);
-
 			var columnList = inputConTempDb.GetColumnsNamesForTable(tableName);
-
 			var outputString = inputConTempDb.BuildIdempotentInsertScript(tableName, columnList, inputData);
 
 			foreach (var col in columnList)
@@ -135,34 +125,6 @@ namespace CopyDataUtil.Svc
 				Logger.Info("RunTime:   " + elapsedTime);
 			}
 			return "Finished";
-		}
-
-		public string StringReplaceOnColumn(string tableName, string targetColumnName, string uniqueColumnName)
-		{
-
-			var query = "";
-			var updateQueryList = new List<UpdateValueDetails>();
-
-			var tableRowsList = _outputDb.GetAllValuesFromTable(tableName);
-			foreach (var values in tableRowsList)
-			{
-				string newValue = values.DESCRIPTION.ToString();
-				if (newValue.Contains(",") || newValue.Contains("'"))
-				{
-					newValue = newValue.Replace(",", "|");
-					newValue = newValue.Replace("'", " ");
-					updateQueryList.Add(new UpdateValueDetails
-					{
-						TableName = tableName,
-						ColumnName = targetColumnName,
-						UpdateValue = newValue,
-						UniqueColumnName = uniqueColumnName,
-						UniqueColumnValue = values.SYSKEY
-					});
-				}
-			}
-			_outputDb.UpdateValueInTable(updateQueryList);
-			return query;
 		}
 
 		public bool SaveToFile(string path, Configuration configMappings)

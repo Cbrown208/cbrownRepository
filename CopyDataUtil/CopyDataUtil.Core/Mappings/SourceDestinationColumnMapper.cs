@@ -28,7 +28,7 @@ namespace CopyDataUtil.Core.Mappings
 
 		public static List<DataFactoryTableSchema> GetServiceCategoryMappings()
 		{
-			string path = @"C:\Dev\PAS_ServiceCategory\src\Pas.ServiceCategory.Processor\Pas.DataFactory.Pipeline.Template\ScSchemaMappings.json";
+			string path = @"C:\Dev\ServiceCategory\src\Pas.ServiceCategory.Processor\Pas.DataFactory.Pipeline.Template\ScSchemaMappings.json";
 
 			var sourceDestinationMappings = JsonConvert.DeserializeObject<List<DataFactoryTableSchema>>(File.ReadAllText(path));
 
