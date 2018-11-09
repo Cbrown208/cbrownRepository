@@ -79,7 +79,7 @@ namespace CopyDataUtil.DataAccess
 
         private int GetTotalRowCount(string sourceConnectionString, string sourceTable, string fromDate)
         {
-            var query = new StringBuilder("Select Count(*)");
+            var query = new StringBuilder("Select Count(1)");
 
             query.Append(" from ").Append(sourceTable);
 

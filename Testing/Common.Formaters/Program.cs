@@ -8,9 +8,12 @@ namespace Common.Formaters
 	public class Program
 	{
 		private static readonly FormatManager Manager = new FormatManager();
+		private static readonly DateFormatter DateManager = new DateFormatter();
 		[STAThread]
 		private static void Main()
 		{
+			DateManager.GetCentralTime();
+
 			RunFormatDisplay();
 
 			var converter = new Base36Convertors();

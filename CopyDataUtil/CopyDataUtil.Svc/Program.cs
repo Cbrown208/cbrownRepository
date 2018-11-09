@@ -6,13 +6,16 @@ namespace CopyDataUtil.Svc
 {
 	public class Program
 	{
+		const string AzureM3ConnectionString = @"Data Source=servicecategorysqldbm3.database.windows.net;uid=Dragon;password=SetMe*963.; Initial Catalog =SC_WFBH; Integrated Security = False;";
+		const string AzureM2ConnectionString = @"Data Source = servicecategorysqldbm2.database.windows.net;uid=Dragon;password=SetMe*963.; Initial Catalog =SC_WFBH; Integrated Security = False;";
+		const string AzureM1ConnectionString = @"Data Source = servicecategorysqldbm1.database.windows.net;uid=Dragon;password=SetMe*963.; Initial Catalog =SC_WFBH; Integrated Security = False;";
 		[STAThread]
 		public static void Main()
 		{
 			Console.WriteLine("What would you like to run?");
 			Console.WriteLine("1: Bulk Copy Manager");
 			Console.WriteLine("2: Create Idempotent Script");
-			Console.WriteLine("3: Run Schema Manager");
+			Console.WriteLine("3: Run Schema Manager Single Table");
 			Console.WriteLine("4: Run Schema Manager All Tables");
 			Console.WriteLine("5: Read Schema Mappings");
 			Console.WriteLine("q: Quit");
@@ -59,8 +62,8 @@ namespace CopyDataUtil.Svc
 
 		public static void RunSchemaManager()
 		{
-			var connectionString = "Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog = SC_CHSQ; Integrated Security = True; ";
-			var tableName = "DtDrg";
+			var connectionString = "Data Source =.; Initial Catalog =SC_Testing; Integrated Security = True;Connection Timeout=90;";
+			var tableName = "BillRevc";
 			var schemaManager = new DatabaseSchemaManager();
 			var schemaResult = schemaManager.GetJsonSchemaFormat(connectionString,tableName);
 
@@ -70,7 +73,7 @@ namespace CopyDataUtil.Svc
 
 		public static void RunSchemaManagerAllTables()
 		{
-			var connectionString = "Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog = SC_CHSQ; Integrated Security = True; ";
+			var connectionString = "Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog = SC_WFBH; Integrated Security = True; ";
 			var schemaManager = new DatabaseSchemaManager();
 			var schemaResultList = schemaManager.GetAllTablesJsonSchemaFormat(connectionString);
 
@@ -95,20 +98,19 @@ namespace CopyDataUtil.Svc
 			var CboGlobalConnectionString = @"Data Source = LEWVQCMGDB02.nthrivenp.nthcrpnp.com\VAL_GLOBAL01; Initial Catalog = CBO_Global; Integrated Security = True;";
 			var CooperContractConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHSC_Contract; Integrated Security = True;";
 			var CooperRepoConnectionString = @"Data Source = LEWVQCMGDB01.nthrivenp.nthcrpnp.com\VAL; Initial Catalog = RMT_CHS_CooperHlthSys; Integrated Security = True; Connection Timeout=90;";
-			var serviceCategoryConnectionString = @"Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog =SC_CHSQ; Integrated Security = True;Connection Timeout=90;";
-			var azureConnectionString = @"Data Source = servicecategorysqldb.database.windows.net;uid=Dragon;password=SetMe*963.; Initial Catalog =SC_CHSQ; Integrated Security = False;";
+
+			var serviceCategoryConnectionString = @"Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog =SC_WFBH; Integrated Security = True;Connection Timeout=90;";
 
 			var copyDetails = new BulkCopyParams
 			{
 				SourceConnectionString = serviceCategoryConnectionString,
-				DestinationConnectionString = serviceCategoryConnectionString,
-				SourceTableName = "BillMast",
-				DestinationTableName = "BillMast",
+				DestinationConnectionString = AzureM2ConnectionString,
+				SourceTableName = "DtCdmDet",
+				DestinationTableName = "DtCdmDet",
 				ColumnsToSkip = null
 			};
 
-			var facilityId = 1412;
-			var shouldPurgeData = true;
+			var facilityId = 0;
 
 			Console.WriteLine("Would you like to use Temp Mappings file? Y:Yes N:no");
 			var mappingInput = Console.ReadLine();
@@ -121,6 +123,15 @@ namespace CopyDataUtil.Svc
 				//copyDetails.ColumnsToSkip = new List<string> { "MTIME" };
 				dbCopyManager.CreateBulkCopyMappingJson(copyDetails);
 				Console.WriteLine("Mapping File Created Successfully!");
+			}
+
+			var shouldPurgeData = false;
+			Console.WriteLine("Would you like to Purge Exsisting Data? Y:Yes N:no");
+			var purgeInput = Console.ReadLine();
+
+			if (purgeInput != null && purgeInput.ToLower() == "y")
+			{
+				shouldPurgeData = true;
 			}
 
 			Console.WriteLine("Would you like to Start Copy? Y:Yes N:no");

@@ -669,100 +669,139 @@
 		//		}
 		//	]
 		//},
-		{
-			"SourceTable": "dbo.Clmchgx_Temp",
-			"DestinationTable": "dbo.ClmChgx",
-			"StagingTable": "dbo.ClmChgx_Staging",
-			"SourceDestinationColumnMapping": [
-				{
-					"SourceColumn": "NSYSKEY",
-					"DestinationColumn": "NSYSKEY"
-				},
-				{
-					"SourceColumn": "XMITLOG",
-					"DestinationColumn": "XMITLOG"
-				},
-				{
-					"SourceColumn": "PATNUM",
-					"DestinationColumn": "PATNUM"
-				},
-				{
-					"SourceColumn": "SEQUENCE",
-					"DestinationColumn": "SEQUENCE"
-				},
-				{
-					"SourceColumn": "CDMCODE",
-					"DestinationColumn": "CDMCODE"
-				},
-				{
-					"SourceColumn": "CDMCHARGE_OLD",
-					"DestinationColumn": "CDMCHARGE_OLD"
-				},
-				{
-					"SourceColumn": "QUANTITY",
-					"DestinationColumn": "QUANTITY"
-				},
-				{
-					"SourceColumn": "SERVDATE",
-					"DestinationColumn": "SERVDATE"
-				},
-				{
-					"SourceColumn": "CDMDESC",
-					"DestinationColumn": "CDMDESC"
-				},
-				{
-					"SourceColumn": "POSTDATE",
-					"DestinationColumn": "POSTDATE"
-				},
-				{
-					"SourceColumn": "PROCCODE",
-					"DestinationColumn": "PROCCODE"
-				},
-				{
-					"SourceColumn": "REVCODE",
-					"DestinationColumn": "REVCODE"
-				},
-				{
-					"SourceColumn": "MDATE",
-					"DestinationColumn": "MDATE"
-				},
-				{
-					"SourceColumn": "MTIME",
-					"DestinationColumn": "MTIME"
-				},
-				{
-					"SourceColumn": "MUSER",
-					"DestinationColumn": "MUSER"
-				},
-				{
-					"SourceColumn": "LINENUM",
-					"DestinationColumn": "LINENUM"
-				},
-				{
-					"SourceColumn": "CHARGEID",
-					"DestinationColumn": "CHARGEID"
-				},
-				{
-					"SourceColumn": "DOMDEF",
-					"DestinationColumn": "DOMDEF"
-				},
-				{
-					"SourceColumn": "XTRADATA",
-					"DestinationColumn": "XTRADATA"
-				},
-				{
-					"SourceColumn": "BILLABLE",
-					"DestinationColumn": "BILLABLE"
-				},
-				{
-					"SourceColumn": "FINCLASS",
-					"DestinationColumn": "FINCLASS"
-				},
-				{
-					"SourceColumn": "CDMCHARGE",
-					"DestinationColumn": "CDMCHARGE"
-				}
-			]
-		}
+		//{
+		//	"SourceTable": "dbo.Clmchgx_Temp",
+		//	"DestinationTable": "dbo.ClmChgx",
+		//	"StagingTable": "dbo.ClmChgx_Staging",
+		//	"SourceDestinationColumnMapping": [
+		//		{
+		//			"SourceColumn": "NSYSKEY",
+		//			"DestinationColumn": "NSYSKEY"
+		//		},
+		//		{
+		//			"SourceColumn": "XMITLOG",
+		//			"DestinationColumn": "XMITLOG"
+		//		},
+		//		{
+		//			"SourceColumn": "PATNUM",
+		//			"DestinationColumn": "PATNUM"
+		//		},
+		//		{
+		//			"SourceColumn": "SEQUENCE",
+		//			"DestinationColumn": "SEQUENCE"
+		//		},
+		//		{
+		//			"SourceColumn": "CDMCODE",
+		//			"DestinationColumn": "CDMCODE"
+		//		},
+		//		{
+		//			"SourceColumn": "CDMCHARGE_OLD",
+		//			"DestinationColumn": "CDMCHARGE_OLD"
+		//		},
+		//		{
+		//			"SourceColumn": "QUANTITY",
+		//			"DestinationColumn": "QUANTITY"
+		//		},
+		//		{
+		//			"SourceColumn": "SERVDATE",
+		//			"DestinationColumn": "SERVDATE"
+		//		},
+		//		{
+		//			"SourceColumn": "CDMDESC",
+		//			"DestinationColumn": "CDMDESC"
+		//		},
+		//		{
+		//			"SourceColumn": "POSTDATE",
+		//			"DestinationColumn": "POSTDATE"
+		//		},
+		//		{
+		//			"SourceColumn": "PROCCODE",
+		//			"DestinationColumn": "PROCCODE"
+		//		},
+		//		{
+		//			"SourceColumn": "REVCODE",
+		//			"DestinationColumn": "REVCODE"
+		//		},
+		//		{
+		//			"SourceColumn": "MDATE",
+		//			"DestinationColumn": "MDATE"
+		//		},
+		//		{
+		//			"SourceColumn": "MTIME",
+		//			"DestinationColumn": "MTIME"
+		//		},
+		//		{
+		//			"SourceColumn": "MUSER",
+		//			"DestinationColumn": "MUSER"
+		//		},
+		//		{
+		//			"SourceColumn": "LINENUM",
+		//			"DestinationColumn": "LINENUM"
+		//		},
+		//		{
+		//			"SourceColumn": "CHARGEID",
+		//			"DestinationColumn": "CHARGEID"
+		//		},
+		//		{
+		//			"SourceColumn": "DOMDEF",
+		//			"DestinationColumn": "DOMDEF"
+		//		},
+		//		{
+		//			"SourceColumn": "XTRADATA",
+		//			"DestinationColumn": "XTRADATA"
+		//		},
+		//		{
+		//			"SourceColumn": "BILLABLE",
+		//			"DestinationColumn": "BILLABLE"
+		//		},
+		//		{
+		//			"SourceColumn": "FINCLASS",
+		//			"DestinationColumn": "FINCLASS"
+		//		},
+		//		{
+		//			"SourceColumn": "CDMCHARGE",
+		//			"DestinationColumn": "CDMCHARGE"
+		//		}
+		//	]
+		//}
+					{
+						"SourceTable": "BillProc",
+						"DestinationTable": "BillProc",
+						"StagingTable": "BillProc_Staging",
+						"SourceDestinationColumnMapping": [
+							{
+								"SourceColumn": "BillMast",
+								"DestinationColumn": "BillMast"
+							},
+							{
+								"SourceColumn": "Syskey",
+								"DestinationColumn": "Syskey"
+							},
+							{
+								"SourceColumn": "FacilityId",
+								"DestinationColumn": "FacilityId"
+							},
+							{
+								"SourceColumn": "Sequence",
+								"DestinationColumn": "Sequence"
+							},
+							{
+								"SourceColumn": "ProcedureCode",
+								"DestinationColumn": "ProcedureCode"
+							},
+							{
+								"SourceColumn": "CodeType",
+								"DestinationColumn": "CodeType"
+							},
+							{
+								"SourceColumn": "Domdef",
+								"DestinationColumn": "Domdef"
+							},
+							{
+								"SourceColumn": "ModifiedDate",
+								"DestinationColumn": "ModifiedDate"
+							}
+						]
+					}
 	]
 }

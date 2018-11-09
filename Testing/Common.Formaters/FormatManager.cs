@@ -14,6 +14,11 @@ namespace Common.Formaters
 		{
 			return Regex.Replace(phoneNumber, @"(\d{3})(\d{3})(\d{4})", "($1) $2-$3");
 		}
+
+		public string CheckGuidFormat(string guidCheck)
+		{
+			return Regex.Replace(guidCheck, @"(\d{3})(\d{3})(\d{4})", "($1) $2-$3");
+		}
 		public string FormatNumber(decimal value)
 		{
 			return String.Format("{0:n}", value);
