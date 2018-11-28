@@ -361,19 +361,19 @@ gulp.task('iisexpress', function () {
 });
 
 var src = '',
-    app = src + 'app/',
-    content = 'content/',
-    styles = content + 'styles/',
-    generated = content + 'generated/',
-    generatedCss = generated + 'css/',
-    generatedJs = generated + 'js/',
-    public = src + 'public/',
-    dist = public + 'dist/',
-    mainApp = dist + 'mainApp',
-    tsFiles = app + '**/*.ts',
-    htmlFiles = app + '**/*.html',
-    //sassFile = styles + 'main.scss',
-    cssFiles = styles + '**/*.css';
+	app = src + 'app/',
+	content = 'content/',
+	styles = content + 'styles/',
+	generated = content + 'generated/',
+	generatedCss = generated + 'css/',
+	generatedJs = generated + 'js/';
+var publiclocation = src + 'public/';
+var dist = publiclocation + 'dist/';
+var mainApp = dist + 'mainApp';
+var tsFiles = app + '**/*.ts';
+var htmlFiles = app + '**/*.html';
+	//sassFile = styles + 'main.scss',
+var    cssFiles = styles + '**/*.css';
 
 var config = {
     app: app,
@@ -382,7 +382,7 @@ var config = {
     generated: generated,
     generatedCss: generatedCss,
     generatedJs: generatedJs,
-    public: public,
+	public: publiclocation,
     dist: dist,
     mainApp: mainApp,
     tsFiles: tsFiles,

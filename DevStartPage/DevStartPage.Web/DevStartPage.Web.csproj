@@ -284,6 +284,7 @@
     <Content Include="gulpfile.js" />
     <Content Include="Img\agario-100px.jpg" />
     <Content Include="Img\amazon-100px.png" />
+    <Content Include="Img\Arlo.png" />
     <Content Include="Img\at&amp;t-100px.png" />
     <Content Include="Img\Azuma-100px.jpg" />
     <Content Include="Img\changeip-100px.png" />
@@ -324,6 +325,7 @@
     <Content Include="Img\plex-100px.png" />
     <Content Include="Img\po.png" />
     <Content Include="Img\Rent-100px.jpg" />
+    <Content Include="Img\Ring.jpg" />
     <Content Include="Img\test.jpg" />
     <Content Include="Img\twitter-100px.png" />
     <Content Include="Img\USBank-100px.jpg" />
@@ -391,7 +393,6 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Content\plugins\jquery-2.2.3.min.map" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\fontawesome-webfont.woff" />

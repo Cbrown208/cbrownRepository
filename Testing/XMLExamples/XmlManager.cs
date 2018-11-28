@@ -45,6 +45,7 @@ namespace XMLExamples
 			var emptyNamepsaces = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
 			var serializer = new XmlSerializer(value.GetType());
 			var settings = new XmlWriterSettings();
+			// Default Indent XML ********************************************************************************************************
 			settings.Indent = true;
 			settings.OmitXmlDeclaration = true;
 
