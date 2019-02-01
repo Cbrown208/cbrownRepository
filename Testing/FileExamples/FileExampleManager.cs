@@ -15,6 +15,18 @@ namespace FileExamples
 			Console.ReadLine();
 		}
 
+		public bool TestingReturn()
+		{
+			var temp1 = new List<string>();
+			Console.WriteLine("Origional Logic 0:" + !(temp1.Count > 1));
+			temp1.Add("hello");
+			Console.WriteLine("Origional Logic 1:" + !(temp1.Count > 1));
+			temp1.Add("hello2");
+			Console.WriteLine("Origional Logic 2:" + !(temp1.Count > 1));
+			return !(temp1.Count > 1);
+			
+		}
+
 		public TimeSpan ReadFile()
 		{
 			var searchString = "Time Elapsed";

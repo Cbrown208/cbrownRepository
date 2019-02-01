@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Contracts;
 using MassTransit;
@@ -13,9 +10,9 @@ namespace TestSubscriber2
 		public Task Consume(ConsumeContext<SomethingHappened> message)
 		{
 			Console.Write("Second Consumer Message #: " + message.Message.What);
-			Console.Write("  SENT: " + message.Message.When.ToString());
-			Console.Write("  PROCESSED: " + DateTime.Now.ToString());
-			Console.WriteLine(" (" + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString() + ")");
+			Console.Write("  SENT: " + message.Message.When);
+			Console.Write("  PROCESSED: " + DateTime.Now);
+			Console.WriteLine(" (" + System.Threading.Thread.CurrentThread.ManagedThreadId + ")");
 			return Task.FromResult(0);
 		}
 	}

@@ -16,6 +16,7 @@ namespace MassTransit3_Example
 					h.Password(busSettings.Password);
 					h.Heartbeat(busSettings.HeartBeatInSeconds);
 				});
+				sbc.EnablePriority(1);
 			});
 			
 			

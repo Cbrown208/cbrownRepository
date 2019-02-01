@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MassTransit;
-using MassTransit.Pipeline;
 using MassTransit3_Example.Messages;
 using MedAssets.AMS.Common;
-using QueueTools.RabbitMQ;
-using RabbitMQ.Client;
 using RabbitMQ_MassTransit3;
 
 namespace MassTransit3_Example
