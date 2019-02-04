@@ -1,0 +1,113 @@
+﻿/*body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}*/
+
+@charset "UTF-8";
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+	white-space: normal;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+	max-width: 280px;
+}
+
+body {
+	background-color: #BDBDBD;
+	/* background-repeat: repeat; */
+	/* background-position: center center; */
+	background-image: url('../Img/earth-desktop-background.jpg');
+	margin: 0;
+	padding: 0;
+}
+
+	body a.visited {
+		color: transparent;
+	}
+
+h2 {
+	color: white;
+	text-align: center;
+}
+
+
+.topnav {
+	overflow: hidden;
+	background-color: #333;
+}
+
+.topnav a {
+	float: left;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+.topnav a:hover {
+	background-color: #ddd;
+	color: black;
+}
+
+.topnav a.active {
+	background-color: black;
+	color: white;
+}
+/* unvisited link */
+a:link {
+	color: transparent;
+}
+
+/* visited link */
+a:visited {
+	color: transparent;
+}
+
+/* mouse over link */
+a:hover {
+	color: lightblue;
+}
+
+/* selected link */
+a:active {
+	color: transparent;
+}
+
+img {
+	border: 0px;
+}
+
+selections {
+	padding: 30px;
+	margin-bottom: 30px;
+	font-size: 21px;
+	font-weight: 200;
+	line-height: 2.1428571435;
+	color: whitesmoke;
+	background-color: transparent
+}
+
+quickSelectTable, td {
+	padding: 5px;
+}
+
+downloadLinks, a:visited, a:active, a:link {
+	color: whitesmoke;
+}
+
+downloadLinks, a:hover {
+	color: lightblue;
+}

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevStartPage.Core", "DevSta
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DevStartPage.Database", "DevStartPage.Database\DevStartPage.Database.sqlproj", "{0FF7CB22-809F-4042-BB66-D15F2C37B0B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevStartPage.Web.AngularCli", "DevStartPage.Web.AngularCli\DevStartPage.Web.AngularCli.csproj", "{A54055BE-9E8D-4782-88E7-16C9EBCC3404}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{0FF7CB22-809F-4042-BB66-D15F2C37B0B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FF7CB22-809F-4042-BB66-D15F2C37B0B6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0FF7CB22-809F-4042-BB66-D15F2C37B0B6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{A54055BE-9E8D-4782-88E7-16C9EBCC3404}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A54055BE-9E8D-4782-88E7-16C9EBCC3404}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A54055BE-9E8D-4782-88E7-16C9EBCC3404}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A54055BE-9E8D-4782-88E7-16C9EBCC3404}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,7 +10,7 @@ namespace DevStartPage.Core.Managers
 	{
 		public List<FileDetails> GetFileList()
 		{
-			var path = AppContext.BaseDirectory + @"app\Downloads\Files\";
+			var path = AppContext.BaseDirectory + @"src\app\Downloads\Files\";
 			var d = new DirectoryInfo(path);//Assuming Test is your Folder
 			var files = d.GetFiles("*");
 			return files.Select(file => new FileDetails

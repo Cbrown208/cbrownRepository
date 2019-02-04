@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+		"traceResolution": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [ "es2015", "dom" ],
+    "pretty": true,
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "noImplicitAny": false,
+    "outDir": "../public/dist/mainApp/",
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "moduleResolution": "node",
+	"skipLibCheck": true
+  },
+  "exclude": [
+    "node_modules",
+    "typings/index",
+        "typings/browser.d.ts",
+    "typings/browser",
+    "node_modules",
+    "typings/index.d.ts"
+  ]
+}

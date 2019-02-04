@@ -1,0 +1,11 @@
+﻿in order to deploy this solution you will need to build/compile and then publish to the desired location...
+
+After that you will need to run "ng build --prod" at the project level and it will bundle up all the files into the "mainApp" folder. 
+
+Once that folder has been generated copy it over to the IIS site and boom done! 
+
+
+Steps to Follow:
+1) publish the project to the website location.
+2) run "ng build --prod"
+3) Copy folder "mainApp" -> website location at the root level. 

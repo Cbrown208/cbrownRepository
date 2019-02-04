@@ -1,0 +1,18 @@
+<!--<div class="navbar navbar-inverse navbar-fixed-top" style="height: 50px"></div>-->
+<div align="center">
+	<div class="topnav" style="height: 50px">
+		<div style="padding-left: 40%">
+			<ul>
+				<li><a active routerLink="/home" routerLinkActive="active">DevStartPage</a></li>
+				<li><a routerLink="downloads" routerLinkActive="active" >Downloads</a></li>
+				<li><a routerLink="testing" routerLinkActive="active">Testing</a></li>
+			</ul>
+		</div>
+	</div>
+	<fancy-spinner [id]="'wizard'"></fancy-spinner>
+	<ng2-toasty [position]="'bottom-center'"></ng2-toasty>
+	<spinner-modal #spinnerModal></spinner-modal>
+	<div class="pfe-router-outlet-wrap">
+		<router-outlet></router-outlet>
+	</div>
+</div>

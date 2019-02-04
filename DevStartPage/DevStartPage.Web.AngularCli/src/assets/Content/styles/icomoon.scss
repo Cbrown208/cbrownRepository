@@ -1,0 +1,58 @@
+@font-face {
+    font-family: 'icomoon';
+    src: url('../fonts/icomoon/icomoon.eot?otjyz6');
+    src: url('../fonts/icomoon/icomoon.eot?otjyz6#iefix') format('embedded-opentype'), url('../fonts/icomoon/icomoon.ttf?otjyz6') format('truetype'), url('../fonts/icomoon/icomoon.woff?otjyz6') format('woff'), url('../fonts/icomoon/icomoon.svg?otjyz6#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="pfeicon-"],
+[class*=" pfeicon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.pfeicon-dollar-big-coin-on-a-hand:before {
+    content: "\e900";
+}
+
+.pfeicon-dollars-symbol-for-money:before {
+    content: "\e903";
+}
+
+.pfeicon-dollar-symbol:before {
+    content: "\e904";
+}
+
+.pfeicon-dollar-circle:before {
+    content: "\e905";
+}
+
+.pfeicon-budget_invoice:before {
+    content: "\e906";
+}
+
+.pfeicon-document:before {
+    content: "\e907";
+}
+
+.pfeicon-hospital_services_icon:before {
+    content: "\e908";
+}
+
+.pfeicon-insurance:before {
+    content: "\e901";
+}
+
+.pfeicon-insurance-dollar:before {
+    content: "\e902";
+}

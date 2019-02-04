@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<base href="/">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="~/Content/styles/ng2-toasty.css">
+	<link rel="stylesheet" type="text/css" href="~/Content/styles/main.css" />
+	<link rel="stylesheet" type="text/css" href="~/Content/font-awesome.min.css" />
+	<link rel="stylesheet" href="~/app/Shared/Widgets/Spinner/spinner.css">
+	<link rel="stylesheet" href="~/Content/font-awesome.css">
+	<link rel="stylesheet" href="~/Content/font-awesome.min.css">
+
+	<title>DevStartPage</title>
+</head>
+<body>
+	@RenderBody()
+	<!-- REQUIRED JS SCRIPTS -->
+	@*<script src="~/Content/plugins/jquery-2.2.3.min.js"></script>
+	<script src="~/Content/plugins/bootstrap.min.js"></script>
+
+	<script src="node_modules/systemjs/dist/system.src.js"></script>
+	<script src="~/systemjs.config.js"></script>
+	<script src="node_modules/core-js/client/shim.min.js"></script>
+	<script src="node_modules/zone.js/dist/zone.js"></script>
+	<script src="node_modules/reflect-metadata/Reflect.js"></script>
+	<script src="node_modules/chart.js/dist/Chart.bundle.js"></script>
+	<script>
+		System.import('../public/dist/mainApp/main.js').catch(function (err) {
+			console.error(err);
+		});
+	</script>
+	<script src="~/Content/plugins/chartjsplugin.js"></script>*@
+
+	@*Prod Deploy Scripts -- Only Need to Copy the Scripts Folder to Server*@
+	<script src="~/Scripts/lib/js/vendors.min.js"></script>
+	<script src="~/Scripts/main.app.min.js"></script>
+</body>
+</html>

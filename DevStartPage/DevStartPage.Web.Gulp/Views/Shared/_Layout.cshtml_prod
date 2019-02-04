@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <base href="/">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link rel="stylesheet" href="~/Content/font-awesome.css">
+		<link rel="stylesheet" href="~/Content/font-awesome.min.css">
+		<link rel="stylesheet" href="~/Content/generated/css/styles.min.css">
+		<link rel="stylesheet" href="~/Content/generated/css/component.min.css">
+		<link rel="stylesheet" href="~/Content/generated/css/global.min.css">
+    <title>PAS Pricing</title>
+</head>
+<body>
+    @RenderBody()
+            <script src="~/Scripts/lib/js/vendors.min.js"></script>
+            <script src="~/Scripts/main.app.min.js"></script>
+</body>
+</html>

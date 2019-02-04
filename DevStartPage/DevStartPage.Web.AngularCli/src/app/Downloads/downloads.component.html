@@ -1,0 +1,43 @@
+﻿<div class="board" style="width: 70%">
+	<div class="tab-content">
+		<div class="col-md-12">
+			<div class="row">
+				<fancy-spinner [id]="'grid'"></fancy-spinner>
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<h1>Downloads</h1>
+						<div style="float: right; padding-bottom: 10px; padding-right: 16px;">
+							<button (click)="refreshTable()" type="button" class="btn btn-info">
+								<span class="glyphicon glyphicon-refresh"></span> 
+							</button>
+							</div>
+						<br>
+						<div class="panel-body no-padding">
+							<data-table #dtDownloadsTable id="persons-grid" headerTitle="Downloads" [header]="false" [items]="filesList" [itemCount]="itemCount" (rowClick)="rowClick($event)" (rowDoubleClick)="rowDoubleClick($event)">
+								<data-table-column [property]="'Name'" [header]="'Name'" [sortable]="true" [resizable]="true">
+								</data-table-column>
+								<data-table-column property="FileSize" header="File Size" [sortable]="true" [resizable]="true">
+								</data-table-column>
+
+								<data-table-column [property]="'LastModified'" [header]="'Last Modified'" [sortable]="true" [resizable]="true">
+									<ng-template #dataTableCell let-item="item">
+										<span>{{item.LastModified | date:'MM/dd/yy hh:mm a'}}</span>
+									</ng-template>
+								</data-table-column>
+								<data-table-column [property]="'Name'" [header]="'Download'" [visible]="true" [resizable]="true">
+									<ng-template #dataTableCell let-item="item">
+										<span>
+											<button (click)="downloadFile(item.Name)" type="button" class="btn btn-info">
+												<span class="glyphicon glyphicon-download"></span> Download
+											</button>
+										</span>
+									</ng-template>
+								</data-table-column>
+							</data-table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

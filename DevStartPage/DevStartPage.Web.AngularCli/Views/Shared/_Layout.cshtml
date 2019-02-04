@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<base href="/">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="stylesheet" href="~/Content/styles/ng2-toasty.css">
+	<link rel="stylesheet" href="~/src/app/Shared/Widgets/Spinner/spinner.css">
+	<link rel="stylesheet" href="~/Content/font-awesome.css">
+	<link rel="stylesheet" href="~/Content/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="~/Content/styles/main.css" />
+
+	<!-- REQUIRED JS SCRIPTS -->
+	<script src="~/Content/plugins/jquery-2.2.3.min.js"></script>
+	<script src="~/Content/plugins/bootstrap.min.js"></script>
+
+	<title>DevStartPage</title>
+	@if (!this.Context.IsDebuggingEnabled)
+	{
+		@Styles.Render("~/mainApp/styleBundles")
+	}
+</head>
+<body>
+@RenderBody()
+@Scripts.Render("~/mainApp/scriptBundles")
+	
+</body>
+</html>

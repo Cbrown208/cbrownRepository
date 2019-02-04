@@ -1,0 +1,22 @@
+body {
+    background-color: $body-bg;
+}
+
+.container {
+    background-color: $container-bg;
+}
+
+.header-ui {
+    //background-color: green;
+    padding: 15px;
+    display: block;
+}
+
+.margin10 {
+    margin: 10px;
+}
+
+.bg-success {
+    background-color: rgb(92, 32, 65);
+    color: #fff;
+} 
