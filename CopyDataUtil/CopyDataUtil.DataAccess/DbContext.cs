@@ -29,7 +29,47 @@ namespace CopyDataUtil.DataAccess
 			using (IDbConnection dbConnection = new SqlConnection(ConnectionString))
 			{
 				dbConnection.Open();
-				var results = dbConnection.Query<TableInfoSchema>(@"SELECT * FROM Information_Schema.Tables where Table_Name not like '%Staging%' AND TABLE_NAME Not Like '%_Ref%' ORDER BY Table_Name").ToList();
+				var results = dbConnection.Query<TableInfoSchema>(@"SELECT * FROM Information_Schema.Tables where Table_Name not like '%Staging%' AND TABLE_NAME Not Like '%_Ref%' AND TABLE_NAME IN('BatchSequencor',
+'BillDiag',
+'BillMast',
+'BillPayrClassSmry',
+'BillPhys',
+'BillProc',
+'BillRevc',
+'ChangeTrackingVersion',
+'ChargeData',
+'ChargeDataCustomFieldMaster',
+'ChargeDataCustomFields',
+'ClmChgx',
+'CpBatchExcept',
+'CpBatchExptDtls',
+'CpBatchPkgPatnum',
+'CpBatchReturn',
+'CpConfidenceLevels',
+'CpDrg',
+'CpDtDiag',
+'CpDtProc',
+'CPLOGPKGPARAM',
+'CpMedicalCptMap',
+'CpProCptExcl',
+'CpRevcodeDetails',
+'CpWorkingParams',
+'DrgGrouper',
+'DtCdmDet',
+'DtDiag',
+'DtDrg',
+'DtRev',
+'ErroredParams',
+'GlDrgDet',
+'GlDrgWt',
+'Glt1det',
+'GlTable1',
+'ScProcessConfig',
+'TbProc',
+'TbProcMessage',
+'TempClaimData',
+'TempParams',
+'UniDef') ORDER BY Table_Name").ToList();
 				return results;
 			}
 		}

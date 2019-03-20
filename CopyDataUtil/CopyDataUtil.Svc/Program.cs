@@ -74,6 +74,7 @@ namespace CopyDataUtil.Svc
 		public static void RunSchemaManagerAllTables()
 		{
 			var connectionString = "Data Source = RCM41VSPASDB02.medassets.com; Initial Catalog = SC_WFBH; Integrated Security = True; ";
+			var serviceCategoryConnectionString = @"Data Source = servicecategorysqldbm3.database.windows.net;uid=Dragon;password=SetMe*963.; Initial Catalog =SC_WFBH; Integrated Security = False;";
 			var schemaManager = new DatabaseSchemaManager();
 			var schemaResultList = schemaManager.GetAllTablesJsonSchemaFormat(connectionString);
 

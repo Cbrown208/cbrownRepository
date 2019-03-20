@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using Common.Formatters.Converters;
+using DataAccessTesting.Models;
 
 namespace DataAccessTesting
 {
