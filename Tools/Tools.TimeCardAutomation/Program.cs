@@ -1,11 +1,21 @@
-﻿namespace Tools.TimeCardAutomation
+﻿using System;
+
+namespace Tools.TimeCardAutomation
 {
 	class Program
 	{
 		private static readonly TimeCardManager Manager = new TimeCardManager();
-		static void Main(string[] args)
+		static void Main()
 		{
-			Manager.FillOutTimeCard();
+			try
+			{
+				Manager.FillOutTimeCard();
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				Console.ReadLine();
+			}
 		}
 	}
 }
