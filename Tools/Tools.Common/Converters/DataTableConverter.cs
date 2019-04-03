@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 
-namespace Common.Formatters.Converters
+namespace Tools.Common.Converters
 {
 	public class DataTableConverter
 	{

@@ -25,7 +25,6 @@ namespace ExcelTesting
 
 			File.WriteAllText(filePath, csv.ToString());
 
-
 			//string csv = string.Format("{0},{1},{2},{3}\n", first, second);
 			//File.WriteAllText(filePath, csv);
 

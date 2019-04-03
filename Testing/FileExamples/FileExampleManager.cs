@@ -7,9 +7,11 @@ namespace FileExamples
 {
 	public class FileExampleManager
 	{
+		private readonly RoboCopyReader _roboCopy = new RoboCopyReader();
 		public void RunFileExamples()
 		{
-			ReadFile();
+			//ReadFile();
+			_roboCopy.ReadRoboCopyLog();
 
 			Console.ReadLine();
 		}

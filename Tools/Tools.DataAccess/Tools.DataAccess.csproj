@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5787F651-A281-403D-ACA8-9F5081829B95}</ProjectGuid>
+    <ProjectGuid>{5F02A019-A22F-4B2F-9055-6659A6E8B598}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>FileExamples</RootNamespace>
-    <AssemblyName>FileExamples</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>Tools.DataAccess</RootNamespace>
+    <AssemblyName>Tools.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -42,11 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileExampleManager.cs" />
-    <Compile Include="FileHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoboCopyReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

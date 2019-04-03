@@ -8,7 +8,7 @@ namespace Tools.TimeCardAutomation
 	{
 		public void FillOutTimeCard()
 		{
-			var pbiList = "790490,791233,789083";
+			var pbiList = "790490,799408,791233,788761,784435,792543";
 
 			IWebDriver driver = new InternetExplorerDriver();
 			driver.Url = "http://timex.nthrive.com/BP/Project/Project%20Center%20Pages/Time.aspx";
@@ -51,8 +51,8 @@ namespace Tools.TimeCardAutomation
 			driver.FindElement(By.Id("txtNote")).SendKeys(GetDevNotesList(pbiList));
 			driver.FindElement(By.Id("cmdSave")).Click();
 
-			driver.Close();
-			driver.Quit();
+			//driver.Close();
+			//driver.Quit();
 		}
 
 		private void ClearCellContents(IWebDriver driver, string cellName)

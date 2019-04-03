@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using CopyDataUtil.Core.Models.DbModels;
 
 namespace CopyDataUtil.DataAccess
@@ -65,6 +66,17 @@ namespace CopyDataUtil.DataAccess
 		{
 			var checkStatement = "END" + Environment.NewLine+ Environment.NewLine;
 			return checkStatement;
+		}
+
+		public string RemoveLastCharacterInStringBuilder()
+		{
+			var sql = new StringBuilder();
+			sql.Append("hello,");
+			Console.WriteLine("Before = "+ sql);
+			sql.Length -= 1;//remove last comma
+			Console.WriteLine("After = " + sql);
+
+			return sql.ToString();
 		}
 	}
 }

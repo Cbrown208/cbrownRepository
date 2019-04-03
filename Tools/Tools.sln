@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.WebRequests", "Tools.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.TimeCardAutomation", "Tools.TimeCardAutomation\Tools.TimeCardAutomation.csproj", "{CA72D784-A2C7-4A60-BB08-46A9337D5703}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.DataAccess", "Tools.DataAccess\Tools.DataAccess.csproj", "{5F02A019-A22F-4B2F-9055-6659A6E8B598}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{CA72D784-A2C7-4A60-BB08-46A9337D5703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA72D784-A2C7-4A60-BB08-46A9337D5703}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA72D784-A2C7-4A60-BB08-46A9337D5703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F02A019-A22F-4B2F-9055-6659A6E8B598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F02A019-A22F-4B2F-9055-6659A6E8B598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F02A019-A22F-4B2F-9055-6659A6E8B598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F02A019-A22F-4B2F-9055-6659A6E8B598}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
