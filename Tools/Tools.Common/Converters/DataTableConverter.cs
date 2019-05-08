@@ -32,6 +32,42 @@ namespace Tools.Common.Converters
 			return table;
 		}
 
+		public DataTable ConvertToDatatable<T>(List<T> data, List<string> headerList)
+		{
+			PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
+
+			if (props.Count != headerList.Count)
+			{
+				throw new ApplicationException("Data column count(" + props.Count + ") does not match the number of header values provided(" + headerList.Count + ")");
+			}
+
+			var table = new DataTable();
+			for (var i = 0; i < props.Count; i++)
+			{
+				PropertyDescriptor prop = props[i];
+				if (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+					table.Columns.Add(prop.Name, prop.PropertyType.GetGenericArguments()[0]);
+				else
+					table.Columns.Add(prop.Name, prop.PropertyType);
+			}
+
+			var values = new object[props.Count];
+			foreach (T item in data)
+			{
+				for (var i = 0; i < values.Length; i++)
+				{
+					values[i] = props[i].GetValue(item);
+				}
+				table.Rows.Add(values);
+			}
+
+			for (var i = 0; i < table.Columns.Count; i++)
+			{
+				table.Columns[i].ColumnName = headerList[i];
+			}
+			return table;
+		}
+
 		public List<T> ConvertDatatableToList<T>(DataTable dt)
 		{
 			PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));

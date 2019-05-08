@@ -63,6 +63,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebDriverUiTesting", "WebDr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelTesting", "ExcelTesting\ExcelTesting.csproj", "{7B209A9E-CF00-45C2-AF7F-9515BA12B31A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGenerator", "DataGenerator\DataGenerator.csproj", "{6E0C66FE-4393-4A8B-A19D-2FA0AD1C8D76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetryExample", "RetryExample\RetryExample.csproj", "{BC59640A-0124-4978-83B9-EA889CBBFED0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -189,6 +193,14 @@ Global
 		{7B209A9E-CF00-45C2-AF7F-9515BA12B31A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B209A9E-CF00-45C2-AF7F-9515BA12B31A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B209A9E-CF00-45C2-AF7F-9515BA12B31A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E0C66FE-4393-4A8B-A19D-2FA0AD1C8D76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E0C66FE-4393-4A8B-A19D-2FA0AD1C8D76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E0C66FE-4393-4A8B-A19D-2FA0AD1C8D76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E0C66FE-4393-4A8B-A19D-2FA0AD1C8D76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC59640A-0124-4978-83B9-EA889CBBFED0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC59640A-0124-4978-83B9-EA889CBBFED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC59640A-0124-4978-83B9-EA889CBBFED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC59640A-0124-4978-83B9-EA889CBBFED0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

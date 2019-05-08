@@ -8,7 +8,7 @@ namespace Tools.TimeCardAutomation
 	{
 		public void FillOutTimeCard()
 		{
-			var pbiList = "790490,799408,791233,788761,784435,792543";
+			var pbiList = "811097,792543,809593,798826";
 
 			IWebDriver driver = new InternetExplorerDriver();
 			driver.Url = "http://timex.nthrive.com/BP/Project/Project%20Center%20Pages/Time.aspx";
@@ -20,7 +20,7 @@ namespace Tools.TimeCardAutomation
 			driver.FindElement(By.PartialLinkText("1000")).Click();
 
 			driver.SwitchTo().ParentFrame();
-			Thread.Sleep(1000);
+			Thread.Sleep(2000);
 			driver.SwitchTo().Frame("MSOPageViewerWebPart_WebPartWPQ3").SwitchTo().Frame("dynamicpart");
 
 			//Maintenance

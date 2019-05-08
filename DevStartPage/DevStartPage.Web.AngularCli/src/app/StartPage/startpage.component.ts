@@ -14,7 +14,7 @@ export class StartPageComponent implements OnInit {
 	fancySpinnerSVC: FancySpinnerService;
 	ipAddress = "";
 	currentDate;
-
+	
 	constructor(injector: Injector,
 		private spinnerSvc: FancySpinnerService,
 		private router: Router,

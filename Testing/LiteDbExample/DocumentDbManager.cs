@@ -39,6 +39,7 @@ namespace LiteDbExample
 				// Use Linq to query documents
 				var results = customers.Find(x => x.Name.StartsWith("Jo"));
 				Console.WriteLine(results.ToString());
+
 			}
 		}
 
