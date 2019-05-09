@@ -11,6 +11,7 @@ namespace Tools.SendingEmail
 		private readonly char[] _delimiterChars = { ' ', 'g', 'k', 'm', ',', ':', '\t' };
 		private readonly char[] _timeDelimiterChars = { ' ', ',', '\t' };
 		private readonly char[] _bytesDelimiterChars = { ' ', ':' };
+
 		public List<string> GetLogPaths()
 		{
 			var basePath = @"C:\MyScripts\Temp\Logs";
