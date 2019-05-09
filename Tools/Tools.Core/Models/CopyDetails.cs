@@ -1,4 +1,4 @@
-﻿namespace Tools.SendingEmail.Models
+﻿namespace Tools.Core.Models
 {
 	public class CopyDetails
 	{

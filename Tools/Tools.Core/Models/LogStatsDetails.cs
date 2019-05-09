@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Tools.SendingEmail.Models
+namespace Tools.Core.Models
 {
 	public class LogStatsDetails
 	{

@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\AppInsightsPurgeParams.cs" />
+    <Compile Include="Models\CopyDetails.cs" />
+    <Compile Include="Models\LogStats.cs" />
+    <Compile Include="Models\LogStatsDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

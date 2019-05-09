@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Linq;
-using Tools.SendingEmail.Models;
+using Tools.Core.Models;
+using Tools.DataAccess;
 
 namespace Tools.SendingEmail
 {
 	public class SendingEmailManager
 	{
 		private readonly  LogReader _logStats = new LogReader();
-		private readonly SendEmail _smail = new SendEmail();
+		private readonly SendEmail _sendMail = new SendEmail();
+		private readonly ManualBackupRepository _backupRepository = new ManualBackupRepository();
+
 		public void SendBackupLogEmail()
 		{
 			Console.WriteLine("starting Version 2");
 			var msgBody = GetEmailBody();
 			var message = new System.Net.Mail.MailMessage {Body = msgBody, IsBodyHtml = true};
-			_smail.SendMailWithBody(message.Body);
+
+			_sendMail.SendMailWithBody(message.Body);
 
 			//Console.ReadLine();
 		}
@@ -83,6 +87,7 @@ namespace Tools.SendingEmail
 			}
 			msgBody = msgBody + "</body></html>";
 
+			_backupRepository.AddRecord(logAuditStats);
 			//var tempResults = JsonConvert.SerializeObject(logAuditStats);
 
 			return msgBody;
