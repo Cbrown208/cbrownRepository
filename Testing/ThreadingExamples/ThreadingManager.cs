@@ -75,7 +75,7 @@ namespace ThreadingExamples
 
 		private int DoWork(int data)
 		{
-			Console.WriteLine("Running for Task:" + data);
+			Console.WriteLine("Running for Task(" + Task.CurrentId + "): " + data);
 			Thread.Sleep(5000);
 			return data + 10;
 		}

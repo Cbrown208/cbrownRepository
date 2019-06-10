@@ -13,8 +13,7 @@ namespace Tools.Common
 
 		public static string GetFilePath(string fileName)
 		{
-			var relativePath = GetRootPath() + "\\Files\\" + fileName;
-			//var relativePath = "Files\\" + fileName;
+			var relativePath = GetRootPath() + "\\" + fileName;
 			return relativePath;
 		}
 	}

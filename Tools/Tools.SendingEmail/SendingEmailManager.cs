@@ -13,11 +13,15 @@ namespace Tools.SendingEmail
 
 		public void SendBackupLogEmail()
 		{
-			Console.WriteLine("starting Version 2");
+			var isTesting = 1;
+			Console.WriteLine("Starting V2");
 			var msgBody = GetEmailBody();
 			var message = new System.Net.Mail.MailMessage {Body = msgBody, IsBodyHtml = true};
 
-			_sendMail.SendMailWithBody(message.Body);
+			if (isTesting == 0)
+			{
+				_sendMail.SendMailWithBody(message.Body);
+			}
 
 			//Console.ReadLine();
 		}
@@ -87,8 +91,16 @@ namespace Tools.SendingEmail
 			}
 			msgBody = msgBody + "</body></html>";
 
-			_backupRepository.AddRecord(logAuditStats);
-			//var tempResults = JsonConvert.SerializeObject(logAuditStats);
+			try
+			{
+				_backupRepository.AddRecord(logAuditStats);
+				//var tempResults = JsonConvert.SerializeObject(logAuditStats);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				throw;
+			}
 
 			return msgBody;
 		}
