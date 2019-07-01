@@ -1,1 +1,107 @@
-{"Configurations":[{"SourceTable":"DtCdmDet","DestinationTable":"DtCdmDet","StagingTable":null,"SourceDestinationColumnMapping":[{"SourceColumn":"SYSKEY","DestinationColumn":"SYSKEY"},{"SourceColumn":"DTCDM","DestinationColumn":"DTCDM"},{"SourceColumn":"CHARGECODE","DestinationColumn":"CHARGECODE"},{"SourceColumn":"CDMDESC","DestinationColumn":"CDMDESC"},{"SourceColumn":"ITEMCHARGE","DestinationColumn":"ITEMCHARGE"},{"SourceColumn":"ITEMCOST","DestinationColumn":"ITEMCOST"},{"SourceColumn":"REVCODE","DestinationColumn":"REVCODE"},{"SourceColumn":"THPCODE","DestinationColumn":"THPCODE"},{"SourceColumn":"CPT4","DestinationColumn":"CPT4"},{"SourceColumn":"CPT4MOD","DestinationColumn":"CPT4MOD"},{"SourceColumn":"MDATE","DestinationColumn":"MDATE"},{"SourceColumn":"MTIME","DestinationColumn":"MTIME"},{"SourceColumn":"MUSER","DestinationColumn":"MUSER"},{"SourceColumn":"DOMDEF","DestinationColumn":"DOMDEF"},{"SourceColumn":"EFF_DATE","DestinationColumn":"EFF_DATE"},{"SourceColumn":"TRM_DATE","DestinationColumn":"TRM_DATE"},{"SourceColumn":"VARDIRCOST","DestinationColumn":"VARDIRCOST"},{"SourceColumn":"VARINDCOST","DestinationColumn":"VARINDCOST"},{"SourceColumn":"FIXDIRCOST","DestinationColumn":"FIXDIRCOST"},{"SourceColumn":"FIXINDCOST","DestinationColumn":"FIXINDCOST"},{"SourceColumn":"HOSPDEPT","DestinationColumn":"HOSPDEPT"},{"SourceColumn":"MCRCSTCTR","DestinationColumn":"MCRCSTCTR"},{"SourceColumn":"FACILITY","DestinationColumn":"FACILITY"},{"SourceColumn":"SOURCE","DestinationColumn":"SOURCE"}]}]}
+{
+	"Configurations": [
+		{
+			"SourceTable": "DtCdmDet",
+			"DestinationTable": "DtCdmDet",
+			"StagingTable": null,
+			"SourceDestinationColumnMapping": [
+				{
+					"SourceColumn": "SYSKEY",
+					"DestinationColumn": "SYSKEY"
+				},
+				{
+					"SourceColumn": "DTCDM",
+					"DestinationColumn": "DTCDM"
+				},
+				{
+					"SourceColumn": "CHARGECODE",
+					"DestinationColumn": "CHARGECODE"
+				},
+				{
+					"SourceColumn": "CDMDESC",
+					"DestinationColumn": "CDMDESC"
+				},
+				{
+					"SourceColumn": "ITEMCHARGE",
+					"DestinationColumn": "ITEMCHARGE"
+				},
+				{
+					"SourceColumn": "ITEMCOST",
+					"DestinationColumn": "ITEMCOST"
+				},
+				{
+					"SourceColumn": "REVCODE",
+					"DestinationColumn": "REVCODE"
+				},
+				{
+					"SourceColumn": "THPCODE",
+					"DestinationColumn": "THPCODE"
+				},
+				{
+					"SourceColumn": "CPT4",
+					"DestinationColumn": "CPT4"
+				},
+				{
+					"SourceColumn": "CPT4MOD",
+					"DestinationColumn": "CPT4MOD"
+				},
+				{
+					"SourceColumn": "MDATE",
+					"DestinationColumn": "MDATE"
+				},
+				{
+					"SourceColumn": "MTIME",
+					"DestinationColumn": "MTIME"
+				},
+				{
+					"SourceColumn": "MUSER",
+					"DestinationColumn": "MUSER"
+				},
+				{
+					"SourceColumn": "DOMDEF",
+					"DestinationColumn": "DOMDEF"
+				},
+				{
+					"SourceColumn": "EFF_DATE",
+					"DestinationColumn": "EFF_DATE"
+				},
+				{
+					"SourceColumn": "TRM_DATE",
+					"DestinationColumn": "TRM_DATE"
+				},
+				{
+					"SourceColumn": "VARDIRCOST",
+					"DestinationColumn": "VARDIRCOST"
+				},
+				{
+					"SourceColumn": "VARINDCOST",
+					"DestinationColumn": "VARINDCOST"
+				},
+				{
+					"SourceColumn": "FIXDIRCOST",
+					"DestinationColumn": "FIXDIRCOST"
+				},
+				{
+					"SourceColumn": "FIXINDCOST",
+					"DestinationColumn": "FIXINDCOST"
+				},
+				{
+					"SourceColumn": "HOSPDEPT",
+					"DestinationColumn": "HOSPDEPT"
+				},
+				{
+					"SourceColumn": "MCRCSTCTR",
+					"DestinationColumn": "MCRCSTCTR"
+				},
+				{
+					"SourceColumn": "FACILITY",
+					"DestinationColumn": "FACILITY"
+				},
+				{
+					"SourceColumn": "SOURCE",
+					"DestinationColumn": "SOURCE"
+				}
+			]
+		}
+	]
+}

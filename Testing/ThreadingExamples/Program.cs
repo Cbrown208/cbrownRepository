@@ -5,10 +5,11 @@ namespace ThreadingExamples
 	class Program
 	{
 		private static readonly ThreadingManager ThreadManager = new ThreadingManager();
+		private static readonly SemaphoreManager SemaphoreManager = new SemaphoreManager();
 		static void Main(string[] args)
 		{
-			ThreadManager.ParallelComparison();
-			ThreadManager.ParallelThreadTest();
+			ThreadManager.RunThreadingTests();
+			SemaphoreManager.RunSemaphoreDemo();
 
 			Console.Read();
 		}

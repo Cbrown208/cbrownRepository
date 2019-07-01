@@ -10,6 +10,13 @@ namespace ThreadingExamples
 {
 	public class ThreadingManager
 	{
+		public void RunThreadingTests()
+		{
+			//ParallelComparison();
+			//var result = ParallelThreadTest();
+			TaskListTest();
+		}
+
 		public void ParallelComparison()
 		{
 			string[] colors = {
@@ -25,7 +32,6 @@ namespace ThreadingExamples
 				"10. Pink"
 			};
 			Console.WriteLine("Traditional foreach loop\n");
-			//start the stopwatch for "for" loop
 			var sw = Stopwatch.StartNew();
 			foreach (string color in colors)
 			{
@@ -33,8 +39,8 @@ namespace ThreadingExamples
 				Thread.Sleep(10);
 			}
 			Console.WriteLine("foreach loop execution time = {0} seconds\n", sw.Elapsed.TotalSeconds);
+
 			Console.WriteLine("Using Parallel.ForEach");
-			//start the stopwatch for "Parallel.ForEach"
 			sw = Stopwatch.StartNew();
 			Parallel.ForEach(colors, color =>
 				{
@@ -61,6 +67,19 @@ namespace ThreadingExamples
 			Console.WriteLine("Task Count: " + count);
 		}
 
+		public bool TaskListTest()
+		{
+
+			var tasks = new List<Task>
+			{
+				Task.Run(() => DoWork(10)),
+				Task.Run(() => DoWork(15))
+			};
+			Task.WhenAll(tasks).Wait();
+			Console.WriteLine("I will only write when all Tasks are Done");
+			return true;
+		}
+
 		public List<int> GetCollectionData()
 		{
 			return new List<int>{1,2};
@@ -77,6 +96,7 @@ namespace ThreadingExamples
 		{
 			Console.WriteLine("Running for Task(" + Task.CurrentId + "): " + data);
 			Thread.Sleep(5000);
+			Console.WriteLine("Finished for Task(" + Task.CurrentId + "): " + data);
 			return data + 10;
 		}
 	}

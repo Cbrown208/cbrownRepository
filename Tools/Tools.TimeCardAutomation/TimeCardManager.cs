@@ -9,7 +9,7 @@ namespace Tools.TimeCardAutomation
 	{
 		public void FillOutTimeCard()
 		{
-			var pbiList = "790977,790979,806941,815903,816067";
+			var pbiList = "817101,812214,818992,790982";
 
 			IWebDriver driver = new InternetExplorerDriver();
 			driver.Url = "http://timex.nthrive.com/BP/Project/Project%20Center%20Pages/Time.aspx";
