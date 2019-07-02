@@ -8,16 +8,12 @@ namespace QueueTools
 			{
 				ConcurrentConsumerLimit = "1",
 				HeartBeatInSeconds = 10,
-				//IncomingUriString = "rabbitmq://DataIngressHL7MsgQQa.medassets.com/",
-				//IncomingUriString = "rabbitmq://rcm41vqpasapp03/",
 				IncomingUriString = "rabbitmq://localhost/",
 				IncomingQueue = "PAS_ADT_HL7_INGRESS_IV",
 				Username = "PAS",
 				Password = "PAS",
 				OutgoingBusSettings = new OutgoingBusSettings()
 				{
-					//BaseUriString = "rabbitmq://rcm41vqpasapp03/PAS",
-					//BaseUriString = "rabbitmq://DataIngressHL7MsgQQa.medassets.com/",
 					BaseUriString = "rabbitmq://localhost/",
 					AdtCommandReadyQueue = "PAS_ADT_CMD_READY_IV",
 					AdtCommandCompleteQueue = "PAS_ADT_CMD_COMPLETE_IV",
@@ -35,23 +31,19 @@ namespace QueueTools
 			return localBusSettings;
 		}
 
-		public static BusSettings GetActualBusSettings()
+		public static BusSettings GetIvBusSettings()
 		{
 			BusSettings localBusSettings = new BusSettings()
 			{
 				ConcurrentConsumerLimit = "1",
 				HeartBeatInSeconds = 10,
-				IncomingUriString = "rabbitmq://DataIngressHL7MsgQQa.medassets.com:5672/",
-				//IncomingUriString = "rabbitmq://rcm41vqpasapp03/",
-				//IncomingUriString = "rabbitmq://localhost/",
+				IncomingUriString = "rabbitmq://iv-rmq-pas.nthrive.com/PAS",
 				IncomingQueue = "PAS_ADT_HL7_INGRESS_IV",
 				Username = "PAS",
 				Password = "PAS",
 				OutgoingBusSettings = new OutgoingBusSettings()
 				{
-					BaseUriString = "rabbitmq://rcm41vqpasapp03/PAS",
-					//BaseUriString = "rabbitmq://DataIngressHL7MsgQQa.medassets.com/",
-					//BaseUriString = "rabbitmq://localhost/",
+					BaseUriString = "rabbitmq://iv-rmq-pas.nthrive.com/PAS",
 					AdtCommandReadyQueue = "PAS_ADT_CMD_READY_IV",
 					AdtCommandCompleteQueue = "PAS_ADT_CMD_COMPLETE_IV",
 					OutgoingQueue = "PAS_ADT_WORKER_{0}_IV",
@@ -75,16 +67,12 @@ namespace QueueTools
 				ConcurrentConsumerLimit = "1",
 				HeartBeatInSeconds = 10,
 				IncomingUriString = "rabbitmq://perflab-rmqcluster.medassets.com/DI",
-				//IncomingUriString = "rabbitmq://rcm41vqpasapp03/",
-				//IncomingUriString = "rabbitmq://localhost/",
 				IncomingQueue = "PAS_ADT_HL7_INGRESS_IV",
 				Username = "perfuser",
 				Password = "perfuser1",
 				OutgoingBusSettings = new OutgoingBusSettings()
 				{
 					BaseUriString = "rabbitmq://perflab-rmqcluster.medassets.com/PAS",
-					//BaseUriString = "rabbitmq://DataIngressHL7MsgQQa.medassets.com/",
-					//BaseUriString = "rabbitmq://localhost/",
 					AdtCommandReadyQueue = "PAS_ADT_CMD_READY_IV",
 					AdtCommandCompleteQueue = "PAS_ADT_CMD_COMPLETE_IV",
 					OutgoingQueue = "PAS_ADT_WORKER_{0}",
@@ -95,7 +83,6 @@ namespace QueueTools
 					ConcurrentConsumerLimit = "1",
 					RetryLimit = "1",
 					HeartBeatInSeconds = 10
-
 				}
 			};
 			return localBusSettings;

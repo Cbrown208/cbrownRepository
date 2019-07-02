@@ -66,6 +66,18 @@ namespace QueueTools
 			return qs;
 		}
 
+		public List<RabbitMQ.QueueInfo> GetVirtualHostQueueList(string vhost)
+		{
+			var queuePattern = "bus-";
+			queuePattern = queuePattern.Replace("{0}", @"\d+");
+			var adtQueueUri = new Uri(_busSettings.OutgoingBusSettings.BaseUriString);
+			string uri = string.Format("{0}://{1}:{2}@{3}:5672/{4}", adtQueueUri.Scheme, _busSettings.Username,
+				_busSettings.Password, adtQueueUri.Host, vhost);
+			var qInfos = RabbitMqTransportManager.GetQueuesFor(uri, vhost);
+			var qs = qInfos.Where(x => !Regex.IsMatch(x.Name, queuePattern)).ToList();
+			return qs;
+		}
+
 		public List<RabbitMQ.QueueInfo> PurgeQueueList(string queuePattern,string vhost)
 		{
 			queuePattern = queuePattern.Replace("{0}", @"\d+");
