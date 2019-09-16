@@ -9,23 +9,26 @@ namespace Tools.TimeCardAutomation
 	{
 		public void FillOutTimeCard()
 		{
-			var pbiList = "817101,812214,818992,790982";
+			var pbiList = "839563,838725,720789,723239,761159,723539,838383,840666,840652";
 
 			IWebDriver driver = new InternetExplorerDriver();
 			driver.Url = "http://timex.nthrive.com/BP/Project/Project%20Center%20Pages/Time.aspx";
-
 			try
 			{
-
-				driver.SwitchTo().Frame("MSOPageViewerWebPart_WebPartWPQ2");
+				Thread.Sleep(1000);
+				var tsList = driver.SwitchTo().Frame("MSOPageViewerWebPart_WebPartWPQ2");
+				Thread.Sleep(1000);
+				var inProcessTable = tsList.FindElement(By.Id("tblTimecard0"));
+				inProcessTable.FindElement(By.PartialLinkText("1000")).Click();
 
 				//driver.FindElement(By.LinkText("[Duplicate]")).Click();
-
-				driver.FindElement(By.PartialLinkText("1000")).Click();
 
 				driver.SwitchTo().ParentFrame();
 				Thread.Sleep(2000);
 				driver.SwitchTo().Frame("MSOPageViewerWebPart_WebPartWPQ3").SwitchTo().Frame("dynamicpart");
+				Thread.Sleep(2000);
+
+				CheckForError(driver);
 
 				//Maintenance
 				var cellId = "day2_hr1_5";
@@ -58,12 +61,38 @@ namespace Tools.TimeCardAutomation
 			}
 			catch (Exception)
 			{
-				driver.Close();
+				//driver.Close();
 				throw;
 			}
 
 			//driver.Close();
 			//driver.Quit();
+		}
+
+		private void CheckForError(IWebDriver driver)
+		{
+			try
+			{
+				var temp = driver.FindElement(By.ClassName("clsErrorText"));
+				RefreshPage(driver);
+				var tsList = driver.SwitchTo().Frame("MSOPageViewerWebPart_WebPartWPQ2");
+				Thread.Sleep(1000);
+				var inProcessTable = tsList.FindElement(By.Id("tblTimecard0"));
+				inProcessTable.FindElement(By.PartialLinkText("1000")).Click();
+
+				driver.SwitchTo().ParentFrame();
+				Thread.Sleep(2000);
+				driver.SwitchTo().Frame("MSOPageViewerWebPart_WebPartWPQ3").SwitchTo().Frame("dynamicpart");
+			}
+			catch (Exception)
+			{
+				// ignored
+			}
+		}
+
+		private void RefreshPage(IWebDriver driver)
+		{
+			driver.Navigate().Refresh();
 		}
 
 		private void ClearCellContents(IWebDriver driver, string cellName)

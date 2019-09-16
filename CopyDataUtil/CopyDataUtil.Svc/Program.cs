@@ -15,9 +15,10 @@ namespace CopyDataUtil.Svc
 			Console.WriteLine("What would you like to run?");
 			Console.WriteLine("1: Bulk Copy Manager");
 			Console.WriteLine("2: Create Idempotent Script");
-			Console.WriteLine("3: Run Schema Manager Single Table");
-			Console.WriteLine("4: Run Schema Manager All Tables");
-			Console.WriteLine("5: Read Schema Mappings");
+			Console.WriteLine("3: Create Idempotent Script From Hard Coded Data");
+			Console.WriteLine("4: Run Schema Manager Single Table");
+			Console.WriteLine("5: Run Schema Manager All Tables");
+			Console.WriteLine("6: Read Schema Mappings");
 			Console.WriteLine("q: Quit");
 			var input = Console.ReadLine();
 
@@ -33,13 +34,18 @@ namespace CopyDataUtil.Svc
 			}
 			else if (!string.IsNullOrWhiteSpace(input) && input.Contains("3"))
 			{
+				CreateSqlInsertScriptFromData();
+			}
+
+			else if (!string.IsNullOrWhiteSpace(input) && input.Contains("4"))
+			{
 				RunSchemaManager();
 			}
-			else if (!string.IsNullOrWhiteSpace(input) && input.Contains("4"))
+			else if (!string.IsNullOrWhiteSpace(input) && input.Contains("5"))
 			{
 				RunSchemaManagerAllTables();
 			}
-			else if (!string.IsNullOrWhiteSpace(input) && input.Contains("5"))
+			else if (!string.IsNullOrWhiteSpace(input) && input.Contains("6"))
 			{
 				ReadScMappingFile();
 			}
@@ -47,6 +53,14 @@ namespace CopyDataUtil.Svc
 			{
 				return;
 			}
+		}
+
+		public static void CreateSqlInsertScriptFromData()
+		{
+			var dbScriptManager = new DatabaseScriptGenerator();
+			var result = dbScriptManager.GenerateScriptFromList();
+			Clipboard.SetText(result);
+			Console.WriteLine(result);
 		}
 
 		public static void CreateIdempotentInsertScript()

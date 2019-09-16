@@ -54,6 +54,13 @@ namespace CopyDataUtil.DataAccess
 			return insertValueString;
 		}
 
+		/// <summary>
+		/// Builds Check Statement using Table Name, Unique Column Name value and value to check against 
+		/// </summary>
+		/// <param name="tableName"></param>
+		/// <param name="column"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
 		public string BuildCheckStatement(string tableName, string column, string value)
 		{
 			var checkStatement = "BEGIN" + Environment.NewLine;

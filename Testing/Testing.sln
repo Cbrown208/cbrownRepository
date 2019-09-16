@@ -67,6 +67,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGenerator", "DataGenera
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetryExample", "RetryExample\RetryExample.csproj", "{BC59640A-0124-4978-83B9-EA889CBBFED0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProveIt", "ProveIt\ProveIt.csproj", "{8F6D4837-89BC-44BB-A175-530FBC8CEAC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -201,6 +203,10 @@ Global
 		{BC59640A-0124-4978-83B9-EA889CBBFED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC59640A-0124-4978-83B9-EA889CBBFED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC59640A-0124-4978-83B9-EA889CBBFED0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F6D4837-89BC-44BB-A175-530FBC8CEAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F6D4837-89BC-44BB-A175-530FBC8CEAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F6D4837-89BC-44BB-A175-530FBC8CEAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F6D4837-89BC-44BB-A175-530FBC8CEAC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

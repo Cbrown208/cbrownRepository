@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.Common", "..\Tools\To
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.WebRequests", "..\Tools\Tools.WebRequests\Tools.WebRequests.csproj", "{0AE663D2-6D78-4B64-B8D5-08A328D5D946}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.ServiceMonitor", "Tools.ServiceMonitor\Tools.ServiceMonitor.csproj", "{E296E7EA-F79A-4138-A195-D6AE4F94FF5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{0AE663D2-6D78-4B64-B8D5-08A328D5D946}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AE663D2-6D78-4B64-B8D5-08A328D5D946}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AE663D2-6D78-4B64-B8D5-08A328D5D946}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E296E7EA-F79A-4138-A195-D6AE4F94FF5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E296E7EA-F79A-4138-A195-D6AE4F94FF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E296E7EA-F79A-4138-A195-D6AE4F94FF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E296E7EA-F79A-4138-A195-D6AE4F94FF5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{B81D74D3-8FCB-4EBE-979E-8DB88342480D} = {6CF1B143-5FCE-4C06-A1D9-F5C30D042AE4}
 		{F3082F11-8E61-42B6-9CB8-8E1016B81E90} = {6CF1B143-5FCE-4C06-A1D9-F5C30D042AE4}
 		{0AE663D2-6D78-4B64-B8D5-08A328D5D946} = {6CF1B143-5FCE-4C06-A1D9-F5C30D042AE4}
+		{E296E7EA-F79A-4138-A195-D6AE4F94FF5C} = {6CF1B143-5FCE-4C06-A1D9-F5C30D042AE4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73F0F6A7-7E79-4803-93D9-D6E6781C4418}

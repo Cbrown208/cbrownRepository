@@ -45,6 +45,9 @@
     <Compile Include="Models\CopyDetails.cs" />
     <Compile Include="Models\LogStats.cs" />
     <Compile Include="Models\LogStatsDetails.cs" />
+    <Compile Include="Models\QueueInfo.cs" />
+    <Compile Include="Models\Servers.cs" />
+    <Compile Include="Models\Services.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
