@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Newtonsoft.Json;
@@ -19,9 +20,23 @@ namespace Common.Formatters
 
 			//RunSqlScrubberDisplay();
 
-			RunJsonFormatDisplay();
+			//RunJsonFormatDisplay();
+
+			RunCsvTest();
 
 			Console.ReadLine();
+		}
+
+		private static void RunCsvTest()
+		{
+			var manager = new FormatManager();
+			var testList = new List<string> {"Hello", "Who"};
+			var result = manager.CreateCommaSeperatedString("Test Message: ", testList);
+			Console.WriteLine(result);
+
+			testList = new List<string> { "Hello" };
+			result = manager.CreateCommaSeperatedString("Test Message: ", testList);
+			Console.WriteLine(result);
 		}
 
 		private static void RunJsonFormatDisplay()

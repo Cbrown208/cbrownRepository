@@ -29,6 +29,13 @@ namespace Tools.Common.Formatters
 			return $"{value:n}";
 		}
 
+		public string CreateCommaSeperatedString(string baseMsg, List<string> valueList)
+		{
+
+			var csvMessage = baseMsg + String.Join(",", valueList);
+			return csvMessage;
+		}
+
 		public List<string> ParseCommaSeperatedString(string value)
 		{
 			string[] values = value.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);

@@ -8,9 +8,9 @@ namespace Tools.ServiceMonitor
 	{
 		public void GetLocalAppPoolDetails()
 		{
-			ServerManager server = new ServerManager();
+			var server = new ServerManager();
+			var appPools = server.ApplicationPools;
 
-			ApplicationPoolCollection appPools = server.ApplicationPools;
 			var sb = new StringBuilder();
 			sb.Append("AutoStart").Append(",");
 			sb.Append("ManagedRuntimeVersion").Append(",");

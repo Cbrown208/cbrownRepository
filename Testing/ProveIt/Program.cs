@@ -12,9 +12,10 @@ namespace ProveIt
 	{
 		static void Main(string[] args)
 		{
-			RunStringAlterTest();
+			//RunStringAlterTest();
 			//QuestionMarkComparisonOperatorTest();
 			//RunTest();
+			FormatRunAsUser();
 			Console.ReadLine();
 		}
 
@@ -75,6 +76,18 @@ namespace ProveIt
 			Console.WriteLine("MAde It 2");
 
 			Console.ReadLine();
+		}
+
+		private static void FormatRunAsUser()
+		{
+			var svcStatus = @"NT SERVICE\DIAHostService";
+			if (svcStatus.Contains(@"\"))
+			{
+				var user = svcStatus.Split('\\');
+				user[0] = user[0].ToLower();
+				svcStatus = String.Join("\\", user.ToArray());
+			}
+			Console.WriteLine(svcStatus);
 		}
 	}
 }

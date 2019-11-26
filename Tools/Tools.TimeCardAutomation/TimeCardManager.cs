@@ -9,7 +9,8 @@ namespace Tools.TimeCardAutomation
 	{
 		public void FillOutTimeCard()
 		{
-			var pbiList = "839563,838725,720789,723239,761159,723539,838383,840666,840652";
+			var pbiList = "844441,842959,842956,843223,843361,827135,845406,845404,844657,842467";
+			var addDevNotes = false;
 
 			IWebDriver driver = new InternetExplorerDriver();
 			driver.Url = "http://timex.nthrive.com/BP/Project/Project%20Center%20Pages/Time.aspx";
@@ -20,7 +21,7 @@ namespace Tools.TimeCardAutomation
 				Thread.Sleep(1000);
 				var inProcessTable = tsList.FindElement(By.Id("tblTimecard0"));
 				inProcessTable.FindElement(By.PartialLinkText("1000")).Click();
-
+				inProcessTable.FindElement(By.PartialLinkText("1000")).Click();
 				//driver.FindElement(By.LinkText("[Duplicate]")).Click();
 
 				driver.SwitchTo().ParentFrame();
@@ -51,13 +52,16 @@ namespace Tools.TimeCardAutomation
 
 				driver.FindElement(By.Id("theSubmit")).Click();
 
-				var notes = "(//A[starts-with(@title, 'Edit notes for this line')])[2]";
-				driver.FindElement(By.XPath(notes)).Click();
-				Thread.Sleep(1000);
+				if (addDevNotes)
+				{
+					var notes = "(//A[starts-with(@title, 'Edit notes for this line')])[2]";
+					driver.FindElement(By.XPath(notes)).Click();
+					Thread.Sleep(1000);
 
-				driver.FindElement(By.Id("txtNote")).Clear();
-				driver.FindElement(By.Id("txtNote")).SendKeys(GetDevNotesList(pbiList));
-				driver.FindElement(By.Id("cmdSave")).Click();
+					driver.FindElement(By.Id("txtNote")).Clear();
+					driver.FindElement(By.Id("txtNote")).SendKeys(GetDevNotesList(pbiList));
+					driver.FindElement(By.Id("cmdSave")).Click();
+				}
 			}
 			catch (Exception)
 			{
