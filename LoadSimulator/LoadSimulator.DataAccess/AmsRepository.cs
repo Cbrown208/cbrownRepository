@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace LoadSimulator.DataAccess
 
 		public AmsRepository()
 		{
-			_db = new SqlConnection(@"Server=RCM41VQPASDB01.medassets.com\PASDEVIV;Database=AMS_QA_Current_STAH;Trusted_Connection=true;");
+			_db = new SqlConnection(@"Server=LEWVQPASDB01.nthrivenp.nthcrpnp.com\IV;Database=AMS_STAH;Trusted_Connection=true;");
 		}
 		public dynamic GetAccountByAccountNumber(string accountNumber)
 		{
@@ -50,7 +51,7 @@ namespace LoadSimulator.DataAccess
 				{
 					foreach (var account in result)
 					{
-						accountList.Add(new WorklistSyncOne { ClientId = account.ClientId, CreatedBy = "Local Test", Account = new Account { AccountNumber = account.AccountNumber, FacilityId = account.FacilityId, AccountSequence = account.AccountSequence } });
+						accountList.Add(new WorklistSyncOne { ClientId = account.ClientId, CreatedBy = "Load Simulator", Account = new Account { AccountNumber = account.AccountNumber, FacilityId = account.FacilityId, AccountSequence = account.AccountSequence },QueuedOn = DateTime.Now});
 					}
 				}
 				return accountList;

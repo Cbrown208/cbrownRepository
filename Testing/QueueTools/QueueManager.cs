@@ -97,6 +97,22 @@ namespace QueueTools
 		public List<RabbitMQ.QueueInfo> DeleteQueueList(string queuePattern, string vhost)
 		{
 			queuePattern = queuePattern.Replace("{0}", @"\d+");
+			queuePattern = "VDILEWVPN";
+			var adtQueueUri = new Uri(_busSettings.OutgoingBusSettings.BaseUriString);
+			string uri = string.Format("{0}://{1}:{2}@{3}/", adtQueueUri.Scheme, _busSettings.Username,
+				_busSettings.Password, adtQueueUri.Host);
+			var qInfos = RabbitMqTransportManager.GetQueuesFor(uri, vhost);
+			var qs = qInfos.Where(x => Regex.IsMatch(x.Name, queuePattern)).ToList();
+			foreach (var queue in qs)
+			{
+				_manager.DeleteQueues(queue.Name);
+			}
+			return qs;
+		}
+
+		public List<RabbitMQ.QueueInfo> DeleteVdiTestingQueues(string vhost)
+		{
+			var queuePattern = "VDILEWVPN";
 			var adtQueueUri = new Uri(_busSettings.OutgoingBusSettings.BaseUriString);
 			string uri = string.Format("{0}://{1}:{2}@{3}/", adtQueueUri.Scheme, _busSettings.Username,
 				_busSettings.Password, adtQueueUri.Host);

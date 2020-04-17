@@ -12,6 +12,7 @@ namespace QueueTools
 			Console.WriteLine("1: Local");
 			Console.WriteLine("2: IV");
 			Console.WriteLine("3: Perf");
+			Console.WriteLine("4: RC");
 			//========== BUS OPTION ==============//
 			var busSettingsOption = Console.ReadLine();
 			//========== BUS OPTION ==============//
@@ -27,9 +28,17 @@ namespace QueueTools
 			{
 				busSettings = LocalBusSettings.GetIvBusSettings();
 			}
-			else
+			else if (busSettingsOption == "3")
 			{
 				busSettings = LocalBusSettings.GetPerfLabBusSettings();
+			}
+			else if (busSettingsOption == "4")
+			{
+				busSettings = LocalBusSettings.GetRCBusSettings();
+			}
+			else
+			{
+				busSettings = LocalBusSettings.GetLocalBusSettings();
 			}
 
 			QueueManager queueManager = new QueueManager(busSettings);
@@ -48,7 +57,9 @@ namespace QueueTools
 			Console.WriteLine("4 : Thread Testing");
 			Console.WriteLine("5 : SendCmd Message");
 			Console.WriteLine("6 : SendCmd Message");
+			Console.WriteLine("7 : Stats");
 			Console.WriteLine("8 : Get QueueList");
+			Console.WriteLine("9 : Delete VDI Queues");
 			Console.WriteLine("to exit the program enter: q");
 			while (text != "q")
 			{
@@ -99,8 +110,11 @@ namespace QueueTools
 						{
 							queueManager.DeleteQueueList(busSettings.OutgoingBusSettings.OutgoingQueue, OutgoingUri.Segments.Last());
 						}
-						queueManager.DeleteQueueList(busSettings.OutgoingBusSettings.OutgoingQueue, "");
-						//queueManager.DeleteQueueList(busSettings.OutgoingBusSettings.OutgoingQueue, "");
+						else
+						{
+							queueManager.DeleteQueueList(busSettings.OutgoingBusSettings.OutgoingQueue, "");
+							//queueManager.DeleteQueueList(busSettings.OutgoingBusSettings.OutgoingQueue, "");
+						}
 
 						Console.WriteLine("Delete Completed");
 						disposeNeeded = true;
@@ -201,6 +215,28 @@ namespace QueueTools
 						}
 						disposeNeeded = true;
 						Console.WriteLine("Stats End");
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine(ex.InnerException);
+					}
+				}
+
+				else if (text == "9")
+				{
+					try
+					{
+						if (OutgoingUri.Segments.Last() != "/")
+						{
+							queueManager.DeleteVdiTestingQueues(OutgoingUri.Segments.Last());
+						}
+						else
+						{
+							queueManager.DeleteVdiTestingQueues("");
+						}
+
+						Console.WriteLine("Delete Completed");
+						disposeNeeded = true;
 					}
 					catch (Exception ex)
 					{

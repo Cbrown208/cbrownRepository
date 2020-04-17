@@ -48,8 +48,9 @@ namespace QueueTools.RabbitMQ
 					UserName = userName,
 					Password = password,
 					HostName = host,
-					Port = port
-				};
+					Port = port,
+					VirtualHost = vhost
+                };
 			}
 	        _management = new RabbitMqEndpointManagement(factory.CreateConnection());
         }

@@ -65,12 +65,12 @@ namespace Tools.TimeCardAutomation
 			}
 			catch (Exception)
 			{
-				//driver.Close();
+				driver.Close();
 				throw;
 			}
 
-			//driver.Close();
-			//driver.Quit();
+			driver.Close();
+			driver.Quit();
 		}
 
 		private void CheckForError(IWebDriver driver)

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using Dapper;
 using DapperTesting.Models;
 using ExcelReader;
 
@@ -13,6 +15,27 @@ namespace DapperTesting
 		{
 			try
 			{
+				var connectionString = @"Server = LEWVHPASDB01.nthrivenp.nthcrpnp.com\RC; Database = AMS_CHSQ; Trusted_Connection = true;";
+
+				using (var db = new SqlConnection(connectionString))
+				{
+					db.Open();
+					for (int i = 25; i <= 1000; i++)
+					{
+						try
+						{
+							var query = "Kill " + i;
+							Console.WriteLine(query);
+							db.Execute(query);
+						}
+						catch (Exception e)
+						{
+							Console.WriteLine(e.Message);
+						}
+					}
+				}
+
+
 				var queryBuilder = new QueryBuilder();
 				var centuraConnectionString = @"Server = RCM41VQPASDB01.medassets.com\PASDEVIV; Database = AMS_QA_CHC; Trusted_Connection = true;";
 				var serviceCategoryCenturaConnectionString = @"Server = RCM41VSPASDB02.medassets.com; Database = SC_Centura; Trusted_Connection = true;";
