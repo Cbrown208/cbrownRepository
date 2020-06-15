@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8F0E46D8-667D-424F-AE30-0313124B5E0A}</ProjectGuid>
+    <ProjectGuid>{E80034D3-AC9A-4C13-BBE1-D0370E3A7E3C}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Common.Formatters</RootNamespace>
-    <AssemblyName>Common.Formatters</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <RootNamespace>Tools.FileGenerator</RootNamespace>
+    <AssemblyName>Tools.FileGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -33,13 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\newtonsoft.json\11.0.2\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,22 +46,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ByteFormatter.cs" />
-    <Compile Include="Converters\Base36Convertors.cs" />
-    <Compile Include="Converters\Base64Converters.cs" />
-    <Compile Include="Converters\ConcreteTypeConverter.cs" />
-    <Compile Include="Converters\DataTableConverter.cs" />
-    <Compile Include="Converters\ParsingConverters.cs" />
-    <Compile Include="DatabaseStringFormatter.cs" />
-    <Compile Include="DateFormatter.cs" />
-    <Compile Include="FormatManager.cs" />
-    <Compile Include="JsonFormatter.cs" />
-    <Compile Include="Person.cs" />
+    <Compile Include="FileGeneratorManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tools.Core\Tools.Core.csproj">
+      <Project>{B81D74D3-8FCB-4EBE-979E-8DB88342480D}</Project>
+      <Name>Tools.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools.DataAccess\Tools.DataAccess.csproj">
+      <Project>{5F02A019-A22F-4B2F-9055-6659A6E8B598}</Project>
+      <Name>Tools.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

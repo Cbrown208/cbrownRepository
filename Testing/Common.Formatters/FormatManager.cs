@@ -10,6 +10,7 @@ namespace Common.Formatters
 	public class FormatManager
 	{
 		private readonly DatabaseStringFormatter _dbStringFormatter = new DatabaseStringFormatter();
+		private readonly ByteFormatter _byteFormatter = new ByteFormatter();
 		public string FormatPhoneNumber(string phoneNumber)
 		{
 			return Regex.Replace(phoneNumber, @"(\d{3})(\d{3})(\d{4})", "($1) $2-$3");
@@ -81,6 +82,12 @@ namespace Common.Formatters
 		public string FormatToCustom(string str)
 		{
 			var results = _dbStringFormatter.FormatCustomSqlString(str);
+			return results;
+		}
+
+		public string FormatByteSize(long byteSize)
+		{
+			var results = _byteFormatter.FormatBytes(byteSize);
 			return results;
 		}
 	}

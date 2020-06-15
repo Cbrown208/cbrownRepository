@@ -13,8 +13,8 @@ namespace ThreadingExamples
 		public void RunThreadingTests()
 		{
 			//ParallelComparison();
-			//var result = ParallelThreadTest();
-			TaskListTest();
+			var result = ParallelThreadTest();
+			//TaskListTest();
 		}
 
 		public void ParallelComparison()
@@ -76,6 +76,7 @@ namespace ThreadingExamples
 				Task.Run(() => DoWork(15))
 			};
 			Task.WhenAll(tasks).Wait();
+
 			Console.WriteLine("I will only write when all Tasks are Done");
 			return true;
 		}
@@ -93,6 +94,15 @@ namespace ThreadingExamples
 		}
 
 		private int DoWork(int data)
+		{
+			Console.WriteLine("Running for Task(" + Task.CurrentId + "): " + data);
+			Thread.Sleep(5000);
+			Console.WriteLine("Finished for Task(" + Task.CurrentId + "): " + data);
+			return data + 10;
+		}
+
+
+		private int DoWork2(int data)
 		{
 			Console.WriteLine("Running for Task(" + Task.CurrentId + "): " + data);
 			Thread.Sleep(5000);

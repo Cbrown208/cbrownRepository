@@ -22,9 +22,18 @@ namespace Common.Formatters
 
 			//RunJsonFormatDisplay();
 
+			//RunByteFormatTest();
+
 			RunCsvTest();
 
 			Console.ReadLine();
+		}
+
+		private static void RunByteFormatTest()
+		{
+			long byteSize = 511464960000;
+			var result = Manager.FormatByteSize(byteSize);
+			Console.WriteLine(result);
 		}
 
 		private static void RunCsvTest()

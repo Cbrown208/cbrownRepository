@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Models\AppInsightsPurgeParams.cs" />
     <Compile Include="Models\CopyDetails.cs" />
+    <Compile Include="Models\EbPortalMapping.cs" />
     <Compile Include="Models\LogStats.cs" />
     <Compile Include="Models\LogStatsDetails.cs" />
     <Compile Include="Models\QueueInfo.cs" />

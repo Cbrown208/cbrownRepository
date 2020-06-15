@@ -14,6 +14,8 @@ namespace Common.Formatters
 				" as ",
 				" between ",
 				"Case ",
+				" cast(",
+				" Cast(",
 				" char ",
 				" count(",
 				" convert(",

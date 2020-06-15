@@ -9,7 +9,7 @@ namespace ThreadingExamples
 		static void Main(string[] args)
 		{
 			ThreadManager.RunThreadingTests();
-			SemaphoreManager.RunSemaphoreDemo();
+			//SemaphoreManager.RunSemaphoreDemo();
 
 			Console.Read();
 		}

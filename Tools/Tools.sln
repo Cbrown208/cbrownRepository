@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.136
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.SendingEmail", "Tools.SendingEmail\Tools.SendingEmail.csproj", "{6A5057FE-C5C4-4DF5-837F-5714CA814823}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.TimeCardAutomation", "Tools.TimeCardAutomation\Tools.TimeCardAutomation.csproj", "{CA72D784-A2C7-4A60-BB08-46A9337D5703}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.DataAccess", "Tools.DataAccess\Tools.DataAccess.csproj", "{5F02A019-A22F-4B2F-9055-6659A6E8B598}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.FileGenerator", "Tools.FileGenerator\Tools.FileGenerator.csproj", "{E80034D3-AC9A-4C13-BBE1-D0370E3A7E3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{5F02A019-A22F-4B2F-9055-6659A6E8B598}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F02A019-A22F-4B2F-9055-6659A6E8B598}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F02A019-A22F-4B2F-9055-6659A6E8B598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E80034D3-AC9A-4C13-BBE1-D0370E3A7E3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E80034D3-AC9A-4C13-BBE1-D0370E3A7E3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E80034D3-AC9A-4C13-BBE1-D0370E3A7E3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E80034D3-AC9A-4C13-BBE1-D0370E3A7E3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
