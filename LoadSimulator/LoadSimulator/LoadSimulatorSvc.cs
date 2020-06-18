@@ -11,7 +11,7 @@ namespace LoadSimulator
 {
 	public class LoadSimulatorSvc
 	{
-		private readonly CommandCenterRepository _pccRepository;
+		//private readonly CommandCenterRepository _pccRepository;
 		private readonly AmsRepository _amsRepository;
 		private readonly IBusControl _busControl;
 		private readonly BusSettings _busSettings;
@@ -19,7 +19,7 @@ namespace LoadSimulator
 
 		public LoadSimulatorSvc()
 		{
-			_pccRepository = IoC.Get<CommandCenterRepository>();
+			//_pccRepository = IoC.Get<CommandCenterRepository>();
 			_amsRepository = IoC.Get<AmsRepository>();
 			_busSettings = BusSettings.FromAppConfig();
 			_busControl = IoC.Get<IBusControl>();
@@ -30,8 +30,8 @@ namespace LoadSimulator
 		{
 			try
 			{
-				var temp = _pccRepository.GetById(2);
-				Console.WriteLine(temp);
+				//var temp = _pccRepository.GetById(2);
+				//Console.WriteLine(temp);
 				var messageCount = 0;
 
 				var syncOneAccountList = _amsRepository.GetAccountFacilityList(messageCount);
@@ -39,9 +39,9 @@ namespace LoadSimulator
 				var testMsg = new WorklistSyncOne(3503, new Account { AccountNumber = "1234", FacilityId = new Guid() });
 
 
-				var sendResult = SendtoEndpoint(testMsg).Result;
-				var publishResult = PublishToEndpoint(testMsg).Result;
-				var publishListResult = PublishToEndpoint(syncOneAccountList).Result;
+				var sendResult = SendListtoEndpoint(syncOneAccountList).Result;
+				//var publishResult = PublishToEndpoint(testMsg).Result;
+				//var publishListResult = PublishToEndpoint(syncOneAccountList).Result;
 
 				_busControl.StopAsync();
 				return true;
@@ -54,10 +54,14 @@ namespace LoadSimulator
 			}
 		}
 
-		private async Task<bool> SendtoEndpoint(WorklistSyncOne msg)
+		private async Task<bool> SendListtoEndpoint(List<WorklistSyncOne> messageList)
 		{
-			var endpoint = new Uri(_busSettings.IncomingUri + "/" + _busSettings.OutgoingQueue);
-			await _busControl.GetSendEndpoint(endpoint).Result.Send(msg);
+			var endpoint = new Uri(_busSettings.IncomingUri + "/" + _busSettings.IncomingQueue);
+			foreach (var msg in messageList)
+			{
+				await _busControl.GetSendEndpoint(endpoint).Result.Send(msg);
+				Console.WriteLine($"PUBLISHED {msg.ClientId} - {msg.Account}");
+			}
 			return true;
 		}
 
@@ -76,7 +80,6 @@ namespace LoadSimulator
 			{
 				await _publisher.Publish(command).ContinueWith((t) =>
 				{
-					Console.WriteLine($"PUBLISHED {command.ClientId} - {command.Account}");
 				});
 			}
 			return true;

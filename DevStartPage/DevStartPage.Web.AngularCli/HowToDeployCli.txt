@@ -7,5 +7,5 @@ Once that folder has been generated copy it over to the IIS site and boom done!
 
 Steps to Follow:
 1) publish the project to the website location.
-2) run "ng build --prod"
+2) run "ng build --prod" or "npm run build"
 3) Copy folder "mainApp" -> website location at the root level. 

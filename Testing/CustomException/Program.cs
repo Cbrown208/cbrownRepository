@@ -2,106 +2,130 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace CustomException
 {
-    internal class Program
-    {
-        private static void Main(string[] args)
-        {
+	internal class Program
+	{
+		private static void Main()
+		{
 
-            IList<string> names = new List<string>();
+			var names = new List<string>();
 
-            names.Add("Bob");
-            names.Add("Joe");
-            names.Add("Three");
+			names.Add("Bob");
+			names.Add("Joe");
+			names.Add("Three");
 
-            //names.ForEach();
-            Console.WriteLine(names.Count);
-            foreach (string value in names)
-            {
-                Console.WriteLine(value);
-            }
-            Console.ReadLine();
-            if (names.Count > 2)
-            {
-                //throw new CustomException(names.ToArray());
-                //throw new CustomException1("Exception with parameter value '{0}'", names.ToString());
-            }
-        }
-    }
+			PrintList(names);
 
-    public class CustomException : ApplicationException
-    {
-        public CustomException(string[] message)
-            : base(string.Join("\n", message.ToArray()))
-        {
-        }
-    }
+			Console.WriteLine(names.Count);
+			if (names.Count > 2)
+			{
+				//throw new CustomException(names.ToArray());
+				//throw new CustomException1("Exception with parameter value '{0}'", names.ToString());
+			}
 
-    [Serializable]
-    public class CustomException1 : ApplicationException
-    {
-        public CustomException1()
-            : base()
-        {
-        }
+			try
+			{
+				if (names.Count > 2)
+				{
+					throw new CustomException1("CustomException");
+				}
+			}
+			catch (ArgumentException argEx)
+			{
 
-        public CustomException1(string message)
-            : base(message)
-        {
-        }
+			}
+			catch (CustomException1 sqlEx)
+			{
+				Console.WriteLine(sqlEx.Message);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.Message);
+			}
 
-        public CustomException1(string format, params object[] args)
-            : base(string.Format(format, args))
-        {
-        }
+			Console.ReadLine();
+		}
 
-        public CustomException1(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
+		private static void PrintList(List<string> names)
+		{
+			foreach (string value in names)
+			{
+				Console.WriteLine(value);
+			}
+		}
+	}
 
-        public CustomException1(string format, Exception innerException, params object[] args)
-            : base(string.Format(format, args), innerException)
-        {
-        }
+	public class CustomException : ApplicationException
+	{
+		public CustomException(string[] message)
+			: base(string.Join("\n", message.ToArray()))
+		{
+		}
+	}
 
-        protected CustomException1(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
-    }
-    public class ShieldingHandleErrorAttribute : HandleErrorAttribute
-    {
-        public override void OnException(ExceptionContext filterContext)
-        {
-            if (filterContext.ExceptionHandled)
-            {
-                return;
-            }
-            if (ExceptionType.IsInstanceOfType(filterContext.Exception) == false)
-            {
-                return;
-            }
+	[Serializable]
+	public class CustomException1 : ApplicationException
+	{
+		public CustomException1()
+			: base()
+		{
+		}
 
-            ActionResult result;
-            if (filterContext.Exception.GetType() == typeof(ApplicationException))
-            {
+		public CustomException1(string message)
+			: base(message)
+		{
+		}
 
-                Console.ReadLine();
-                //result = GetCustomException(filterContext);
-                //filterContext.HttpContext.Response.StatusCode = 400;
-                //var id = GenerateNewGuid();
-                //LogException(filterContext.Exception, id);
-            }
+		public CustomException1(string format, params object[] args)
+			: base(string.Format(format, args))
+		{
+		}
 
-            else
-            {
-            }
-        }
-    }
+		public CustomException1(string message, Exception innerException)
+			: base(message, innerException)
+		{
+		}
+
+		public CustomException1(string format, Exception innerException, params object[] args)
+			: base(string.Format(format, args), innerException)
+		{
+		}
+
+		protected CustomException1(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+		}
+	}
+	public class ShieldingHandleErrorAttribute : HandleErrorAttribute
+	{
+		public override void OnException(ExceptionContext filterContext)
+		{
+			if (filterContext.ExceptionHandled)
+			{
+				return;
+			}
+			if (ExceptionType.IsInstanceOfType(filterContext.Exception) == false)
+			{
+				return;
+			}
+
+			ActionResult result;
+			if (filterContext.Exception.GetType() == typeof(ApplicationException))
+			{
+
+				Console.ReadLine();
+				//result = GetCustomException(filterContext);
+				//filterContext.HttpContext.Response.StatusCode = 400;
+				//var id = GenerateNewGuid();
+				//LogException(filterContext.Exception, id);
+			}
+
+			else
+			{
+			}
+		}
+	}
 }

@@ -18,5 +18,5 @@
 //    //onDateChanged(event: IMyDateModel): void {
 //    //    // date selected
 //    //}
-//} 
+//}
 //# sourceMappingURL=datepicker.component.js.map

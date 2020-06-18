@@ -13,6 +13,7 @@ namespace PingExample
     {
         private readonly ServiceStatus _serviceStatus = new ServiceStatus();
         private static readonly WebsiteCheck _web = new WebsiteCheck();
+        private static readonly WmiServerManager WmiManager = new WmiServerManager();
 
         static void Main(string[] args)
         {
@@ -25,10 +26,14 @@ namespace PingExample
             //string svcResult = ServiceStatus.GetServiceStatus2();
             //Console.WriteLine(svcResult);
 
+            //WmiManager.GetLastBootTime();
+            //WmiManager.GetDiskspace();
+            WmiManager.GetServerDiskSpace();
 
-            string url = "http://googleisawesome.com";
-            bool webresult = _web.PingWebsite(url);
-            Console.WriteLine(webresult);
+
+            //string url = "http://googleisawesome.com";
+            //bool webresult = _web.PingWebsite(url);
+            //Console.WriteLine(webresult);
 
 
             Console.ReadLine();

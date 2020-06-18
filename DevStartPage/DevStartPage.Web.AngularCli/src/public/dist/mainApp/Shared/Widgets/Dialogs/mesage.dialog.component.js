@@ -24,7 +24,7 @@ var MessageDialogComponent = /** @class */ (function () {
     };
     __decorate([
         core_1.ViewChild('popUpModal'),
-        __metadata("design:type", typeof (_a = typeof ngx_bootstrap_1.ModalDirective !== "undefined" && ngx_bootstrap_1.ModalDirective) === "function" && _a || Object)
+        __metadata("design:type", ngx_bootstrap_1.ModalDirective)
     ], MessageDialogComponent.prototype, "modal", void 0);
     MessageDialogComponent = __decorate([
         core_1.Component({
@@ -34,7 +34,6 @@ var MessageDialogComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], MessageDialogComponent);
     return MessageDialogComponent;
-    var _a;
 }());
 exports.MessageDialogComponent = MessageDialogComponent;
 //# sourceMappingURL=mesage.dialog.component.js.map

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using CopyDataUtil.Core.Models.DbModels;
 
 namespace CopyDataUtil.DataAccess
@@ -53,6 +54,13 @@ namespace CopyDataUtil.DataAccess
 			return insertValueString;
 		}
 
+		/// <summary>
+		/// Builds Check Statement using Table Name, Unique Column Name value and value to check against 
+		/// </summary>
+		/// <param name="tableName"></param>
+		/// <param name="column"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
 		public string BuildCheckStatement(string tableName, string column, string value)
 		{
 			var checkStatement = "BEGIN" + Environment.NewLine;
@@ -65,6 +73,17 @@ namespace CopyDataUtil.DataAccess
 		{
 			var checkStatement = "END" + Environment.NewLine+ Environment.NewLine;
 			return checkStatement;
+		}
+
+		public string RemoveLastCharacterInStringBuilder()
+		{
+			var sql = new StringBuilder();
+			sql.Append("hello,");
+			Console.WriteLine("Before = "+ sql);
+			sql.Length -= 1;//remove last comma
+			Console.WriteLine("After = " + sql);
+
+			return sql.ToString();
 		}
 	}
 }

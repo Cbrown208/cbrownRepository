@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Common.Formatters.Converters;
+using Newtonsoft.Json;
 
 namespace Common.Formatters
 {
@@ -9,19 +10,69 @@ namespace Common.Formatters
 	{
 		private static readonly FormatManager Manager = new FormatManager();
 		private static readonly DateFormatter DateManager = new DateFormatter();
+
 		[STAThread]
 		private static void Main()
 		{
 			DateManager.GetCentralTime();
 
-			RunFormatDisplay();
+			//RunFormatDisplay();
 
-			var converter = new Base36Convertors();
+			//RunSqlScrubberDisplay();
 
-			//var syskey = "000";
-			//var syskeyList = converter.GetPartialList(syskey, 1000);
-			//Console.WriteLine(syskeyList.Count);
+			//RunJsonFormatDisplay();
 
+			//RunByteFormatTest();
+
+			RunCsvTest();
+
+			Console.ReadLine();
+		}
+
+		private static void RunByteFormatTest()
+		{
+			long byteSize = 511464960000;
+			var result = Manager.FormatByteSize(byteSize);
+			Console.WriteLine(result);
+		}
+
+		private static void RunCsvTest()
+		{
+			var manager = new FormatManager();
+			var testList = new List<string> {"Hello", "Who"};
+			var result = manager.CreateCommaSeperatedString("Test Message: ", testList);
+			Console.WriteLine(result);
+
+			testList = new List<string> { "Hello" };
+			result = manager.CreateCommaSeperatedString("Test Message: ", testList);
+			Console.WriteLine(result);
+		}
+
+		private static void RunJsonFormatDisplay()
+		{
+			var testPerson = new Person{Id = 1, FirstName = "John", LastName = "Snow",Email = "jhonnySnow@theWall.com"};
+
+			var lowerCaseJson = JsonFormatter.ToJson(testPerson);
+			DisplayResult("Lower Case Json Format", lowerCaseJson);
+
+			var camelCaseJson = JsonFormatter.ToCamelCaseJson(testPerson);
+			DisplayResult("Camel Case Json Format", camelCaseJson);
+
+			var testPersonJsonProperties = new PersonJsonAttributes { Id = 1, FirstName = "John", LastName = "Snow", Email = "jhonnySnow@theWall.com" };
+			var jsonPropertiesObject = JsonConvert.SerializeObject(testPersonJsonProperties, Formatting.Indented);
+			DisplayResult("Object Json Properties", jsonPropertiesObject);
+
+			Clipboard.SetText(jsonPropertiesObject);
+		}
+
+		public static void DisplayResult(string title, object obj)
+		{
+			Console.WriteLine("****** "+title+" ******");
+			Console.WriteLine(obj + Environment.NewLine);
+		}
+
+		private static void RunSqlScrubberDisplay()
+		{
 			// String to Format
 			var stringToFormat = @"CREATE PROCEDURE [dbo].[isp_ReconcileChargeRecords]
 	(@FacilityId INT = 0 )
@@ -126,13 +177,8 @@ END";
 			var sqlCustomScrubbedString = Manager.FormatToCustom(stringToFormat);
 
 			Clipboard.SetText(sqlScrubbedString);
-
-			Console.WriteLine("*** Formatted String ***");
-			Console.WriteLine(Environment.NewLine);
-			Console.WriteLine(sqlCustomScrubbedString);
-			Console.WriteLine(Environment.NewLine);
-
-			Console.ReadLine();
+			Console.WriteLine("*** Formatted String ***" + Environment.NewLine);
+			Console.WriteLine(sqlCustomScrubbedString + Environment.NewLine);
 		}
 
 		private static void RunFormatDisplay()

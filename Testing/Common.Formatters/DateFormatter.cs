@@ -24,7 +24,6 @@ namespace Common.Formatters
 
 			var temp = TimeZoneInfo.GetSystemTimeZones();
 			Console.WriteLine(newTime);
-			Console.ReadLine();
 			return newTime;
 		}
 	}

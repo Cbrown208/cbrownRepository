@@ -49,7 +49,8 @@ namespace QueueTools.RabbitMQ
 					Password = password,
 					HostName = host,
 					Port = port,
-				};
+					VirtualHost = vhost
+                };
 			}
 	        _management = new RabbitMqEndpointManagement(factory.CreateConnection());
         }
@@ -69,6 +70,7 @@ namespace QueueTools.RabbitMQ
         {
             return GetQueuesFor(busHostUri, vhost).Where(x => x.Name.StartsWith(nameStartsWith)).ToList();
         }
+
         public List<QueueInfo> GetQueuesFor(string busHostUri, string vhost)
         {
             var queues = new List<QueueInfo>();
@@ -87,18 +89,11 @@ namespace QueueTools.RabbitMQ
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                     Convert.ToBase64String(byteArray));
 
-                try
-                {
-                    var result = client.GetAsync(new Uri(String.Format("http://{0}:15672/api/queues/{1}", host, vhost))).Result;
-                    if (result.IsSuccessStatusCode)
-                    {
-                        queues = result.Content.ReadAsAsync<List<QueueInfo>>().Result;
-                    }
-                }
-                catch
-                {
-                    throw;
-                }
+	            var result = client.GetAsync(new Uri(String.Format("http://{0}:15672/api/queues/{1}", host, vhost))).Result;
+	            if (result.IsSuccessStatusCode)
+	            {
+		            queues = result.Content.ReadAsAsync<List<QueueInfo>>().Result;
+	            }
             }
             return queues;
         }

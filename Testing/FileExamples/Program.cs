@@ -1,18 +1,15 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-
-namespace FileExamples
+﻿namespace FileExamples
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static void Main()
 		{
 			var manager = new FileExampleManager();
-			//manager.RunFileExamples();
+			manager.RunFileExamples();
 
-			var result = manager.TestingReturn();
-			Console.WriteLine(result);
-			Console.ReadLine();
+			//var result = manager.TestingReturn();
+			//Console.WriteLine(result);
+			//Console.ReadLine();
 		}
 	}
 }

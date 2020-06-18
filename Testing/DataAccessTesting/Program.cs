@@ -2,15 +2,11 @@
 {
 	class Program
 	{
-		private static readonly BulkCopyManager Manager = new BulkCopyManager();
+		private static readonly DataAccessManager Manager = new DataAccessManager();
+		
 		static void Main()
 		{
-			var result = Manager.StartCopy();
-			if (result)
-			{
-				//Console.ReadLine();
-				System.Threading.Thread.Sleep(10000);
-			}
+			Manager.RunDataAccessTesting();
 		}
 	}
 }

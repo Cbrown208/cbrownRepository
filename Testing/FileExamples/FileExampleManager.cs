@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace FileExamples
 {
 	public class FileExampleManager
 	{
+		private readonly RoboCopyReader _roboCopy = new RoboCopyReader();
 		public void RunFileExamples()
 		{
-			ReadFile();
+			//ReadFile();
+			_roboCopy.ReadRoboCopyLog();
 
 			Console.ReadLine();
 		}

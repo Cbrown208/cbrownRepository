@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ByteFormatter.cs" />
     <Compile Include="Converters\Base36Convertors.cs" />
     <Compile Include="Converters\Base64Converters.cs" />
     <Compile Include="Converters\ConcreteTypeConverter.cs" />
@@ -56,6 +57,8 @@
     <Compile Include="DatabaseStringFormatter.cs" />
     <Compile Include="DateFormatter.cs" />
     <Compile Include="FormatManager.cs" />
+    <Compile Include="JsonFormatter.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

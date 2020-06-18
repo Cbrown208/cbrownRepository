@@ -12,6 +12,7 @@ namespace QueueTools
 			Console.WriteLine("1: Local");
 			Console.WriteLine("2: IV");
 			Console.WriteLine("3: Perf");
+			Console.WriteLine("4: RC");
 			//========== BUS OPTION ==============//
 			var busSettingsOption = Console.ReadLine();
 			//========== BUS OPTION ==============//
@@ -25,11 +26,19 @@ namespace QueueTools
 			}
 			else if (busSettingsOption == "2")
 			{
-				busSettings = LocalBusSettings.GetActualBusSettings();
+				busSettings = LocalBusSettings.GetIvBusSettings();
+			}
+			else if (busSettingsOption == "3")
+			{
+				busSettings = LocalBusSettings.GetPerfLabBusSettings();
+			}
+			else if (busSettingsOption == "4")
+			{
+				busSettings = LocalBusSettings.GetRCBusSettings();
 			}
 			else
 			{
-				busSettings = LocalBusSettings.GetPerfLabBusSettings();
+				busSettings = LocalBusSettings.GetLocalBusSettings();
 			}
 
 			QueueManager queueManager = new QueueManager(busSettings);
@@ -48,6 +57,9 @@ namespace QueueTools
 			Console.WriteLine("4 : Thread Testing");
 			Console.WriteLine("5 : SendCmd Message");
 			Console.WriteLine("6 : SendCmd Message");
+			Console.WriteLine("7 : Stats");
+			Console.WriteLine("8 : Get QueueList");
+			Console.WriteLine("9 : Delete VDI Queues");
 			Console.WriteLine("to exit the program enter: q");
 			while (text != "q")
 			{
@@ -98,8 +110,11 @@ namespace QueueTools
 						{
 							queueManager.DeleteQueueList(busSettings.OutgoingBusSettings.OutgoingQueue, OutgoingUri.Segments.Last());
 						}
-						queueManager.DeleteQueueList(busSettings.OutgoingBusSettings.OutgoingQueue, "");
-						//queueManager.DeleteQueueList(busSettings.OutgoingBusSettings.OutgoingQueue, "");
+						else
+						{
+							queueManager.DeleteQueueList(busSettings.OutgoingBusSettings.OutgoingQueue, "");
+							//queueManager.DeleteQueueList(busSettings.OutgoingBusSettings.OutgoingQueue, "");
+						}
 
 						Console.WriteLine("Delete Completed");
 						disposeNeeded = true;
@@ -183,6 +198,52 @@ namespace QueueTools
 					}
 				}
 
+				else if (text == "8")
+				{
+					try
+					{
+						var queueList = queueManager.GetVirtualHostQueueList(OutgoingUri.Segments.Last());
+
+						foreach (var info in queueList)
+						{
+							if (info.Messages > 0)
+							{
+								Console.WriteLine("Name:      " + info.Name);
+								Console.WriteLine("Messages:  " + info.Messages);
+								Console.WriteLine("Consumers: " + info.Consumers);
+							}
+						}
+						disposeNeeded = true;
+						Console.WriteLine("Stats End");
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine(ex.InnerException);
+					}
+				}
+
+				else if (text == "9")
+				{
+					try
+					{
+						if (OutgoingUri.Segments.Last() != "/")
+						{
+							queueManager.DeleteVdiTestingQueues(OutgoingUri.Segments.Last());
+						}
+						else
+						{
+							queueManager.DeleteVdiTestingQueues("");
+						}
+
+						Console.WriteLine("Delete Completed");
+						disposeNeeded = true;
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine(ex.InnerException);
+					}
+				}
+
 				text = Console.ReadLine();
 			}
 			Console.WriteLine("Exiting Program .... Bye");
@@ -191,8 +252,6 @@ namespace QueueTools
 			{
 				queueManager.Dispose();
 			}
-
-
 		}
 	}
 }

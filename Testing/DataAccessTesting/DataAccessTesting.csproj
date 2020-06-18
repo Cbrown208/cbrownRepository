@@ -43,9 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BulkCopyDetails.cs" />
+    <Compile Include="Models\BulkCopyDetails.cs" />
     <Compile Include="BulkCopyManager.cs" />
-    <Compile Include="CMSPricing.cs" />
+    <Compile Include="Models\CMSPricing.cs" />
+    <Compile Include="DataAccessManager.cs" />
+    <Compile Include="DbSaveFileManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,5 +60,6 @@
       <Name>Common.Formatters</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
