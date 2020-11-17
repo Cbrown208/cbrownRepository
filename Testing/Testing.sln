@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arrays", "Arrays\Arrays.csproj", "{C68C7B45-7D9A-471B-94F4-CA6B08BA211F}"
 EndProject
@@ -68,6 +68,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetryExample", "RetryExample\RetryExample.csproj", "{BC59640A-0124-4978-83B9-EA889CBBFED0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProveIt", "ProveIt\ProveIt.csproj", "{8F6D4837-89BC-44BB-A175-530FBC8CEAC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQApiCalls", "RabbitMQApiCalls\RabbitMQApiCalls.csproj", "{A9C1F646-DF65-4C47-B6B7-59B38C711FB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -207,6 +209,10 @@ Global
 		{8F6D4837-89BC-44BB-A175-530FBC8CEAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F6D4837-89BC-44BB-A175-530FBC8CEAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F6D4837-89BC-44BB-A175-530FBC8CEAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9C1F646-DF65-4C47-B6B7-59B38C711FB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9C1F646-DF65-4C47-B6B7-59B38C711FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9C1F646-DF65-4C47-B6B7-59B38C711FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9C1F646-DF65-4C47-B6B7-59B38C711FB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

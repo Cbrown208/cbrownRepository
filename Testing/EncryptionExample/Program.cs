@@ -38,7 +38,6 @@ namespace EncryptionExample
                 pigLatin.pigTalk("PigLatin");
                 //encryptionType = "q";
             }
-
         }
     }
 }
