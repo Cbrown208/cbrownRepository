@@ -71,6 +71,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProveIt", "ProveIt\ProveIt.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQApiCalls", "RabbitMQApiCalls\RabbitMQApiCalls.csproj", "{A9C1F646-DF65-4C47-B6B7-59B38C711FB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureNetFrameworkWeb", "AzureNetFrameworkWeb\AzureNetFrameworkWeb.csproj", "{CBC0F131-A1D2-4AB0-9529-855B182CBE96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetFrameworkChecker", "DotNetFrameworkChecker\DotNetFrameworkChecker.csproj", "{5F5B9D24-E60D-4C79-A786-2ED7149A13CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -213,6 +217,14 @@ Global
 		{A9C1F646-DF65-4C47-B6B7-59B38C711FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9C1F646-DF65-4C47-B6B7-59B38C711FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9C1F646-DF65-4C47-B6B7-59B38C711FB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBC0F131-A1D2-4AB0-9529-855B182CBE96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBC0F131-A1D2-4AB0-9529-855B182CBE96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBC0F131-A1D2-4AB0-9529-855B182CBE96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBC0F131-A1D2-4AB0-9529-855B182CBE96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F5B9D24-E60D-4C79-A786-2ED7149A13CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F5B9D24-E60D-4C79-A786-2ED7149A13CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F5B9D24-E60D-4C79-A786-2ED7149A13CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F5B9D24-E60D-4C79-A786-2ED7149A13CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

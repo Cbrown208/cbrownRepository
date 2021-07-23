@@ -107,6 +107,87 @@ namespace RabbitMQApiCalls
 			}
 		}
 
+		public async Task<List<RmqQueueProperties>> GetRmqQueueList(string vHost = null)
+		{
+			try
+			{
+				var endpoint = _baseUrl + "/api/queues";
+
+				if (!string.IsNullOrWhiteSpace(vHost))
+				{
+					endpoint = _baseUrl + "/api/queues/" + vHost;
+				}
+
+				// Instantiate HttpClient passing in the HttpClientHandler
+				using (var httpClient = GetClient())
+				{
+					// Get the response from the API endpoint.
+					var httpResponseMessage = httpClient.GetAsync(endpoint).Result;
+					var httpContent = httpResponseMessage.Content;
+
+					using (var streamReader = new StreamReader(httpContent.ReadAsStreamAsync().Result))
+					{
+						// Get the output string.
+						var returnedJsonString = await streamReader.ReadToEndAsync();
+						var results = new List<RmqQueueProperties>();
+
+						if (returnedJsonString != "")
+						{
+							results = JsonConvert.DeserializeObject<List<RmqQueueProperties>>(returnedJsonString);
+							return results;
+						}
+						return results;
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+
+		public async Task<List<RmqConsumerProperties>> GetRmqConsumerList(string vHost = null)
+		{
+			try
+			{
+				var consumerEndpoint = "/api/consumers";
+				var endpoint = _baseUrl + consumerEndpoint;
+
+				if (!string.IsNullOrWhiteSpace(vHost))
+				{
+					endpoint = _baseUrl + consumerEndpoint + vHost;
+				}
+
+				// Instantiate HttpClient passing in the HttpClientHandler
+				using (var httpClient = GetClient())
+				{
+					// Get the response from the API endpoint.
+					var httpResponseMessage = httpClient.GetAsync(endpoint).Result;
+					var httpContent = httpResponseMessage.Content;
+
+					using (var streamReader = new StreamReader(httpContent.ReadAsStreamAsync().Result))
+					{
+						// Get the output string.
+						var returnedJsonString = await streamReader.ReadToEndAsync();
+						var results = new List<RmqConsumerProperties>();
+
+						if (returnedJsonString != "")
+						{
+							results = JsonConvert.DeserializeObject<List<RmqConsumerProperties>>(returnedJsonString);
+							return results;
+						}
+						return results;
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+
 		private HttpClient GetClient()
 		{
 			var httpClientHandler = new HttpClientHandler { Credentials = new NetworkCredential(UserName, UserPassword) };

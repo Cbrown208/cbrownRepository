@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Common.Formatters;
 
 
@@ -10,14 +8,33 @@ namespace ProveIt
 {
 	class Program
 	{
+		private static readonly DotNetVersionManager _dotNetVersionManager = new DotNetVersionManager();
+
 		static void Main(string[] args)
 		{
+			RunURLParserTest();
+			//_dotNetVersionManager.CheckDotNetVersion();
 			//RunStringAlterTest();
-			EditList();
+			//EditList();
 			//QuestionMarkComparisonOperatorTest();
 			//RunTest();
 			//FormatRunAsUser();
+			TempTest();
 			Console.ReadLine();
+		}
+
+		public static void TempTest()
+		{
+			string inputString = "SuperAwesome";
+			var result = inputString.IndexOf("Something");
+			Console.WriteLine("Results: " + result);
+		}
+
+		public static void RunURLParserTest()
+		{
+			Uri uri = new Uri("http://iv-rmq-pas.nthrive.com:15672/#/");
+			var result = uri.Scheme + "://" + uri.Authority;
+			Console.WriteLine("Result 1" + result);
 		}
 
 		private static void RunStringAlterTest()

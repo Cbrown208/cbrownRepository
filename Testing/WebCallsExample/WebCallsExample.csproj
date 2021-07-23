@@ -66,6 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerResponse.cs" />
     <Compile Include="SoapRequestExample.cs" />
+    <Compile Include="TestWebsiteManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
