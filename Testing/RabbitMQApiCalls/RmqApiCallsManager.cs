@@ -21,16 +21,16 @@ namespace RabbitMQApiCalls
 		{
 
 			//_rmqApiGateway = new RabbitMqApiGateway(OldProdRmqUrl);
-			_rmqApiGateway = new RabbitMqApiGateway(ProdRmqUrl);
+			_rmqApiGateway = new RabbitMqApiGateway(QaRmqUrl);
 		}
 
 		public void RunApiCallsTest()
 		{
 			//ReadRmqConnectionsFromFile();
 			//ReadRmqConnectionsFromServer();
-			GetMonitoredQueueListDetails();
+			//GetMonitoredQueueListDetails();
 			//GetQueuesWithConsumersFromServer();
-			//GetConsumersListFromServer();
+			GetConsumersListFromServer();
 			Console.ReadLine();
 		}
 

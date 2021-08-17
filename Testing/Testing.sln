@@ -75,6 +75,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureNetFrameworkWeb", "Azu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetFrameworkChecker", "DotNetFrameworkChecker\DotNetFrameworkChecker.csproj", "{5F5B9D24-E60D-4C79-A786-2ED7149A13CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCheckerTool", "ServerCheckerTool\ServerCheckerTool.csproj", "{5990053C-5CBD-4A18-8C1C-50B124512803}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -225,6 +227,10 @@ Global
 		{5F5B9D24-E60D-4C79-A786-2ED7149A13CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F5B9D24-E60D-4C79-A786-2ED7149A13CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F5B9D24-E60D-4C79-A786-2ED7149A13CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5990053C-5CBD-4A18-8C1C-50B124512803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5990053C-5CBD-4A18-8C1C-50B124512803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5990053C-5CBD-4A18-8C1C-50B124512803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5990053C-5CBD-4A18-8C1C-50B124512803}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
