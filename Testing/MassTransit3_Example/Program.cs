@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using MassTransit;
 using MassTransit3_Example.Messages;
 using MedAssets.AMS.Common;
-using RabbitMQ_MassTransit3;
 
 namespace MassTransit3_Example
 {
@@ -20,12 +20,25 @@ namespace MassTransit3_Example
 			var endpoint = new Uri(busSettings.IncomingUriString + "/" + busSettings.OutgoingQueue);
 			ExMessages exMessage = new ExMessages();
 
+			var personList = new List<Person>();
+
+			for (int i = 0; i < 200; i++)
+			{
+				var subject = new Person {FirstName = "John", LastName = "Snow" + i};
+				personList.Add(subject);
+			}
+
 			Console.WriteLine("Press any button to send a message");
 			Console.ReadLine();
 			bus.Start();
 			var msg = exMessage.GetAdtQueueMessageWithAccountNumber("Test123");
 
-			GetValue(bus, endpoint, msg);
+			foreach (var person in personList)
+			{
+				GetValue(bus, endpoint, person);
+			}
+
+			//GetValue(bus, endpoint, msg);
 
 			Console.WriteLine("Send Finished");
 			
@@ -34,7 +47,7 @@ namespace MassTransit3_Example
 
 		}
 
-		private static async void GetValue(IBusControl bus, Uri endpoint, IAdtQueueMessage msg)
+		private static async void GetValue<T>(IBusControl bus, Uri endpoint, T msg)
 		{
 			//await bus.Publish(msg);
 

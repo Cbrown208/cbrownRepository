@@ -1,0 +1,5 @@
+https://infrastructure.nthrive.com/infrastructure/api/system
+https://login.nthrive.com
+https://plat-res-api.nthrive.com/
+https://platweb.nthrive.com/
+https://dcs.nthrive.com/dcs/api

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RabbitMQApiCalls.Models;
@@ -175,6 +176,47 @@ namespace RabbitMQApiCalls
 						if (returnedJsonString != "")
 						{
 							results = JsonConvert.DeserializeObject<List<RmqConsumerProperties>>(returnedJsonString);
+							return results;
+						}
+						return results;
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+
+		public async Task<List<RmqExchangeProperties>> GetRmqExchangeList(string vHost = null)
+		{
+			try
+			{
+				var consumerEndpoint = "/api/exchanges";
+				var endpoint = _baseUrl + consumerEndpoint;
+
+				if (!string.IsNullOrWhiteSpace(vHost))
+				{
+					endpoint = _baseUrl + consumerEndpoint + vHost;
+				}
+
+				// Instantiate HttpClient passing in the HttpClientHandler
+				using (var httpClient = GetClient())
+				{
+					// Get the response from the API endpoint.
+					var httpResponseMessage = httpClient.GetAsync(endpoint).Result;
+					var httpContent = httpResponseMessage.Content;
+
+					using (var streamReader = new StreamReader(httpContent.ReadAsStreamAsync().Result))
+					{
+						// Get the output string.
+						var returnedJsonString = await streamReader.ReadToEndAsync();
+						var results = new List<RmqExchangeProperties>();
+
+						if (returnedJsonString != "")
+						{
+							results = JsonConvert.DeserializeObject<List<RmqExchangeProperties>>(returnedJsonString);
 							return results;
 						}
 						return results;

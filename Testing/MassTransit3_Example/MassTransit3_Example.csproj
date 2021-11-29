@@ -69,6 +69,7 @@
     <Compile Include="Messages\AdtQueueMessage.cs" />
     <Compile Include="Messages\ExMessages.cs" />
     <Compile Include="Messages\IHL7QueryMessage.cs" />
+    <Compile Include="Messages\Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitMQ\QueueInfo.cs" />

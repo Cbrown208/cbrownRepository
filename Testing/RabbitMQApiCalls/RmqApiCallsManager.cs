@@ -15,13 +15,15 @@ namespace RabbitMQApiCalls
 		private const string RcRmqUrl = "http://rc-rmq-pas.nthrive.com:15672";
 		private const string ProdRmqUrl = "http://rmq-pas.nthrive.com:15672";
 		private const string OldProdRmqUrl = "http://rmq2-pas.nthrive.com:15672";
+
+		private const string ProdDiRmq = "http://dataingresshl7msgq.nthrive.com:15672";
 		private readonly RabbitMqApiGateway _rmqApiGateway;
 
 		public RmqApiCallsManager()
 		{
 
-			//_rmqApiGateway = new RabbitMqApiGateway(OldProdRmqUrl);
-			_rmqApiGateway = new RabbitMqApiGateway(QaRmqUrl);
+			//_rmqApiGateway = new RabbitMqApiGateway(QaRmqUrl);
+			_rmqApiGateway = new RabbitMqApiGateway(ProdRmqUrl);
 		}
 
 		public void RunApiCallsTest()
@@ -31,6 +33,10 @@ namespace RabbitMQApiCalls
 			//GetMonitoredQueueListDetails();
 			//GetQueuesWithConsumersFromServer();
 			GetConsumersListFromServer();
+
+			//GetExchangeList();
+
+			//GetOrphanedQueues();
 			Console.ReadLine();
 		}
 
@@ -92,7 +98,7 @@ namespace RabbitMQApiCalls
 
 		private void GetMonitoredQueueListDetails()
 		{
-			var rmqQueueList = _rmqApiGateway.GetRmqQueueList().Result;
+			var rmqQueueList = _rmqApiGateway.GetRmqQueueList("PAS").Result;
 			var monitoredQueueList = new List<RmqQueueProperties>();
 
 			var importantQueueList = new List<string> { "PAS_ADT_HL7_INGRESS", "Ei_Audit", "_CMD_", "_QUERY_REQUEST", "EB_Processor", "STATUS" , "RegQA", "Worklist", "Service_Category", "_AUTOMATION", "Simulator_Cmd" };
@@ -118,6 +124,7 @@ namespace RabbitMQApiCalls
 				}
 				else
 				{
+					Console.WriteLine("Idel Since : " + queue.IdleSinceLocalDateTime);
 					Console.WriteLine("Consumers : " + queue.consumers + Environment.NewLine);
 				}
 			}
@@ -130,8 +137,15 @@ namespace RabbitMQApiCalls
 			var allQueueList = new List<RmqQueueProperties>();
 			var consumerCount = 0;
 
+
+
 			foreach (var queue in rmqQueueList)
 			{
+				if (queue.backing_queue_status.avg_egress_rate <= 0 && queue.messages_ready > 0 && !queue.name.ToLower().Contains("_error"))
+				{
+					Console.WriteLine("Possible Orphan Queue: " + queue.name + "-" + queue.messages_ready + "-" + queue.backing_queue_status.avg_ingress_rate);
+				}
+
 				if (!queue.name.Contains("bus-") && !queue.name.Contains("_error") && !queue.name.Contains("_skipped"))
 				{
 					consumerCount = consumerCount + queue.consumers;
@@ -146,8 +160,8 @@ namespace RabbitMQApiCalls
 			{
 				if (queue.consumers > 0)
 				{
-					Console.WriteLine("Queue Name: " + queue.name);
-					Console.WriteLine("Consumers : " + queue.consumers + Environment.NewLine);
+					//Console.WriteLine("Queue Name: " + queue.name);
+					//Console.WriteLine("Consumers : " + queue.consumers + Environment.NewLine);
 				}
 			}
 			Console.WriteLine("Total Consumer Count: "+consumerCount);
@@ -160,7 +174,7 @@ namespace RabbitMQApiCalls
 
 			foreach (var consumer in rmqConsumerList)
 			{
-				if (!consumer.queue.name.Contains("bus-") && !consumer.queue.name.Contains("INGRESS_CLIENT") && !consumer.queue.name.Contains("ADT_WORKER_"))
+				if (!consumer.queue.name.Contains("bus-") && !consumer.queue.name.Contains("INGRESS_CLIENT") && consumer.queue.name.Contains("ADT_WORKER_"))
 				{
 					consumerList.Add(consumer.queue);
 				}
@@ -174,6 +188,92 @@ namespace RabbitMQApiCalls
 			}
 
 			Console.WriteLine("Total Consumer Count: " + consumerList.Count);
+		}
+
+		private void GetOrphanedQueues()
+		{
+			var rmqQueueList = _rmqApiGateway.GetRmqQueueList().Result;
+
+			var orphanedQueueList = new List<RmqQueueProperties>();
+			var orphanedRouterList = new List<string>();
+			// avg_ingress_rate seems to get reset to 0 after about 10-15 min or so 
+
+			foreach (var queue in rmqQueueList)
+			{
+				if (queue.backing_queue_status.avg_ingress_rate * 100 <= 0 && queue.messages_ready > 0 && !queue.name.ToLower().Contains("_error") && queue.name.ToLower().Contains("adt_worker_"))
+				{
+					orphanedQueueList.Add(queue);
+					//Console.WriteLine("Possible Orphan Queue: " + queue.name + "-" + queue.messages_ready + "-" + queue.backing_queue_status.avg_ingress_rate);
+				}
+				
+			}
+
+			if (orphanedQueueList.Any())
+			{
+				Console.WriteLine("PossibleOrphaned Queues: ");
+				foreach (var queue in orphanedQueueList)
+				{
+					Console.WriteLine(queue.name+ "-" + queue.messages_ready);
+					var queueParts = queue.name.Split('_');
+					
+					var isRouterInList = orphanedRouterList.FirstOrDefault(x => x == queueParts[3]);
+					if (isRouterInList == null)
+					{
+						orphanedRouterList.Add(queueParts[3]);
+					}
+					//Console.WriteLine("Possible Orphan Queue: " + queue.name + "-" + queue.messages_ready + "-" + queue.backing_queue_status.avg_ingress_rate);
+				}
+				Console.WriteLine("Total PossibleOrphaned Queues: "+ orphanedQueueList.Count);
+			}
+
+			if (orphanedRouterList.Any())
+			{
+				Console.WriteLine("Routers below have orphaned Queues: ");
+				foreach (var router in orphanedRouterList)
+				{
+					Console.WriteLine(router);
+				}
+			}
+
+			else
+			{
+				Console.WriteLine("No Orphaned Queues found.");
+			}
+		}
+
+		private void GetExchangeList()
+		{
+			var rmqExchangeList = _rmqApiGateway.GetRmqExchangeList().Result;
+			var serverlist = new List<string>();
+
+			foreach (var exchange in rmqExchangeList)
+			{
+
+				if (!exchange.auto_delete && exchange.name.Contains("bus-"))
+				{
+					var subExchangeName = exchange.name.Split('-');
+					if (subExchangeName.Length > 1)
+					{
+						var serverValue = subExchangeName[1] + "-" + subExchangeName[2];
+						serverlist.Add(serverValue);
+					}
+				}
+			}
+
+			var distinctList = serverlist
+				.GroupBy(l => l)
+				.Select(g => new
+				{
+					Date = g.Key,
+					Count = g.Select(l => l).Count()
+				});
+
+			distinctList = distinctList.OrderBy(x => x.Count);
+			foreach (var server in distinctList)
+			{
+				Console.WriteLine(server.Count+ " - " + server.Date);
+			}
+
 		}
 	}
 }

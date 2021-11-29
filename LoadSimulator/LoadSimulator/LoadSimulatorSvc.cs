@@ -32,7 +32,7 @@ namespace LoadSimulator
 			{
 				//var temp = _pccRepository.GetById(2);
 				//Console.WriteLine(temp);
-				var messageCount = 0;
+				var messageCount = 1000;
 
 				var syncOneAccountList = _amsRepository.GetAccountFacilityList(messageCount);
 				_busControl.StartAsync();

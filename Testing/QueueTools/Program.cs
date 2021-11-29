@@ -51,15 +51,16 @@ namespace QueueTools
 			var text = "";
 			bus.Start();
 			Console.WriteLine("Please select from the following options: ");
-			Console.WriteLine("1 : Send X Messages to PAS_ADT_HL7_INGRESS queue");
-			Console.WriteLine("2 : Purge All PAS_ADT_WORKER queues");
-			Console.WriteLine("3 : Delete All PAS_ADT_WORKER queues");
-			Console.WriteLine("4 : Thread Testing");
-			Console.WriteLine("5 : SendCmd Message");
-			Console.WriteLine("6 : SendCmd Message");
-			Console.WriteLine("7 : Stats");
-			Console.WriteLine("8 : Get QueueList");
-			Console.WriteLine("9 : Delete VDI Queues");
+			Console.WriteLine("1  : Send X Messages to PAS_ADT_HL7_INGRESS queue");
+			Console.WriteLine("2  : Purge All PAS_ADT_WORKER queues");
+			Console.WriteLine("3  : Delete All PAS_ADT_WORKER queues");
+			Console.WriteLine("4  : Thread Testing");
+			Console.WriteLine("5  : SendCmd Message");
+			Console.WriteLine("6  : SendCmd Message");
+			Console.WriteLine("7  : Stats");
+			Console.WriteLine("8  : Get QueueList");
+			Console.WriteLine("9  : Delete VDI Queues");
+			Console.WriteLine("10 : Delete Extra Exchanges");
 			Console.WriteLine("to exit the program enter: q");
 			while (text != "q")
 			{
@@ -233,6 +234,28 @@ namespace QueueTools
 						else
 						{
 							queueManager.DeleteVdiTestingQueues("");
+						}
+
+						Console.WriteLine("Delete Completed");
+						disposeNeeded = true;
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine(ex.InnerException);
+					}
+				}
+
+				else if (text == "10")
+				{
+					try
+					{
+						if (OutgoingUri.Segments.Last() != "/")
+						{
+							queueManager.DeleteUnusedExchanges(OutgoingUri.Segments.Last());
+						}
+						else
+						{
+							queueManager.DeleteUnusedExchanges("");
 						}
 
 						Console.WriteLine("Delete Completed");

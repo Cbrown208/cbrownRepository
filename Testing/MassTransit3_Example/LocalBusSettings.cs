@@ -1,18 +1,16 @@
-using MassTransit3_Example;
-
-namespace RabbitMQ_MassTransit3
+namespace MassTransit3_Example
 {
 	public class LocalBusSettings
 	{
 		public BusSettings GetLocalBusSettings()
 		{
-			BusSettings localBusSettings = new BusSettings()
+			var localBusSettings = new BusSettings
 			{
 				ConcurrentConsumerLimit = "1",
 				HeartBeatInSeconds = 10,
-				IncomingUriString = "rabbitmq://iv-rmq-pas.nthrive.com/DI",
-				IncomingQueue = "PAS_ADT_HL7_INGRESS_TEST",
-				OutgoingQueue = "PAS_ADT_HL7_INGRESS_TEST",
+				IncomingUriString = "rabbitmq://localhost/PAS",
+				IncomingQueue = "ConsumerTesting",
+				OutgoingQueue = "Worklist_Sync",
 				Username = "PAS",
 				Password = "PAS"
 			};

@@ -6,15 +6,15 @@ namespace QueueTools
 		{
 			BusSettings localBusSettings = new BusSettings()
 			{
-				ConcurrentConsumerLimit = "1",
+				ConcurrentConsumerLimit = "5",
 				HeartBeatInSeconds = 10,
-				IncomingUriString = "rabbitmq://localhost/",
+				IncomingUriString = "rabbitmq://localhost/PAS",
 				IncomingQueue = "PAS_ADT_HL7_INGRESS_IV",
 				Username = "PAS",
 				Password = "PAS",
 				OutgoingBusSettings = new OutgoingBusSettings()
 				{
-					BaseUriString = "rabbitmq://localhost/",
+					BaseUriString = "rabbitmq://localhost/PAS",
 					AdtCommandReadyQueue = "PAS_ADT_CMD_READY_IV",
 					AdtCommandCompleteQueue = "PAS_ADT_CMD_COMPLETE_IV",
 					OutgoingQueue = "PAS_ADT_WORKER_{0}_IVM",

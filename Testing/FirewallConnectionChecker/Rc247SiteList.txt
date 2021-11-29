@@ -1,0 +1,10 @@
+https://www.demo.propatientco.com
+https://pay.demo.patientco.com/
+https://pay.patientco.com
+https://www.propatientco.com
+https://login.zirmed.com
+https://plat-res-api-m1.nthrivenp.com/
+https://services.hsp.transunion.com
+https://login-m1.nthrivenp.com
+https://platwebrc.nthrive.com
+https://services.hsp.transunion.com/ssotoken/SsoTokenService.svc

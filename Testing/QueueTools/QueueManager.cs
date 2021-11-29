@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text.RegularExpressions;
 using QueueTools.RabbitMQ;
 
@@ -123,6 +124,26 @@ namespace QueueTools
 				_manager.DeleteQueues(queue.Name);
 			}
 			return qs;
+		}
+
+		public List<ExchangeInfo> DeleteUnusedExchanges(string vhost)
+		{
+			var exchangePattern = "bus-";
+			//exchangePattern = "bus-6VFRFH2-PAS.Worklist.WinSvc-yyyoyynbyybfy8xgbdceq1t1bx";
+			var adtQueueUri = new Uri(_busSettings.OutgoingBusSettings.BaseUriString);
+			string uri = string.Format("{0}://{1}:{2}@{3}/", adtQueueUri.Scheme, _busSettings.Username, _busSettings.Password, adtQueueUri.Host);
+			var qInfos = RabbitMqTransportManager.GetExchangesFor(uri, vhost);
+			var exchangeList = qInfos.Where(x => Regex.IsMatch(x.name, exchangePattern)).ToList();
+			if (exchangeList.Any())
+			{
+				Console.WriteLine("Deleting " + exchangeList.Count + " Exchanges");
+				foreach (var exchange in exchangeList)
+				{
+					_manager.DeleteExchanges(exchange.name);
+				}
+			}
+
+			return exchangeList;
 		}
 
 		public List<RabbitMQ.QueueInfo> GetQueueStats(string queuePattern, string vhost)

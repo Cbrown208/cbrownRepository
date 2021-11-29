@@ -97,7 +97,23 @@ namespace QueueTools.RabbitMQ
 			}
 		}
 
-		public void Dispose()
+		public void DeleteExchange(string exchangeName)
+		{
+			using (IModel model = _connection.CreateModel())
+			{
+				try
+				{
+					model.ExchangeDelete(exchangeName);
+				}
+				catch
+				{
+				}
+
+				model.Close(200, "Deleted Exchange");
+			}
+		}
+
+        public void Dispose()
         {
             if (_disposed)
                 return;

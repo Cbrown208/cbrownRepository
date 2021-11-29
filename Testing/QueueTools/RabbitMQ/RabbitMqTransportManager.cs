@@ -98,6 +98,33 @@ namespace QueueTools.RabbitMQ
             return queues;
         }
 
+        public List<ExchangeInfo> GetExchangesFor(string busHostUri, string vhost)
+        {
+	        var queues = new List<ExchangeInfo>();
+
+	        using (var client = new HttpClient())
+	        {
+		        client.DefaultRequestHeaders.Accept.Clear();
+		        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+		        var endpoint = RabbitMqEndpointAddress.Parse(busHostUri);
+		        var host = endpoint.Uri.Host;
+		        var user = endpoint.ConnectionFactory.UserName;
+		        var password = endpoint.ConnectionFactory.Password;
+		        var byteArray = Encoding.ASCII.GetBytes(String.Format("{0}:{1}", user, password));
+
+		        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
+			        Convert.ToBase64String(byteArray));
+
+		        var result = client.GetAsync(new Uri(String.Format("http://{0}:15672/api/exchanges/{1}", host, vhost))).Result;
+		        if (result.IsSuccessStatusCode)
+		        {
+			        queues = result.Content.ReadAsAsync<List<ExchangeInfo>>().Result;
+		        }
+	        }
+	        return queues;
+        }
+
         public List<QueueInfo> GetQueuesFor(string busHostUri, string queue, string vhost = @"%2F")
         {
             var queues = new List<QueueInfo>();
@@ -141,6 +168,12 @@ namespace QueueTools.RabbitMQ
 		{
 			_management.Delete(queueName);
 		}
+
+		public void DeleteExchanges(string exchangeName)
+		{
+			_management.DeleteExchange(exchangeName);
+
+        }
 
 		//public static ConnectionFactory GetConnectionFactory()
 		//{
