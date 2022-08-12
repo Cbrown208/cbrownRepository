@@ -171,45 +171,5 @@ namespace FirewallConnectionChecker
 			response.Close();
 			return true;
 		}
-
-		private void GetTestSiteList()
-		{
-			var externalSites = new List<WebsiteDetails>
-			{
-				new WebsiteDetails {Url = "https://services.hsp.transunion.com/ssotoken/SsoTokenService.svc"},
-				new WebsiteDetails {Url = "https://www.propatientco.com"},
-				new WebsiteDetails {Url = "https://www.demo.propatientco.com/sso/v1"},
-				new WebsiteDetails {Url = "https://login.zirmed.com"}
-			};
-
-			var nThriveProductSites = new List<WebsiteDetails>
-			{
-				new WebsiteDetails {Url = "https://plat-res-api-m2-3.nthrivenp.com/"},
-				new WebsiteDetails {Url = "https://platwebdev.nthrive.com/"},
-				new WebsiteDetails {Url = "https://login-m2.nthrivenp.com"},
-				new WebsiteDetails {Url = "http://cmcboservices-contractvalidation-val.nthrive.com:9000/api/1/"}
-			};
-
-			var pasWebsiteList = new List<WebsiteDetails>
-			{
-				new WebsiteDetails {Url = "https://iv-pos-svc.nthrive.com/ecashservice"},
-				new WebsiteDetails {Url = "https://iv-abn-pas.nthrive.com/abn/api/system"},
-				new WebsiteDetails {Url = "https://iv-infrastructure.nthrive.com/infrastructure/api/system"},
-				new WebsiteDetails {Url = "https://iv-p2p.nthrive.com/p2p/api/system"},
-
-				new WebsiteDetails {Url = "https://iv-pas-svc.nthrive.com/paswebservice/api/system"},
-				new WebsiteDetails {Url = "https://iv-pricing.nthrive.com/pricingapi/api/system"},
-				new WebsiteDetails {Url = "https://iv-pns.nthrive.com/pns/api/system"},
-
-				new WebsiteDetails {Url = "https://iv-regqa-api.nthrive.com/RegQAApi/api/system"},
-				new WebsiteDetails {Url = "https://iv-pos-svc.nthrive.com/ecashservice"},
-				new WebsiteDetails {Url = "https://iv-svc-pas.nthrive.com/patientbalanceservice/PatientBalanceService.svc?wsdl"},
-
-				new WebsiteDetails {Url = "https://qa-dcs.nthrive.com/dcs/api"},
-				new WebsiteDetails {Url = "https://qa-estimation.nthrive.com/Estimation/api/system"},
-				new WebsiteDetails {Url = "https://qa-pls.nthrive.com/pls/api/system"},
-				new WebsiteDetails {Url = "https://qa-svc-ei.nthrive.com/api/system"}
-			};
-		}
 	}
 }

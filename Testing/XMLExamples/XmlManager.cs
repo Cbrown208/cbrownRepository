@@ -3,11 +3,38 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace XMLExamples
 {
 	public class XmlManager
 	{
+
+		public void ReadXmlDynamically()
+		{
+			string xmlExampleValue =
+				@"<PnsProviderSettings>
+					<Username>chbrown</Username>
+					<Password>YepYep</Password>
+					<OrganizationId>nope</OrganizationId>
+					<IsTestRequest>[4]</IsTestRequest>
+				</PnsProviderSettings>";
+
+
+			var xmlObject = GetXmlObject(xmlExampleValue);
+
+			Console.WriteLine("UserName: "+ xmlObject.PnsProviderSettings.Username);
+			Console.WriteLine("Password: " + xmlObject.PnsProviderSettings.Password);
+		}
+
+		private dynamic GetXmlObject(string xmlRaw)
+		{
+			var document = new XmlDocument();
+			document.LoadXml(xmlRaw);
+			return JsonConvert.DeserializeObject<dynamic>(JsonConvert.SerializeXmlNode(document));
+		}
+
+
 		public string GetXmlValue(string content, string startString, string endString)
 		{
 			if (content.Contains(startString) && content.Contains(endString))

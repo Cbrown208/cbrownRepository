@@ -14,7 +14,6 @@ namespace RabbitMQApiCalls
 		private const string QaRmqUrl = "http://iv-rmq-pas.nthrive.com:15672";
 		private const string RcRmqUrl = "http://rc-rmq-pas.nthrive.com:15672";
 		private const string ProdRmqUrl = "http://rmq-pas.nthrive.com:15672";
-		private const string OldProdRmqUrl = "http://rmq2-pas.nthrive.com:15672";
 
 		private const string ProdDiRmq = "http://dataingresshl7msgq.nthrive.com:15672";
 		private readonly RabbitMqApiGateway _rmqApiGateway;
@@ -23,11 +22,12 @@ namespace RabbitMQApiCalls
 		{
 
 			//_rmqApiGateway = new RabbitMqApiGateway(QaRmqUrl);
-			_rmqApiGateway = new RabbitMqApiGateway(ProdRmqUrl);
+			_rmqApiGateway = new RabbitMqApiGateway(LocalRmqUrl);
 		}
 
 		public void RunApiCallsTest()
 		{
+			GetSpecificQueueDetails();
 			//ReadRmqConnectionsFromFile();
 			//ReadRmqConnectionsFromServer();
 			//GetMonitoredQueueListDetails();
@@ -94,6 +94,16 @@ namespace RabbitMQApiCalls
 			}
 
 			Console.WriteLine("Total Connection Count: " + processList.Count);
+		}
+
+		private void GetSpecificQueueDetails()
+		{
+			var tempUri = new Uri("rabbitmq://localhost/PAS");
+
+
+
+			var queueDetails = _rmqApiGateway.GetRmqQueueDetails("MedAssets.Estimation.Worker_error", "PAS").Result;
+
 		}
 
 		private void GetMonitoredQueueListDetails()
@@ -169,12 +179,14 @@ namespace RabbitMQApiCalls
 
 		private void GetConsumersListFromServer()
 		{
+			var temp = _rmqApiGateway.GetRmqQueueDetails("MedAssets.Estimation.Worker_error", "PAS").Result;
+
 			var rmqConsumerList = _rmqApiGateway.GetRmqConsumerList().Result;
 			var consumerList = new List<RmqQueueProperties>();
 
 			foreach (var consumer in rmqConsumerList)
 			{
-				if (!consumer.queue.name.Contains("bus-") && !consumer.queue.name.Contains("INGRESS_CLIENT") && consumer.queue.name.Contains("ADT_WORKER_"))
+				if (!consumer.queue.name.Contains("bus-") && !consumer.queue.name.Contains("INGRESS_CLIENT") && !consumer.queue.name.Contains("ADT_WORKER_"))
 				{
 					consumerList.Add(consumer.queue);
 				}

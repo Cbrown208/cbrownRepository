@@ -9,7 +9,7 @@ namespace XMLExamples
 	{
 		private const string StartAccountNumberTag = "<AccountNumber>";
 		private const string EndAccountNumberTag = "</AccountNumber>";
-		private static readonly XmlManager manager = new XmlManager();
+		private static readonly XmlManager _manager = new XmlManager();
 		static readonly XmlTestMessage xmlTestMessages = new XmlTestMessage();
 
 		public static void Main(string[] args)
@@ -28,6 +28,9 @@ namespace XMLExamples
 			//	var temp = xmlSerializer.Deserialize(sr) as Employee;
 			//}
 
+			_manager.ReadXmlDynamically();
+
+
 			EmployeeTypes typesTest = new EmployeeTypes();
 			var testEmp = new Employee(){FirstName = "Jim",LastName = "Bob"};
 			typesTest.ArrayTest = new Employee[3];
@@ -36,13 +39,13 @@ namespace XMLExamples
 
 			typesTest.ListObjectTest = new List<Employee>();
 			typesTest.ListObjectTest.Add(testEmp);
-			var results = manager.SerializeToString(typesTest);
+			var results = _manager.SerializeToString(typesTest);
 
 			typesTest.ArrayTest = new Employee[0];
 			typesTest.ListStringTest = null;
 			typesTest.ListObjectTest = new List<Employee>();
 
-			var results2 = manager.SerializeToString(typesTest);
+			var results2 = _manager.SerializeToString(typesTest);
 			Console.ReadLine();
 		}
 	}

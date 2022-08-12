@@ -1,29 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Management;
+using System.Reflection;
 
 namespace DotNetFrameworkChecker
 {
 	public class DotNetManager
 	{
+		public const string OutputFileName = "DotNetCheckLog.txt";
+
 		public void CheckDotNetVersionForServers()
 		{
-			var serverList = GetServerList();
+			var resultList = new List<string>();
+			var serverList = new List<string>();
+
+			CleanOutputFile(OutputFileName);
+
+			serverList = GetServerList("WEB",18);
+			serverList.Add("LEWVPPASWEB19.nthrive.nthcrp.com");
+			serverList.Add("LEWVPPASWEB20.nthrive.nthcrp.com");
+			serverList.AddRange(GetServerList("APP", 32));
+			serverList.AddRange(GetServerList("TSK", 52));
 
 			foreach (var server in serverList)
 			{
 				var version = DotNetFrameworkVersion(server);
 				var result = CheckFor45PlusVersion((int) version);
-				Console.WriteLine(server+" : "+ result);
+				var output = server + " : " + result;
+				resultList.Add(output);
+				WriteValueToFile(output);
 			}
-			
+
+			var outputPath = Path.Combine(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().GetName().CodeBase).LocalPath)) +"\\" + OutputFileName;
+			Console.WriteLine("FilePath: " + outputPath);
 		}
 
-		public List<string> GetServerList()
+		private List<string> GetServerList(string serverType, int serverCount)
 		{
 			var serverList = new List<string>();
-			serverList.Add("RCM41VHPASSOA01.medassets.com");
+			var baseServerName = "LEWVPPAS" + serverType;
 
+			var serverDomain = ".nthrive.nthcrp.com";
+			if (serverType.ToLower().Contains("web"))
+			{
+				serverDomain = ".nthext.com";
+			}
+
+			for (int i = 1; i < serverCount + 1; i++)
+			{
+				var sName = baseServerName + String.Format("{0:00}", i) + serverDomain;
+				serverList.Add(sName);
+			}
 			return serverList;
 		}
 
@@ -83,7 +111,29 @@ namespace DotNetFrameworkChecker
 
 			// This code should never execute. A non-null release key should mean
 			// that 4.5 or later is installed.
-			return "No 4.5 or later version detected";
+			return "No 4.5 or later version detected" + releaseKey;
+		}
+
+		private void WriteValueToFile(string value)
+		{
+			try
+			{
+				using (var file = new StreamWriter(OutputFileName, true))
+				{
+					file.WriteLineAsync(value);
+				}
+				Console.WriteLine(value);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				Console.WriteLine(value);
+			}
+		}
+
+		private void CleanOutputFile(string outputFileName)
+		{
+			File.WriteAllText(outputFileName, string.Empty);
 		}
 	}
 }

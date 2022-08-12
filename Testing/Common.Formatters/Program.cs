@@ -20,7 +20,7 @@ namespace Common.Formatters
 
 			//RunSqlScrubberDisplay();
 
-			//RunJsonFormatDisplay();
+			RunJsonFormatDisplay();
 
 			//RunByteFormatTest();
 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30611.23
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arrays", "Arrays\Arrays.csproj", "{C68C7B45-7D9A-471B-94F4-CA6B08BA211F}"
 EndProject
@@ -78,6 +78,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerCheckerTool", "ServerCheckerTool\ServerCheckerTool.csproj", "{5990053C-5CBD-4A18-8C1C-50B124512803}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirewallConnectionChecker", "FirewallConnectionChecker\FirewallConnectionChecker.csproj", "{AC16B34C-D003-464C-885D-4408C93FC6B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebResponseChecker", "WebResponseChecker\WebResponseChecker.csproj", "{D559CBE2-B151-4A06-B054-3CC621C1B463}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TlsTester", "TlsTester\TlsTester.csproj", "{49A1DE42-D016-43C4-97C6-BAEC167F9B5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -237,6 +241,14 @@ Global
 		{AC16B34C-D003-464C-885D-4408C93FC6B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC16B34C-D003-464C-885D-4408C93FC6B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC16B34C-D003-464C-885D-4408C93FC6B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D559CBE2-B151-4A06-B054-3CC621C1B463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D559CBE2-B151-4A06-B054-3CC621C1B463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D559CBE2-B151-4A06-B054-3CC621C1B463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D559CBE2-B151-4A06-B054-3CC621C1B463}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49A1DE42-D016-43C4-97C6-BAEC167F9B5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49A1DE42-D016-43C4-97C6-BAEC167F9B5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49A1DE42-D016-43C4-97C6-BAEC167F9B5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49A1DE42-D016-43C4-97C6-BAEC167F9B5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -29,9 +29,8 @@ namespace DapperTesting
 
 		public string BuildCheckStatement(string tableName, string column, string value)
 		{
-			var checkStatement = "BEGIN" + Environment.NewLine;
-			checkStatement = checkStatement + string.Format("IF NOT exists(select 1 from [{0}] where {1} = '{2}')", tableName, column, value);
-			checkStatement = checkStatement + Environment.NewLine;
+			var checkStatement = string.Format("IF NOT exists(select 1 from [{0}] where {1} = '{2}')", tableName, column, value);
+			checkStatement = checkStatement + Environment.NewLine+ "BEGIN" + Environment.NewLine; 
 			return checkStatement;
 		}
 
@@ -39,6 +38,15 @@ namespace DapperTesting
 		{
 			var checkStatement = "END" + Environment.NewLine+ Environment.NewLine;
 			return checkStatement;
+		}
+
+		public string BuildPccInsertStatement(string sName, string sDescription)
+		{
+			var checkStatement = string.Format("IF NOT EXISTS(SELECT 1 FROM [Servers] WHERE ServerName = '{0}' AND Environment = 5)", sName);
+			var result = checkStatement + Environment.NewLine + "BEGIN" + Environment.NewLine;
+			result = result + "INSERT INTO[dbo].[Servers]([ServerName],[ServerDescription],[Environment],[Status],[IsActive],[LastUpdated]) VALUES" + Environment.NewLine;
+			result = result + string.Format("('{0}', '{1}', 5, 0, 1, GETDATE())", sName, sDescription) + Environment.NewLine + "END" + Environment.NewLine + Environment.NewLine;
+			return result;
 		}
 	}
 }

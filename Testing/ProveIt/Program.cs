@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Common.Formatters;
+using Newtonsoft.Json;
 
 
 namespace ProveIt
@@ -12,7 +13,7 @@ namespace ProveIt
 
 		static void Main(string[] args)
 		{
-			RunURLParserTest();
+			//RunURLParserTest();
 			//_dotNetVersionManager.CheckDotNetVersion();
 			//RunStringAlterTest();
 			//EditList();
@@ -25,9 +26,14 @@ namespace ProveIt
 
 		public static void TempTest()
 		{
-			string inputString = "SuperAwesome";
-			var result = inputString.IndexOf("Something");
-			Console.WriteLine("Results: " + result);
+			var rawServerName = "LEWVPPASWEB02";
+			var serverName = rawServerName;
+			if (serverName.Contains("."))
+			{
+				serverName = serverName.Split('.')[0];
+			}
+			Console.WriteLine("RawServerName: " + rawServerName);
+			Console.WriteLine("Results: " + serverName);
 		}
 
 		public static void RunURLParserTest()
@@ -39,7 +45,8 @@ namespace ProveIt
 
 		private static void RunStringAlterTest()
 		{
-			var input = "\"{\"Status\":0,\"ErrorCode\":13,\"ErrorMessage\":\"Error course does not exist\",\"Completions\":null,\"NotFound\":[7336,7626,7813]}\"";
+			var input =
+				"\"{\"Status\":0,\"ErrorCode\":13,\"ErrorMessage\":\"Error course does not exist\",\"Completions\":null,\"NotFound\":[7336,7626,7813]}\"";
 
 			input = input.Replace(@"\", "");
 			input = input.Replace(@"""{", "{");
@@ -53,8 +60,8 @@ namespace ProveIt
 		{
 			Console.WriteLine("Comparison Tests Start ------------------");
 			var input = true;
-			Console.WriteLine("input = "+ input);
-			var result = (input) ? "True Response": "False Response";
+			Console.WriteLine("input = " + input);
+			var result = (input) ? "True Response" : "False Response";
 			Console.WriteLine(result);
 
 			input = false;
@@ -94,6 +101,7 @@ namespace ProveIt
 				var procedure = hospitalProcedure[counter];
 				procedure = details.ToList().FindAll(obj => !string.IsNullOrEmpty(obj.LastName.Trim('0')))[counter];
 			}
+
 			Console.WriteLine("MAde It");
 
 			var specProcedure = personList.FindAll(obj => obj.FirstName == "Hosp").ToList();
@@ -102,6 +110,7 @@ namespace ProveIt
 				var procedure = specProcedure[counter];
 				procedure = details.ToList().FindAll(obj => string.IsNullOrEmpty(obj.LastName.Trim('0')))[counter];
 			}
+
 			Console.WriteLine("MAde It 2");
 
 			Console.ReadLine();
@@ -116,6 +125,7 @@ namespace ProveIt
 				user[0] = user[0].ToLower();
 				svcStatus = String.Join("\\", user.ToArray());
 			}
+
 			Console.WriteLine(svcStatus);
 		}
 

@@ -108,6 +108,46 @@ namespace RabbitMQApiCalls
 			}
 		}
 
+		public async Task<RmqQueueProperties> GetRmqQueueDetails(string queueName, string vHost = null)
+		{
+			try
+			{
+				var endpoint = _baseUrl + "/api/queues/"+ queueName;
+
+				if (!string.IsNullOrWhiteSpace(vHost))
+				{
+					endpoint = _baseUrl + "/api/queues/" + vHost +"/"+ queueName;
+				}
+
+				// Instantiate HttpClient passing in the HttpClientHandler
+				using (var httpClient = GetClient())
+				{
+					// Get the response from the API endpoint.
+					var httpResponseMessage = httpClient.GetAsync(endpoint).Result;
+					var httpContent = httpResponseMessage.Content;
+
+					using (var streamReader = new StreamReader(httpContent.ReadAsStreamAsync().Result))
+					{
+						// Get the output string.
+						var returnedJsonString = await streamReader.ReadToEndAsync();
+						var results = new RmqQueueProperties();
+
+						if (returnedJsonString != "")
+						{
+							results = JsonConvert.DeserializeObject<RmqQueueProperties>(returnedJsonString);
+							return results;
+						}
+						return results;
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				throw;
+			}
+		}
+
 		public async Task<List<RmqQueueProperties>> GetRmqQueueList(string vHost = null)
 		{
 			try

@@ -45,9 +45,6 @@ namespace XMLReader
 			//Console.WriteLine("Results:");
 			//Console.WriteLine(result);
 			Console.ReadLine();
-
-
-
         }
     }
 }

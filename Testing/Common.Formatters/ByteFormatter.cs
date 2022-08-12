@@ -55,5 +55,23 @@
 
 			return $"{dblSByte:0.##} {suffix[i]}";
 		}
+
+		/// <summary>
+		/// Format raw Kilobytes value (double) into a readable string.
+		/// </summary>
+		/// <param name="kiloBytes"></param>
+		/// <returns></returns>
+		public string FormatMegaBytes(double megaBytes)
+		{
+			string[] suffix = { "MB", "GB", "TB" };
+			int i;
+			double dblSByte = megaBytes;
+			for (i = 0; i < suffix.Length && megaBytes >= 1024; i++, megaBytes /= 1024)
+			{
+				dblSByte = megaBytes / 1024.0;
+			}
+
+			return $"{dblSByte:0.##}{suffix[i]}";
+		}
 	}
 }

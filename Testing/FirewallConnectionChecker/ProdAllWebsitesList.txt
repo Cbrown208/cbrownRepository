@@ -30,3 +30,4 @@ https://plat-res-api.nthrive.com/
 https://pay.demo.patientco.com
 https://pay.patientco.com
 https://www.propatientco.com
+https://www.google.com/recaptcha/api/siteverify

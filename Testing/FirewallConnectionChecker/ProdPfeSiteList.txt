@@ -1,5 +1,0 @@
-https://pricing.nthrive.com/pricingapi/api/system
-https://login.nthrive.com
-https://plat-res-api.nthrive.com/
-https://platweb.nthrive.com/
-https://www.google.com/recaptcha/api/siteverify
