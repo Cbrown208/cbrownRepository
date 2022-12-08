@@ -20,13 +20,22 @@ namespace Common.Formatters
 
 			//RunSqlScrubberDisplay();
 
-			RunJsonFormatDisplay();
+			//RunJsonFormatDisplay();
 
 			//RunByteFormatTest();
 
-			RunCsvTest();
+			//RunCsvTest();
+
+			RunSoapTest();
 
 			Console.ReadLine();
+		}
+
+		private static void RunSoapTest()
+		{
+			var testPerson = new Person { Id = 1, FirstName = "John", LastName = "Snow", Email = "jhonnySnow@theWall.com" };
+			var soapResult = Soapformatter.ToSoap(testPerson);
+			Console.WriteLine(soapResult);
 		}
 
 		private static void RunByteFormatTest()

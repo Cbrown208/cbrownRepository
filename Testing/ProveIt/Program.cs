@@ -26,14 +26,13 @@ namespace ProveIt
 
 		public static void TempTest()
 		{
-			var rawServerName = "LEWVPPASWEB02";
-			var serverName = rawServerName;
-			if (serverName.Contains("."))
-			{
-				serverName = serverName.Split('.')[0];
-			}
-			Console.WriteLine("RawServerName: " + rawServerName);
-			Console.WriteLine("Results: " + serverName);
+			var isClinic = true;
+			var productRollupOptions = true;
+			var combinedEstimateOption = true;
+
+			var result = isClinic? productRollupOptions : productRollupOptions && !combinedEstimateOption;
+
+			Console.WriteLine("Results: " + result);
 		}
 
 		public static void RunURLParserTest()

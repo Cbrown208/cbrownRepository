@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Common.Formatters
 {
+	[Serializable]
 	public class Person
 	{
 		public int Id { get; set; }
