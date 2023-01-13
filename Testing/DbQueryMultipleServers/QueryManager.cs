@@ -11,21 +11,89 @@ namespace DbQueryMultipleServers
 	public class QueryManager
 	{
 		private const string OutputFileName = "MultipleQueryDbOutput.csv";
-		public void RunQuery()
+
+		private readonly string _outputPath = Path.Combine(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().GetName().CodeBase).LocalPath)) + "\\" + OutputFileName;
+
+		public void RunMultipleDbQuery()
 		{
-			var resultList = new List<QueryResults>();
-			for (int i = 1; i < 8; i++)
+			var pasDbServerConnection = "Server=LEWVPPASDB{0}.nthrive.nthcrp.com;Database=Platform_Sub; Trusted_Connection=true;";
+			var pasDbClientDbCount = 7;
+			var cmDbConnection = "Server=LEWVPCMGDB{0}.nthrive.nthcrp.com;Database=CBO_Global; Trusted_Connection=true;";
+
+			var dbList = GetDbConnectionStringList(pasDbServerConnection, pasDbClientDbCount);
+
+			//RunQuery(pasDbServerConnection, pasDbClientDbCount);
+			RunFacilityOptionQuery(pasDbServerConnection, pasDbClientDbCount);
+
+			Console.WriteLine(Environment.NewLine+ Environment.NewLine + _outputPath);
+		}
+
+		private List<string> GetDbConnectionStringList(string dbConnectionString, int serverCount)
+		{
+			var dbConnectionStringList = new List<string>();
+			for (int i = 1; i <= serverCount; i++)
 			{
 				var serverNumber = i.ToString("D2");
-				var clientDb = string.Format("Server=LEWVPPASDB{0}.nthrive.nthcrp.com;Database=Platform_Sub; Trusted_Connection=true;", serverNumber);
+				var clientDb = string.Format(dbConnectionString, serverNumber);
+				dbConnectionStringList.Add(clientDb);
+			}
+			return dbConnectionStringList;
+		}
+
+		public void RunQuery(string dbConnectionString, int serverCount)
+		{
+			CleanOutputFile(OutputFileName);
+			var resultList = new List<QueryResults>();
+			for (int i = 1; i <= serverCount; i++)
+			{
+				var serverNumber = i.ToString("D2");
+				var clientDb = string.Format(dbConnectionString, serverNumber);
+
 				using (var db = new SqlConnection(clientDb))
 				{
 					db.Open();
-					var query = GetQuery();
+					var query = GetClientDbQuery();
 					var queryResults = db.Query<QueryResults>(query).ToList();
 					resultList.AddRange(queryResults);
 					db.Close();
 				}
+			}
+
+			WriteValueToFile("DbServer,DbName,QueryResults");
+			foreach (var result in resultList)
+			{
+				var outputResult = result.DbServer + "," + result.DbName + "," + result.QueryResult;
+				WriteValueToFile(outputResult);
+			}
+
+		}
+
+		public void RunFacilityOptionQuery(string dbConnectionString, int serverCount)
+		{
+			var facOptionIds = "250";
+			CleanOutputFile(OutputFileName);
+			var resultList = new List<FacilityOptionQueryResults>();
+			for (int i = 1; i <= serverCount; i++)
+			{
+				var serverNumber = i.ToString("D2");
+				var clientDb = string.Format(dbConnectionString, serverNumber);
+
+				using (var db = new SqlConnection(clientDb))
+				{
+					db.Open();
+					var query = GetFacilityOptionQuery(facOptionIds);
+					var queryResults = db.Query<FacilityOptionQueryResults>(query).ToList();
+					resultList.AddRange(queryResults);
+					db.Close();
+				}
+			}
+
+			WriteValueToFile("DbServer,DbName,ClientId,FacilityName,FacilityId,FacilityOptionName,FacilityOptionTypeId,OptionValue");
+			foreach (var result in resultList)
+			{
+				var facName = result.FacilityName?.Replace(",", "");
+				var outputResult = result.DbServer + "," + result.DbName + "," + result.ClientId + "," + facName + "," + result.FacilityId + "," + result.FacilityOptionName + "," + result.FacilityOptionTypeId + "," + result.OptionValue;
+				WriteValueToFile(outputResult);
 			}
 		}
 
@@ -36,8 +104,8 @@ namespace DbQueryMultipleServers
 			for (int i = 1; i < 3; i++)
 			{
 				var serverNumber = i.ToString("D2");
-				//Console.WriteLine(serverNumber);
 				var clientDb = string.Format("Server=LEWVPCMGDB{0}.nthrive.nthcrp.com;Database=CBO_Global; Trusted_Connection=true;", serverNumber);
+
 				using (var db = new SqlConnection(clientDb))
 				{
 					db.Open();
@@ -54,10 +122,6 @@ namespace DbQueryMultipleServers
 				var outputResult = result.DbServer + "," + result.DbName + "," + result.QueryResult;
 				WriteValueToFile(outputResult);
 			}
-			Console.WriteLine();
-			Console.WriteLine();
-			var outputPath = Path.Combine(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().GetName().CodeBase).LocalPath)) + "\\" + OutputFileName;
-			Console.WriteLine(outputPath);
 		}
 
 		public void WriteValueToFile(string value)
@@ -136,14 +200,6 @@ BEGIN
 	insert into @ResultsList
 	EXEC sys.sp_executesql @SQL
 
-	--DECLARE @ClientId int
-	--SET @ClientId = (SELECT TOP(1) clientId from @ResultsList where DbName = @DbName AND ClientId != 99001)
-	--DECLARE @ClientName VARCHAR(150) = (select TOP(1) Name from aaafacilities where ClientID in (@ClientId))
-	
-	--UPDATE @ResultsList
-	--SET ClientName = @ClientName
-	--where DbName = @DbName
-
 	UPDATE @DbList
 	SET QueryResult = 'Successful'
 	where NAME = @DbName
@@ -161,6 +217,146 @@ END
 --select * from @DbList where QueryResult != 'Successful'
 select * from @ResultsList";
 		}
+
+		// Used to get Misc Queries on Client DB's
+		public string GetClientDbQuery()
+		{
+			var queryLoopStart = @"/****** Run Query on All DB's in Server  ******/
+				DECLARE @DbList TABLE (
+				ID INT IDENTITY(1,1),
+				ClientId INT NULL,
+				ClientName VARCHAR(100) NULL,
+				NAME VARCHAR(50) NOT NULL,
+				Counts INT NULL,
+				QueryResult varchar(50) NULL)
+
+				DECLARE @ResultsList TABLE (
+				DbServer VARCHAR(75) NULL,
+				DbName VARCHAR(50) NOT NULL,
+				QueryResult varchar(150) NULL)
+
+				DECLARE @Cnt INT=1;
+				DECLARE @DbName VARCHAR(50)='';
+				DECLARE @TotalDbCount INT;    
+				
+				INSERT INTO @DbList     
+				SELECT null,null,NAME,NULL,NULL FROM SYS.DATABASES
+				WHERE (NAME LIKE 'AMS_%' AND NAME NOT LIKE 'AMS_%DEMO%' AND NAME NOT LIKE 'AMS_Standard' AND NAME NOT LIKE 'AMS_Internal' AND NAME NOT LIKE 'AMS_HL7')
+
+				SELECT @TotalDbCount = COUNT(1) FROM @DbList 
+				
+				WHILE (@Cnt<=@TotalDbCount)   
+				BEGIN   
+				SELECT @DbName=NAME   
+				FROM @DbList   
+				WHERE ID=@Cnt;
+				
+				DECLARE @SQL NVARCHAR(MAX)";
+
+			var searchQuery = @"
+				SET @SQL = 'SELECT @@SERVERNAME,'''+@DbName+''', '+
+				--+'CAST(format(COUNT(1), ''N0'') as varchar(150)) '+ -- Integer Results with commas 
+				+'FORMAT (MAX(CreatedOn), ''yyyy-MM-dd'')'+ 
+				+'FROM ' + @DbName + '.dbo.PosCollection (nolock)'";
+
+			var queryLoopEnd = @"
+				print @DbName
+				BEGIN TRY 
+
+				insert into @ResultsList
+				EXEC sys.sp_executesql @SQL
+
+				UPDATE @DbList
+				SET QueryResult = 'Successful'
+				where NAME = @DbName
+				END TRY
+
+				BEGIN CATCH
+				UPDATE @DbList
+				SET QueryResult = 'Failed'
+				where NAME = @DbName
+				END CATCH
+
+				SET @Cnt=@Cnt+1; 
+				END
+
+				select * from @ResultsList";
+
+			return queryLoopStart + searchQuery + queryLoopEnd;
+		}
+
+		public string GetFacilityOptionQuery(string facilityOptionTypeIds)
+		{
+			var queryLoopStart = @"/****** Run Query on All DB's in Server  ******/
+				DECLARE @DbList TABLE (
+				ID INT IDENTITY(1,1),
+				ClientId INT NULL,
+				ClientName VARCHAR(100) NULL,
+				NAME VARCHAR(50) NOT NULL,
+				Counts INT NULL,
+				QueryResult varchar(50) NULL)
+
+DECLARE @ResultsList TABLE (
+	DbServer VARCHAR(75) NULL,
+	DbName VARCHAR(50) NOT NULL,
+	ClientId int NULL,    
+	FacilityName VARCHAR(150) NULL,
+	[FacilityId] [uniqueidentifier] NULL,
+	[FacilityOptionName] varchar(150) NULL,
+	[FacilityOptionTypeId] [int] NULL,
+	[OptionValue] [varchar](max) NULL)
+
+				DECLARE @Cnt INT=1;
+				DECLARE @DbName VARCHAR(50)='';
+				DECLARE @TotalDbCount INT;    
+				
+				INSERT INTO @DbList     
+				SELECT null,null,NAME,NULL,NULL FROM SYS.DATABASES
+				WHERE (NAME LIKE 'AMS_%' AND NAME NOT LIKE 'AMS_%DEMO%' AND NAME NOT LIKE 'AMS_Standard' AND NAME NOT LIKE 'AMS_Internal' AND NAME NOT LIKE 'AMS_HL7')
+
+				SELECT @TotalDbCount = COUNT(1) FROM @DbList 
+				
+				WHILE (@Cnt<=@TotalDbCount)   
+				BEGIN   
+				SELECT @DbName=NAME   
+				FROM @DbList   
+				WHERE ID=@Cnt;
+				
+				DECLARE @SQL NVARCHAR(MAX)";
+
+			var searchQuery = @"
+					SET @SQL = '	
+	SELECT @@SERVERNAME,'''+@DbName+'''as DbName,fac.ClientId as ClientId, fac.Name as FacilityName, f.FacilityId, ft.Name as FacilityOptionName, f.FacilityOptionTypeId,OptionValue 
+	FROM ' + @DbName + '.[dbo].[FacilityOptionValue] (nolock) f
+	LEFT OUTER JOIN ' + @DbName + '.[dbo].[FacilityOptionType] (nolock) ft ON f.FacilityOptionTypeId = ft.FacilityOptionTypeId
+	LEFT OUTER JOIN aaaFacilities (nolock) fac ON f.FacilityId = fac.FacilityId
+	WHERE f.FacilityOptionTypeId in ("+ facilityOptionTypeIds + ") --AND f.OptionValue = ''TRUE'''";
+
+			var queryLoopEnd = @"
+				print @DbName
+				BEGIN TRY 
+
+				insert into @ResultsList
+				EXEC sys.sp_executesql @SQL
+
+				UPDATE @DbList
+				SET QueryResult = 'Successful'
+				where NAME = @DbName
+				END TRY
+
+				BEGIN CATCH
+				UPDATE @DbList
+				SET QueryResult = 'Failed'
+				where NAME = @DbName
+				END CATCH
+
+				SET @Cnt=@Cnt+1; 
+				END
+
+				select * from @ResultsList";
+
+			return queryLoopStart + searchQuery + queryLoopEnd;
+		}
 	}
 
 	public class QueryResults
@@ -168,5 +364,17 @@ select * from @ResultsList";
 		public string DbServer { get; set; }
 		public string DbName { get; set; }
 		public string QueryResult { get; set; }
+	}
+
+	public class FacilityOptionQueryResults
+	{
+		public string DbServer { get; set; }
+		public string DbName { get; set; }
+		public int? ClientId { get; set; }
+		public string FacilityName { get; set; }
+		public Guid FacilityId { get; set; }
+		public string FacilityOptionName { get; set; }
+		public string FacilityOptionTypeId { get; set; }
+		public string OptionValue { get; set; }
 	}
 }
