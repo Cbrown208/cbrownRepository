@@ -17,10 +17,10 @@ namespace ProveIt
 			//_dotNetVersionManager.CheckDotNetVersion();
 			//RunStringAlterTest();
 			//EditList();
-			//QuestionMarkComparisonOperatorTest();
-			//RunTest();
+			QuestionMarkComparisonOperatorTest();
+			RunTest();
 			//FormatRunAsUser();
-			TempTest();
+			//TempTest();
 			Console.ReadLine();
 		}
 
@@ -57,7 +57,7 @@ namespace ProveIt
 
 		private static void QuestionMarkComparisonOperatorTest()
 		{
-			Console.WriteLine("Comparison Tests Start ------------------");
+			Console.WriteLine("------------------ Comparison Tests Start ------------------");
 			var input = true;
 			Console.WriteLine("input = " + input);
 			var result = (input) ? "True Response" : "False Response";
@@ -79,14 +79,20 @@ namespace ProveIt
 			result = pTest.FirstName != null ? "True Response" : "False Response";
 			Console.WriteLine(result);
 
-			Console.WriteLine("Comparison Tests End ------------------");
+			Console.WriteLine("------------------ Comparison Tests End ------------------");
 		}
 
 		private static void RunTest()
 		{
 			var personList = new List<Person>();
 
+			personList = null;
+
+			var temp2 = personList.FirstOrDefault(x => x.FirstName == "nope");
+
 			var details = new List<Person>().AsEnumerable();
+
+			
 
 			var temp = personList.Select(x => x.Id);
 			Console.WriteLine(temp.FirstOrDefault());
@@ -94,6 +100,8 @@ namespace ProveIt
 
 			personList.Add(new Person { FirstName = "joe", LastName = "bob" });
 			personList.Add(new Person { FirstName = "joe", LastName = "bob" });
+
+
 			var hospitalProcedure = personList.FindAll(obj => obj.FirstName == "Hosp").ToList();
 			for (var counter = 0; counter < hospitalProcedure.Count; counter++)
 			{

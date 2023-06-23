@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -26,6 +27,11 @@ namespace DbQueryMultipleServers
 			RunFacilityOptionQuery(pasDbServerConnection, pasDbClientDbCount);
 
 			Console.WriteLine(Environment.NewLine+ Environment.NewLine + _outputPath);
+
+			// Open Results in Excel / Whatever program is default for .csv
+			Process.Start(_outputPath);
+
+			Console.WriteLine("File Should be open test...");
 		}
 
 		private List<string> GetDbConnectionStringList(string dbConnectionString, int serverCount)
