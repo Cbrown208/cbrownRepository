@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using Common.Formatters;
 using Newtonsoft.Json;
@@ -13,12 +16,13 @@ namespace ProveIt
 
 		static void Main(string[] args)
 		{
-			//RunURLParserTest();
+			RunDbConnectionParserTest();
+			RunURLParserTest();
 			//_dotNetVersionManager.CheckDotNetVersion();
 			//RunStringAlterTest();
 			//EditList();
-			QuestionMarkComparisonOperatorTest();
-			RunTest();
+			//QuestionMarkComparisonOperatorTest();
+			//RunTest();
 			//FormatRunAsUser();
 			//TempTest();
 			Console.ReadLine();
@@ -37,9 +41,23 @@ namespace ProveIt
 
 		public static void RunURLParserTest()
 		{
-			Uri uri = new Uri("http://iv-rmq-pas.nthrive.com:15672/#/");
+			Uri uri = new Uri("https://iv-rmq-pas.nthrive.com:15672/#/");
 			var result = uri.Scheme + "://" + uri.Authority;
-			Console.WriteLine("Result 1" + result);
+			Console.WriteLine("Result 1: " + result);
+
+			var result2 = uri.GetLeftPart(System.UriPartial.Authority);
+
+			Console.WriteLine("Result 2: " + result2);
+		}
+		public static void RunDbConnectionParserTest()
+		{
+			var connectionString = "server=nprod-cleariq-dev-scus-db1-sqlmi.61a4b50c50df.database.windows.net;Database=CIQ_main_UTSW_Automation;User Id =Cleariq;Password=Sqlmiserveradmin123";
+			IDbConnection connection = new SqlConnection(connectionString);
+			var dbName = connection.Database;
+			var dbServer = new SqlConnection(connectionString).DataSource;
+			
+			Console.WriteLine("Result 1: " + dbName);
+			Console.WriteLine("Result 2: " + dbServer);
 		}
 
 		private static void RunStringAlterTest()
@@ -80,6 +98,13 @@ namespace ProveIt
 			Console.WriteLine(result);
 
 			Console.WriteLine("------------------ Comparison Tests End ------------------");
+
+
+			var valueToCheck = 'F';
+			var patientSex = valueToCheck == 'B' ? 'O' : valueToCheck;
+
+			Console.WriteLine("Input Value: " + valueToCheck + " | Results: " + patientSex);
+
 		}
 
 		private static void RunTest()

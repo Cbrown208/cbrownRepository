@@ -15,6 +15,8 @@ namespace DbQueryMultipleServers
 
 		private readonly string _outputPath = Path.Combine(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().GetName().CodeBase).LocalPath)) + "\\" + OutputFileName;
 
+		private CiqQueryManager ciqManager = new CiqQueryManager();
+
 		public void RunMultipleDbQuery()
 		{
 			var pasDbServerConnection = "Server=LEWVPPASDB{0}.nthrive.nthcrp.com;Database=Platform_Sub; Trusted_Connection=true;";
@@ -23,8 +25,9 @@ namespace DbQueryMultipleServers
 
 			var dbList = GetDbConnectionStringList(pasDbServerConnection, pasDbClientDbCount);
 
-			//RunQuery(pasDbServerConnection, pasDbClientDbCount);
-			RunFacilityOptionQuery(pasDbServerConnection, pasDbClientDbCount);
+			RunQuery(pasDbServerConnection, pasDbClientDbCount);
+			//RunFacilityOptionQuery(pasDbServerConnection, pasDbClientDbCount);
+			
 
 			Console.WriteLine(Environment.NewLine+ Environment.NewLine + _outputPath);
 
@@ -59,6 +62,7 @@ namespace DbQueryMultipleServers
 				{
 					db.Open();
 					var query = GetClientDbQuery();
+					query = GetOneOffQuery();
 					var queryResults = db.Query<QueryResults>(query).ToList();
 					resultList.AddRange(queryResults);
 					db.Close();
@@ -76,7 +80,7 @@ namespace DbQueryMultipleServers
 
 		public void RunFacilityOptionQuery(string dbConnectionString, int serverCount)
 		{
-			var facOptionIds = "250";
+			var facOptionIds = "300";
 			CleanOutputFile(OutputFileName);
 			var resultList = new List<FacilityOptionQueryResults>();
 			for (int i = 1; i <= serverCount; i++)
@@ -92,14 +96,6 @@ namespace DbQueryMultipleServers
 					resultList.AddRange(queryResults);
 					db.Close();
 				}
-			}
-
-			WriteValueToFile("DbServer,DbName,ClientId,FacilityName,FacilityId,FacilityOptionName,FacilityOptionTypeId,OptionValue");
-			foreach (var result in resultList)
-			{
-				var facName = result.FacilityName?.Replace(",", "");
-				var outputResult = result.DbServer + "," + result.DbName + "," + result.ClientId + "," + facName + "," + result.FacilityId + "," + result.FacilityOptionName + "," + result.FacilityOptionTypeId + "," + result.OptionValue;
-				WriteValueToFile(outputResult);
 			}
 		}
 
@@ -123,11 +119,11 @@ namespace DbQueryMultipleServers
 			}
 
 			WriteValueToFile("DbServer,DbName,QueryResults");
-			foreach (var result in resultList)
-			{
-				var outputResult = result.DbServer + "," + result.DbName + "," + result.QueryResult;
-				WriteValueToFile(outputResult);
-			}
+			//foreach (var result in resultList)
+			//{
+			//	var outputResult = result.DbServer + "," + result.DbName + "," + result.QueryResult;
+			//	WriteValueToFile(outputResult);
+			//}
 		}
 
 		public void WriteValueToFile(string value)
@@ -363,6 +359,70 @@ DECLARE @ResultsList TABLE (
 
 			return queryLoopStart + searchQuery + queryLoopEnd;
 		}
+
+		public string GetOneOffQuery()
+		{
+			var queryLoopStart = @"/****** Run Query on All DB's in Server  ******/
+				DECLARE @DbList TABLE (
+				ID INT IDENTITY(1,1),
+				ClientId INT NULL,
+				ClientName VARCHAR(100) NULL,
+				NAME VARCHAR(50) NOT NULL,
+				Counts INT NULL,
+				QueryResult varchar(50) NULL)
+
+				DECLARE @ResultsList TABLE (
+				DbServer VARCHAR(75) NULL,
+				DbName VARCHAR(50) NOT NULL,
+				QueryResult varchar(150) NULL)
+
+				DECLARE @Cnt INT=1;
+				DECLARE @DbName VARCHAR(50)='';
+				DECLARE @TotalDbCount INT;    
+				
+				INSERT INTO @DbList     
+				SELECT null,null,NAME,NULL,NULL FROM SYS.DATABASES
+				WHERE name != 'model' and name != 'DBA_DB'
+
+				SELECT @TotalDbCount = COUNT(1) FROM @DbList 
+				
+				WHILE (@Cnt<=@TotalDbCount)   
+				BEGIN   
+				SELECT @DbName=NAME   
+				FROM @DbList   
+				WHERE ID=@Cnt;
+				
+				DECLARE @SQL NVARCHAR(MAX)";
+
+			var searchQuery = @"
+	SET @SQL = 'SELECT @@SERVERNAME,'''+@DbName+''', name as UserName '
+	+'FROM ' + @DbName + '.sys.database_principals WHERE name like ''%P-TSG%''' ";
+
+			var queryLoopEnd = @"
+				BEGIN TRY 
+
+				insert into @ResultsList
+				EXEC sys.sp_executesql @SQL
+
+				UPDATE @DbList
+				SET QueryResult = 'Successful'
+				where NAME = @DbName
+				END TRY
+
+				BEGIN CATCH
+				UPDATE @DbList
+				SET QueryResult = 'Failed'
+				where NAME = @DbName
+				END CATCH
+
+				SET @Cnt=@Cnt+1; 
+				END
+
+				select * from @ResultsList";
+
+			return queryLoopStart + searchQuery + queryLoopEnd;
+		}
+
 	}
 
 	public class QueryResults
@@ -370,6 +430,7 @@ DECLARE @ResultsList TABLE (
 		public string DbServer { get; set; }
 		public string DbName { get; set; }
 		public string QueryResult { get; set; }
+		public string SiteName { get; set; }
 	}
 
 	public class FacilityOptionQueryResults
