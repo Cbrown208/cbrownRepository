@@ -5,8 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 
 namespace DbQueryMultipleServers
@@ -15,24 +13,33 @@ namespace DbQueryMultipleServers
 	{
 		private const string OutputFileName = "CiqMultipleQueryDbOutput.csv";
 		private readonly string _outputPath = Path.Combine(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().GetName().CodeBase).LocalPath)) + "\\" + OutputFileName;
+		private List<string> _columnList = new List<string> { "DbServer", "DbName", "QueryResult", "SiteName" };
 
 		public void CiqRunMulitpleDbQuery()
 		{
 			CleanOutputFile(OutputFileName);
-			var user = @"chbrown@finthrive.com";
-			//User ID=Cleariq; Password=Sqlmiserveradmin123;MultiSubnetFailover=True;"
-			var ciqDbConnection = "Server=tcp:prod-cleariq-scus-db0{0}-sqlmi.8276cba25254.database.windows.net,1433;Persist Security Info=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Authentication=Active Directory Integrated;";
+			var ciqDbConnection = "Server=azrvpciqdb{0}01.nthrive.nthcrp.com,1433;Trusted_Connection=True;TrustServerCertificate=True;";
 			var queryText = GetCiqWorkflowQueueCountQuery();
 
 			queryText = GetCiqUsersListQuery();
 			queryText = GetFacilityAppSettingQuery();
+			queryText = GetMostRecentDbUpScriptRan();
+			queryText = GetOneOffQuery();
 
-			var resultList = CiqRunQuery<QueryResults>(ciqDbConnection, 10, queryText);
+			var _columnList = GetColumnListFromClass(new QueryResults());
 
-			WriteValueToFile("DbServer,DbName,QueryResult,SiteName");
+			var queryResultTable = BuildResultsTableString(_columnList);
+
+			var resultList = CiqRunQuery<QueryResults>(ciqDbConnection, 6, queryText);
+
+			string joinedColumns = string.Join(",", _columnList);
+			WriteValueToFile(joinedColumns);
+
+
+
 			foreach (var result in resultList)
 			{
-				var outputResult = result.DbServer + "," + result.DbName + "," + result.QueryResult + "," + result.SiteName;
+				var outputResult = result.DbServer + "," + result.DbName + "," + result.QueryResult + "," + result.QueryResult2 + ","+ result.QueryResult3;
 				WriteValueToFile(outputResult);
 			}
 
@@ -44,6 +51,19 @@ namespace DbQueryMultipleServers
 			Console.WriteLine("File Should be open test...");
 			Console.ReadLine();
 		}
+
+		public List<string> GetColumnListFromClass(object obj)
+		{
+			var templist = obj.GetType().GetProperties();
+			var columnList = new List<string>();
+			foreach (var prop in templist)
+			{
+				columnList.Add(prop.Name);
+			}
+
+			return columnList;
+		}
+
 		public void WriteValueToFile(string value)
 		{
 			try
@@ -66,12 +86,14 @@ namespace DbQueryMultipleServers
 			File.WriteAllText(outputFileName, string.Empty);
 		}
 
+
+
 		public List<T> CiqRunQuery<T>(string dbConnectionString, int serverCount, string query)
 		{
 			var resultsList = new List<T>();
-			for (int i = 1; i <= serverCount; i++)
+			for (int i = 2; i <= serverCount; i++)
 			{
-				var serverNumber = i.ToString("D2");
+				var serverNumber = i.ToString();
 				var clientDb = string.Format(dbConnectionString, serverNumber);
 
 				using (var db = new SqlConnection(clientDb))
@@ -221,6 +243,25 @@ select * from @ResultsList";
 			return query;
 		}
 
+
+		public string BuildResultsTableString(List<string> columnList)
+		{
+			var baseResultList = "DECLARE @ResultsList TABLE (DbServer VARCHAR(75) NULL, DbName VARCHAR(50) NOT NULL, QueryResult varchar(150) NULL,QueryResult1 varchar(150) NULL,QueryResult2 varchar(150) NULL);";
+
+			var query = "DECLARE @ResultsList TABLE (";
+
+			foreach (var col in columnList)
+			{
+				query = query + col + " varchar(100) NULL, ";
+			}
+			int index = query.LastIndexOf(',');
+			query = query.Remove(index, 1);
+
+			query = query + ");";
+
+			return query;
+		}
+
 		private string GetDbList(string dbLike, string dbNotLike)
 		{
 			var notLikeQuery = string.Format(" AND NAME NOT LIKE '{1}'", dbNotLike);
@@ -241,8 +282,120 @@ SELECT @TotalDbCount = COUNT(1) FROM @DbList
 WHILE (@Cnt<=@TotalDbCount)    
 BEGIN     
 SELECT @DbName=DbName FROM @DbList WHERE ID=@Cnt;
-DECLARE @SQL NVARCHAR(MAX) ",dbLike,dbNotLike); 
+DECLARE @SQL NVARCHAR(MAX) ", dbLike, dbNotLike);
 			return queryText;
+		}
+
+		private string GetMostRecentDbUpScriptRan()
+		{
+			var query = @"/****** Run Query on All DB's in Server  ******/
+DECLARE @DbList TABLE ( ID INT IDENTITY(1,1), ClientId INT NULL, ClientName VARCHAR(100) NULL, NAME VARCHAR(50) NOT NULL, Counts INT NULL, QueryResult varchar(50) NULL);
+DECLARE @ResultsList TABLE (DbServer VARCHAR(75) NULL, DbName VARCHAR(50) NOT NULL, QueryResult varchar(150) NULL,SiteName varchar(max) NULL);
+DECLARE @Cnt INT=1;
+DECLARE @DbName VARCHAR(50)='';
+DECLARE @TotalDbCount INT; 
+INSERT INTO @DbList     
+SELECT null,null,NAME,NULL,NULL FROM SYS.DATABASES    
+WHERE (NAME LIKE 'CIQ_%' AND NAME NOT LIKE 'CIQ_%Training%')
+SELECT @TotalDbCount = COUNT(1) FROM @DbList
+
+WHILE (@Cnt<=@TotalDbCount)    
+BEGIN     
+SELECT @DbName=NAME     
+FROM @DbList     
+WHERE ID=@Cnt;
+DECLARE @SQL NVARCHAR(MAX)
+SET @SQL = 'SELECT Top 1 @@SERVERNAME,'''+@DbName+''', '+'[Version] ,(select AppTierUrl from '+@DbName+'.dbo.GlobalSettings (nolock)) as SiteName
+FROM ' + @DbName + '.dbo.DBUpdates with (nolock) order by DbUpdateId desc'
+print @SQL
+BEGIN TRY
+insert into @ResultsList
+EXEC sys.sp_executesql @SQL
+UPDATE @DbList
+SET QueryResult = 'Successful'
+where NAME = @DbName
+END TRY
+BEGIN CATCH
+UPDATE @DbList
+SET QueryResult = 'Failed'
+where NAME = @DbName
+END CATCH
+SET @Cnt=@Cnt+1; 
+END
+select * from @ResultsList";
+			return query;
+		}
+
+		private string GetOneOffQuery()
+		{
+			var query = @"/****** Run Query on All DB's in Server  ******/
+DECLARE @DbList TABLE (
+		ID INT IDENTITY(1,1),
+		DbName VARCHAR(50) NOT NULL,
+		QueryResult varchar(50) NULL)
+
+DECLARE @ResultsList TABLE (
+		DbServer VARCHAR(75) NULL,
+		DbName VARCHAR(50) NOT NULL,
+		QueryResult varchar(150) NULL,
+		QueryResult2 varchar(150) NULL)
+
+DECLARE @Cnt INT=1;
+DECLARE @DbName VARCHAR(50)='';
+DECLARE @TotalDbCount INT;
+
+INSERT INTO @DbList     
+SELECT NAME,NULL FROM SYS.DATABASES    
+WHERE (NAME LIKE 'CIQ_%' AND Name like '%IPAS%' AND NAME NOT LIKE 'CIQ_%Training%')
+
+SELECT @TotalDbCount = COUNT(1) FROM @DbList
+
+WHILE (@Cnt<=@TotalDbCount)    
+BEGIN     
+	SELECT @DbName=DbName FROM @DbList WHERE ID=@Cnt;
+	
+	DECLARE @SQL NVARCHAR(MAX)
+	DECLARE @SQL2 NVARCHAR(MAX)
+
+	SET @SQL = 'SELECT distinct @@SERVERNAME,'''+@DbName+''',
+	(select right(AppTierUrl, charindex(''/'', reverse(AppTierUrl)) - 1) from '+@DbName+'.dbo.GlobalSettings (nolock)) as SiteName,
+	Alias
+	from ' + @DbName + '.dbo.InsPlanAliases (nolock)'
+
+	SET @SQL2 = 'SELECT distinct @@SERVERNAME,'''+@DbName+''', 
+	(select right(AppTierUrl, charindex(''/'', reverse(AppTierUrl)) - 1) from '+@DbName+'.dbo.GlobalSettings (nolock)) as SiteName,
+	InValue 
+	from ' + @DbName + '.dbo.Mappings (nolock) WHERE Component = ''ContractAliases'''
+
+	print @DbName
+	BEGIN TRY 
+
+	insert into @ResultsList
+	EXEC sys.sp_executesql @SQL
+
+	insert into @ResultsList
+	EXEC sys.sp_executesql @SQL2
+
+
+	UPDATE @DbList
+	SET QueryResult = 'Successful'
+	where DbName = @DbName
+	END TRY
+
+	BEGIN CATCH
+	UPDATE @DbList
+	SET QueryResult = 'Failed'
+	where DbName = @DbName
+	END CATCH
+
+	SET @Cnt=@Cnt+1; 
+END
+
+--select * from @DbList
+select distinct * from @ResultsList order by DbServer,DbName,QueryResult
+
+";
+			return query;
 		}
 	}
 }

@@ -16,26 +16,22 @@ namespace ProveIt
 
 		static void Main(string[] args)
 		{
-			RunDbConnectionParserTest();
-			RunURLParserTest();
+			//RunDbConnectionParserTest();
+			//RunURLParserTest();
 			//_dotNetVersionManager.CheckDotNetVersion();
 			//RunStringAlterTest();
 			//EditList();
 			//QuestionMarkComparisonOperatorTest();
 			//RunTest();
 			//FormatRunAsUser();
-			//TempTest();
+			TempTest();
 			Console.ReadLine();
 		}
 
 		public static void TempTest()
 		{
-			var isClinic = true;
-			var productRollupOptions = true;
-			var combinedEstimateOption = true;
 
-			var result = isClinic? productRollupOptions : productRollupOptions && !combinedEstimateOption;
-
+			var result = DateTime.Today.AddDays(-1); 
 			Console.WriteLine("Results: " + result);
 		}
 

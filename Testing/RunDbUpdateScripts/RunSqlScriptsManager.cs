@@ -6,16 +6,21 @@ namespace RunDbUpdateScripts
 {
 	public class RunSqlScriptsManager
 	{
+		public const string DbName = "Dev_CIQ_Main_Chris";
 		public void RunDbScripts()
 		{
-			var ciqDbConnection = "data source=nprod-cleariq-dev-scus-db1-sqlmi.61a4b50c50df.database.windows.net;initial catalog=Dev_CIQ_Main_Chris;User ID=Cleariq; Password=Sqlmiserveradmin123;MultiSubnetFailover=True;";
 			var scriptPath = @"C:\Dev\ClearIQ\app-cleariq\SQL\DBChanges";
+
+			var ciqDbConnection = "data source=azrvdciqdb201.NTHRIVENP.NTHCRPNP.com; initial catalog=CIQ_Main_UTSW_Automation3; Trusted_Connection=True; MultiSubnetFailover=True;TrustServerCertificate=True;";
+			                      //"User ID=Cleariq; Password=Sqlmiserveradmin123;";
+			ciqDbConnection =
+				"data source=azrvdciqdb201.nthrivenp.nthcrpnp.com; initial catalog=" + DbName+"; User ID=Cleariq; Password=Sqlmiserveradmin123; MultiSubnetFailover=True;TrustServerCertificate=True;";
 
 			var scriptsAlreadyRan = GetScriptsAlreadyRan(ciqDbConnection);
 
 			var missingFiles = new List<string>();
 
-			DirectoryInfo d = new DirectoryInfo(@"C:\Dev\ClearIQ\app-cleariq\SQL\DBChanges"); //Assuming Test is your Folder
+			DirectoryInfo d = new DirectoryInfo(@"C:\Dev\ClearIQ\app-cleariq\SQL\DBChanges");
 
 			var fileList = d.GetFiles("Script_00*").ToList().OrderBy(x => x.Name);
 
@@ -34,7 +39,7 @@ namespace RunDbUpdateScripts
 					{
 						CiqRunCommand(ciqDbConnection, commandString);
 					}
-					var updateQuery = string.Format("INSERT INTO [Dev_CIQ_Main_Chris].[dbo].[DBUpdates]([Version],[DateRan],[Comment],[RollbackDate]) VALUES ('SQL.DBChanges.{0}',GETDATE(),'Ran {0}',null) ", file.Name);
+					var updateQuery = string.Format("INSERT INTO [{0}].[dbo].[DBUpdates]([Version],[DateRan],[Comment],[RollbackDate]) VALUES ('SQL.DBChanges.{1}',GETDATE(),'Ran {1}',null) ", DbName, file.Name);
 					CiqRunQuery<dynamic>(ciqDbConnection, updateQuery);
 				}
 			}
@@ -49,7 +54,7 @@ namespace RunDbUpdateScripts
 
 		private List<QueryResult> GetScriptsAlreadyRan(string connectionString)
 		{
-			var query = "USE [Dev_CIQ_Main_Chris]; Select Version from DbUpdates order by DateRan desc";
+			var query = "USE ["+DbName+"]; Select Version from DbUpdates order by DateRan desc";
 
 			var results = CiqRunQuery<QueryResult>(connectionString, query);
 

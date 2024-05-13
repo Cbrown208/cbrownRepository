@@ -9,12 +9,25 @@ namespace FirewallConnectionChecker
 
 		static void Main(string[] args)
 		{
-			//Console.WriteLine("Please choose a Connection to Check ");
-			//Console.WriteLine("1 = Websites ");
-			//Console.WriteLine("2 = Db Connection ");
-			//ConnectionCheckerManager.CheckConnections();
+			Console.WriteLine("Please choose a Connection to Check ");
+			Console.WriteLine("1 = Websites ");
+			Console.WriteLine("2 = Db Connection ");
+			
+			var input = Console.ReadLine();
 
-			DbConnectionManager.CheckDbConnectionList();
+			if (string.IsNullOrWhiteSpace(input))
+			{
+				Console.WriteLine("Please Enter a valid input");
+			}
+
+			if (!string.IsNullOrWhiteSpace(input) && input.Contains("1"))
+			{
+				ConnectionCheckerManager.CheckConnections();
+			}
+			else if (!string.IsNullOrWhiteSpace(input) && input.Contains("2"))
+			{
+				DbConnectionManager.CheckDbConnectionList();
+			}
 
 			Console.WriteLine("Press any key to exit");
 			Console.ReadLine();
